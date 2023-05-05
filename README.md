@@ -1,3 +1,4 @@
 # friendship-store
-<br>Nikita - Frontend developer</br>
-Polina - Backend developer
+#### Nikita - Frontend developer
+#### Polina - Backend developer
+#### Sergey - Frontend developer
