@@ -1,3 +1,3 @@
 # friendship-store
-Nikita - Frontend developer
+<br>Nikita - Frontend developer</br>
 Polina - Backend developer
