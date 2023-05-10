@@ -1,0 +1,51 @@
+
+@font-face {
+    font-display: swap;
+    font-family: 'Righteous';
+    font-style: normal;
+    font-weight: 400;
+    src: url('../fonts/righteous-v14-latin-regular.woff2') format('woff2'),
+        url('../fonts/righteous-v14-latin-regular.woff') format('woff');
+}
+
+html {
+    box-sizing: border-box;
+}
+
+*, *::after, *::before {
+    box-sizing: inherit;
+}
+
+body {
+    font-family: 'Righteous', sans-serif;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 1.2;
+    color: $blue;
+    background-color: $white;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    border: 0;
+    padding: 0;
+    white-space: nowrap;
+    clip-path: inset(100%);
+    clip: rect(0 0 0 0);
+    overflow: hidden;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.container {
+    max-width: 1312px;
+    padding: 0 48px;
+    margin: 0 auto;
+}
