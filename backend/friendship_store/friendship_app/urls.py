@@ -1,6 +1,6 @@
 from django.urls import path
-
 from .views import *
+from .yasg import urlpatterns as doc_urls
 
 urlpatterns = [
     path('products/', ProductAPIView.as_view()),
@@ -13,3 +13,5 @@ urlpatterns = [
     path('product_by_brand/<int:brand>', ProductByBrandAPIView.as_view()),
     path('basket/<int:user_id>', BasketByIdAPIView.as_view()),
 ]
+
+urlpatterns += doc_urls
