@@ -13,6 +13,17 @@ const routes = [
       },
     ],
   },
+  {
+    path: '/aboutus',
+    component: () => import('@/layouts/Default.vue'),
+    children: [
+      {
+        path: '',
+        name: 'AboutUsPage',
+        component: () => import('@/views/AboutUsPage.vue'),
+      },
+    ],
+  },
 ]
 
 const router = createRouter({
