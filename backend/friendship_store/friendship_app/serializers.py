@@ -19,17 +19,6 @@ class BrandSerializer(serializers.ModelSerializer):
         model = Brand
         fields = '__all__'
 
-        #     (
-        #     'product_name',
-        #     'model',
-        #     'price',
-        #     'availability',
-        #     'category',
-        #     'brand',
-        #     'description',
-        #     'quantity',
-        # )
-
 
 class BasketSerializer(serializers.ModelSerializer):
     class Meta:
