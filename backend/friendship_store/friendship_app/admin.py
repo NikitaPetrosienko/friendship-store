@@ -9,4 +9,3 @@ admin.site.register(Brand)
 admin.site.register(Image)
 admin.site.register(Order)
 admin.site.register(Basket)
-
