@@ -1,7 +1,7 @@
 from rest_framework import generics
 
 from .models import Product, Category, Brand
-from .serializers import ProductSerializer, CategorySerializer, BrandSerializer
+from .serializers import *
 
 
 class ProductAPIView(generics.ListAPIView):
@@ -41,3 +41,19 @@ class CategoryAPIView(generics.ListAPIView):
 class BrandAPIView(generics.ListAPIView):
     queryset = Brand.objects.all()
     serializer_class = BrandSerializer
+
+
+class AddToBasketAPIView(generics.CreateAPIView):
+    serializer_class = BasketSerializer
+
+
+class BasketByIdAPIView(generics.ListAPIView):
+    serializer_class = BasketSerializer
+
+    def get_queryset(self):
+        user_id = self.kwargs['user_id']
+        return Basket.objects.filter(user_id=user_id)
+
+
+class AddOrderAPIView(generics.CreateAPIView):
+    serializer_class = OrderSerializer

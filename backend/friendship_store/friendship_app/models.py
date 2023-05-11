@@ -19,6 +19,9 @@ class Basket(models.Model):
     product_id = models.ForeignKey('Product', on_delete=models.PROTECT)
     quantity = models.IntegerField(default=1)
 
+    def __str__(self):
+        return f'{self.user_id} - {self.product_id}'
+
 
 class Order(models.Model):
     basket_id = models.ForeignKey('Basket', on_delete=models.PROTECT)
@@ -27,6 +30,7 @@ class Order(models.Model):
     house = models.CharField(max_length=5)
     apartment = models.CharField(max_length=5, blank=True)
     is_card_payment = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return f'Address: {self.district} {self.street} {self.house} {self.apartment}'
@@ -63,5 +67,3 @@ class Brand(models.Model):
 class Image(models.Model):
     image = models.ImageField()
     product_id = models.ForeignKey('Product', on_delete=models.PROTECT)
-
-

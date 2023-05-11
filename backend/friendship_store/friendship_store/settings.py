@@ -81,7 +81,7 @@ WSGI_APPLICATION = 'friendship_store.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'django_store',
+        'NAME': 'friendship',
         'USER': 'postgres',
         'PASSWORD': os.getenv('PASSWORD_DB'),
         'HOST': 'localhost',
