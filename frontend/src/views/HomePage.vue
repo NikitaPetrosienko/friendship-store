@@ -1,13 +1,15 @@
-<template>
-  <div>
-    HomePage
-  </div>
-</template>
-
 <script setup lang="ts">
-
+import HomePageSwiper from '@/components/home-page/HomePageSwiper.vue';
+import HomePageProducts from '@/components/home-page/HomePageProducts.vue';
 </script>
 
-<style scoped>
 
-</style>
+<template>
+  <div class="home-page">
+
+    <HomePageSwiper />
+
+    <HomePageProducts />
+
+  </div>
+</template>
