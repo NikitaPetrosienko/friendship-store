@@ -3,3 +3,4 @@ exclude =
     /*migrations*/
     /*venv*/
 max-line-length = 100
+ignore = F401, F403

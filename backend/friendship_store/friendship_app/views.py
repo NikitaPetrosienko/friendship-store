@@ -1,16 +1,16 @@
 from rest_framework import generics
 
-from .models import Product, Category, Brand
-from .serializers import *
+from friendship_app.models import Product, Category, Brand, Basket
+import friendship_app.serializers as fs
 
 
 class ProductAPIView(generics.ListAPIView):
     queryset = Product.objects.all()
-    serializer_class = ProductSerializer
+    serializer_class = fs.ProductSerializer
 
 
 class ProductByIdAPIView(generics.ListAPIView):
-    serializer_class = ProductSerializer
+    serializer_class = fs.ProductSerializer
 
     def get_queryset(self):
         product_id = self.kwargs['id']
@@ -18,7 +18,7 @@ class ProductByIdAPIView(generics.ListAPIView):
 
 
 class ProductByCategoryAPIView(generics.ListAPIView):
-    serializer_class = ProductSerializer
+    serializer_class = fs.ProductSerializer
 
     def get_queryset(self):
         category = self.kwargs['category']
@@ -26,7 +26,7 @@ class ProductByCategoryAPIView(generics.ListAPIView):
 
 
 class ProductByBrandAPIView(generics.ListAPIView):
-    serializer_class = ProductSerializer
+    serializer_class = fs.ProductSerializer
 
     def get_queryset(self):
         brand = self.kwargs['brand']
@@ -35,20 +35,20 @@ class ProductByBrandAPIView(generics.ListAPIView):
 
 class CategoryAPIView(generics.ListAPIView):
     queryset = Category.objects.all()
-    serializer_class = CategorySerializer
+    serializer_class = fs.CategorySerializer
 
 
 class BrandAPIView(generics.ListAPIView):
     queryset = Brand.objects.all()
-    serializer_class = BrandSerializer
+    serializer_class = fs.BrandSerializer
 
 
 class AddToBasketAPIView(generics.CreateAPIView):
-    serializer_class = BasketSerializer
+    serializer_class = fs.BasketSerializer
 
 
 class BasketByIdAPIView(generics.ListAPIView):
-    serializer_class = BasketSerializer
+    serializer_class = fs.BasketSerializer
 
     def get_queryset(self):
         user_id = self.kwargs['user_id']
@@ -56,4 +56,4 @@ class BasketByIdAPIView(generics.ListAPIView):
 
 
 class AddOrderAPIView(generics.CreateAPIView):
-    serializer_class = OrderSerializer
+    serializer_class = fs.OrderSerializer

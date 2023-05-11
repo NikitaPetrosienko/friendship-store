@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Product, Customer, Order, Category, Brand, Image, Basket
+from friendship_app.models import Product, Customer, Order, Category, Brand, Image, Basket
 
 admin.site.register(Product)
 admin.site.register(Customer)

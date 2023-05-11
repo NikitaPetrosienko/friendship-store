@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Product, Category, Brand, Basket, Order
+from friendship_app.models import Product, Category, Brand, Basket, Order
 
 
 class ProductSerializer(serializers.ModelSerializer):
