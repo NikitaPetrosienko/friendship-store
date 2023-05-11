@@ -26,7 +26,6 @@ import AppHeaderPanel from '@/components/header/AppHeaderPanel.vue'
 }
 .header__container {
   display: flex;
-  align-items: center;
 }
 .header__logo {
   display: block;

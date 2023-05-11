@@ -20,12 +20,21 @@
 @import '@/assets/scss/_variables.scss';
 @import '@/assets/scss/_mixins.scss';
 .header-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: space-between;
   padding-left: 20px;
 }
 .header-panel__phone {
+  flex: 1 1 auto;
   display: block;
   @include font(18px, 400, 22px);
+  text-decoration: none;
   color: $white;
+}
+.header-panel__phone::before {
+  content: url('../../assets/img/phone.svg');
+  margin-right: 16px;
 }
 .header-panel__links {
   display: flex;

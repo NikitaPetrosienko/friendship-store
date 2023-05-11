@@ -66,6 +66,7 @@ const navigationList = ref([
 @import '@/assets/scss/_variables.scss';
 @import '@/assets/scss/_mixins.scss';
 .header-links {
+  flex: 1 0 auto;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
