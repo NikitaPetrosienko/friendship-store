@@ -30,7 +30,7 @@ const navigationList = ref([
   {
     id: 6,
     title: 'О нас',
-    url: '/about'
+    url: '/aboutus'
   },
   {
     id: 7,

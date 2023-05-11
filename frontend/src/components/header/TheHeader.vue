@@ -6,7 +6,10 @@ import AppHeaderPanel from '@/components/header/AppHeaderPanel.vue'
 <template>
   <header class="header">
     <div class="container header__container">
-      <img class="header__logo" src="../../assets/img/logo.png" alt="Дружба Store">
+      
+      <router-link to="/">
+        <img class="header__logo" src="../../assets/img/logo.png" alt="Дружба Store" />
+      </router-link>
 
       <AppHeaderLinks />
 
