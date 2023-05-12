@@ -64,5 +64,5 @@ class BasketByIdAPIView(generics.ListAPIView):
         return Basket.objects.filter(user_id=user_id)
 
 
-class AddOrderAPIView(generics.CreateAPIView):
+class NewOrderAPIView(generics.CreateAPIView):
     serializer_class = fs.OrderSerializer

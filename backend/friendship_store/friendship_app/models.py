@@ -1,21 +1,9 @@
 from django.db import models
-from django.core.validators import RegexValidator
-
-
-class Customer(models.Model):
-    first_name = models.CharField(max_length=30)
-    last_name = models.CharField(max_length=50)
-    email = models.EmailField(unique=True)
-    phoneNumberRegex = RegexValidator(regex=r'^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$')
-    phone_number = models.CharField(validators=[phoneNumberRegex], max_length=12, unique=True)
-    password = models.CharField(unique=True, null=True)
-
-    def __str__(self):
-        return f'{self.first_name} {self.last_name}'
+from django.contrib.auth.models import User
 
 
 class Basket(models.Model):
-    user_id = models.ForeignKey('Customer', on_delete=models.PROTECT)
+    user_id = models.ForeignKey(User, on_delete=models.PROTECT)
     product_id = models.ForeignKey('Product', on_delete=models.PROTECT)
     quantity = models.IntegerField(default=1)
 
