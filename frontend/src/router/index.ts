@@ -24,6 +24,17 @@ const routes = [
       },
     ],
   },
+  {
+    path: '/product/:id',
+    component: () => import('@/layouts/Default.vue'),
+    children: [
+      {
+        path: '',
+        name: 'ProductPage',
+        component: () => import('@/views/ProductPage.vue'),
+      },
+    ],
+  },
 ]
 
 const router = createRouter({
