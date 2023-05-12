@@ -46,6 +46,15 @@ class BrandAPIView(generics.ListAPIView):
 class AddToBasketAPIView(generics.CreateAPIView):
     serializer_class = fs.BasketSerializer
 
+    def perform_create(self, serializer):
+        data = serializer.validated_data
+        product = Product.objects.get(id=data['product_id'].id)
+        product.quantity -= int(data['quantity'])
+
+        if product.quantity >= 0:
+            product.save()
+            serializer.save()
+
 
 class BasketByIdAPIView(generics.ListAPIView):
     serializer_class = fs.BasketSerializer
@@ -55,5 +64,5 @@ class BasketByIdAPIView(generics.ListAPIView):
         return Basket.objects.filter(user_id=user_id)
 
 
-class AddOrderAPIView(generics.CreateAPIView):
+class NewOrderAPIView(generics.CreateAPIView):
     serializer_class = fs.OrderSerializer
