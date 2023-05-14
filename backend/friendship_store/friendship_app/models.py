@@ -53,5 +53,9 @@ class Brand(models.Model):
 
 
 class Image(models.Model):
-    image = models.ImageField()
+    image = models.URLField()
     product_id = models.ForeignKey('Product', on_delete=models.PROTECT)
+
+
+class Album(models.Model):
+    image = models.URLField()

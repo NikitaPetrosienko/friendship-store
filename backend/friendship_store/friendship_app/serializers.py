@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from friendship_app.models import Product, Category, Brand, Basket, Order
+import friendship_app.models as model
 
 from djoser.serializers import UserCreateSerializer
 
@@ -22,29 +22,41 @@ class CustomUserCreateSerializer(UserCreateSerializer):
 
 class ProductSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Product
+        model = model.Product
         fields = '__all__'
 
 
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
-        model = Category
+        model = model.Category
         fields = '__all__'
 
 
 class BrandSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Brand
+        model = model.Brand
         fields = '__all__'
 
 
 class BasketSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Basket
+        model = model.Basket
         fields = '__all__'
+
+
+class AlbumSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = model.Album
+        fields = '__all__'
+
+
+class ImageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = model.Album
+        fields = ('image',)
 
 
 class OrderSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Order
+        model = model.Order
         fields = '__all__'
