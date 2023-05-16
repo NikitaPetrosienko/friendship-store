@@ -24,13 +24,19 @@
   flex-direction: column;
   align-items: space-between;
   padding-left: 20px;
+  @include for-size(tablet) { // ToDo
+    padding-left: 0;
+  }
 }
 .header-panel__phone {
-  flex: 1 1 auto;
   display: block;
+  flex: 1 1 auto;
   @include font(18px, 400, 22px);
   text-decoration: none;
   color: $white;
+  @include for-size(laptop-s) { // ToDo
+    display: none;
+  }
 }
 .header-panel__phone::before {
   content: url('../../assets/img/phone.svg');
@@ -52,15 +58,27 @@
   width: 39px;
   height: 40px;
   background-image: url('../../assets/img/basket.svg');
+  @include for-size(tablet) {
+    width: 17px;
+    height: 15px;
+  }
 }
 .header-panel__link_favourites {
   width: 52px;
   height: 44px;
   background-image: url('../../assets/img/favourites.svg');
+  @include for-size(tablet) {
+    width: 17px;
+    height: 16px;
+  }
 }
 .header-panel__link_login {
   width: 54px;
   height: 46px;
-  background-image: url('../../assets/img/login.svg');
+  background-image: url('../../assets/img/login.svg');  
+  @include for-size(tablet) {
+    width: 19px;
+    height: 18px;
+  }
 }
 </style>
