@@ -42,7 +42,14 @@ const brands = ref([
   width: calc(100% / 3);
   padding: 0 38px;
   @include for-size(tablet) {
+    width: 100%;
     padding: 0 24px;
+  }
+}
+
+.home-page-brands__column+.home-page-brands__column {
+  @include for-size(tablet) {
+    margin-top: 40px;
   }
 }
 .home-page-brands__card {
