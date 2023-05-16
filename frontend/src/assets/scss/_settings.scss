@@ -17,6 +17,7 @@ html {
 }
 
 body {
+    min-width: 320px;
     font-family: 'Righteous', sans-serif;
     font-size: 18px;
     font-weight: 400;
@@ -48,4 +49,9 @@ img {
     max-width: 1312px;
     padding: 0 48px;
     margin: 0 auto;
+}
+@media (max-width: 560px) {
+    .container {
+        padding: 0 24px;
+    }
 }

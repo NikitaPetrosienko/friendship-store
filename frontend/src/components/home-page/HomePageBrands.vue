@@ -24,6 +24,8 @@ const brands = ref([
 </template>
 
 <style lang="scss" scoped>
+@import '@/assets/scss/_variables.scss';
+@import '@/assets/scss/_mixins.scss';
 .home-page-brands {
   padding-top: 40px;
 }
@@ -32,10 +34,16 @@ const brands = ref([
   justify-content: flex-start;
   flex-wrap: wrap;
   margin: 0 -38px;
+  @include for-size(tablet) {
+    margin: 0 -24px;
+  }
 }
 .home-page-brands__column {
   width: calc(100% / 3);
   padding: 0 38px;
+  @include for-size(tablet) {
+    padding: 0 24px;
+  }
 }
 .home-page-brands__card {
 }
