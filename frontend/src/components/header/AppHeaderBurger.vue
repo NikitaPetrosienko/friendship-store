@@ -41,6 +41,7 @@ const toggleBurgerMenu = () => {
 .header-burger {
   display: none;
   background-color: $blue;
+  z-index: 50;
 
   @include for-size(laptop-s) {
     display: block;
