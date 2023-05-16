@@ -47,6 +47,7 @@ class Category(models.Model):
 
 class Brand(models.Model):
     brand_name = models.CharField(max_length=50)
+    image = models.URLField()
 
     def __str__(self):
         return self.brand_name
@@ -59,3 +60,21 @@ class Image(models.Model):
 
 class Album(models.Model):
     image = models.URLField()
+
+
+class News(models):
+    title = models.CharField()
+    main_image = models.URLField()
+    date = models.DateField()
+    body = models.TextField()
+
+    def __str__(self):
+        return self.title
+
+
+class Review(models.Model):
+    rating = models.IntegerField()
+    body = models.TextField()
+    user_id = models.ForeignKey('User', on_delete=models.PROTECT)
+
+
