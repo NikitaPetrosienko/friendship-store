@@ -1,11 +1,13 @@
 from django.contrib import admin
 
-from friendship_app.models import Product, Order, Category, Brand, Image, Basket, Album
+import friendship_app.models as model
 
-admin.site.register(Product)
-admin.site.register(Category)
-admin.site.register(Brand)
-admin.site.register(Image)
-admin.site.register(Order)
-admin.site.register(Basket)
-admin.site.register(Album)
+admin.site.register(model.Product)
+admin.site.register(model.Category)
+admin.site.register(model.Brand)
+admin.site.register(model.Image)
+admin.site.register(model.Order)
+admin.site.register(model.Basket)
+admin.site.register(model.Album)
+admin.site.register(model.News)
+admin.site.register(model.Review)

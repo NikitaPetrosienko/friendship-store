@@ -60,3 +60,15 @@ class OrderSerializer(serializers.ModelSerializer):
     class Meta:
         model = model.Order
         fields = '__all__'
+
+
+class NewsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = model.News
+        fields = '__all__'
+
+
+class ReviewSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = model.Review
+        fields = '__all__'

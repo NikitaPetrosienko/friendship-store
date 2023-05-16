@@ -79,3 +79,20 @@ class BasketByIdAPIView(generics.ListAPIView):
 
 class NewOrderAPIView(generics.CreateAPIView):
     serializer_class = fs.OrderSerializer
+
+
+class NewsAPIView(generics.ListAPIView):
+    queryset = model.News.objects.all()
+    serializer_class = fs.NewsSerializer
+
+
+class ReviewAPIView(generics.ListAPIView):
+    serializer_class = fs.ReviewSerializer
+
+    def get_queryset(self):
+        product_id = self.kwargs['product_id']
+        return model.Review.objects.filter(product_id=product_id)
+
+
+class CreateReviewAPIView(generics.CreateAPIView):
+    serializer_class = fs.ReviewSerializer

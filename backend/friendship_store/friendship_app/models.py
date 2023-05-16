@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.core.validators import MinValueValidator, MaxValueValidator
 
 
 class Basket(models.Model):
@@ -33,6 +34,7 @@ class Product(models.Model):
     brand = models.ForeignKey('Brand', on_delete=models.PROTECT, blank=True)
     description = models.TextField()
     quantity = models.IntegerField(default=0)
+    main_image = models.URLField(default='http://example.com')
 
     def __str__(self):
         return f'{self.product_name} {self.model}'
@@ -47,7 +49,7 @@ class Category(models.Model):
 
 class Brand(models.Model):
     brand_name = models.CharField(max_length=50)
-    image = models.URLField()
+    image = models.URLField(default='http://example.com')
 
     def __str__(self):
         return self.brand_name
@@ -62,7 +64,7 @@ class Album(models.Model):
     image = models.URLField()
 
 
-class News(models):
+class News(models.Model):
     title = models.CharField()
     main_image = models.URLField()
     date = models.DateField()
@@ -73,8 +75,7 @@ class News(models):
 
 
 class Review(models.Model):
-    rating = models.IntegerField()
+    rating = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(5)])
     body = models.TextField()
-    user_id = models.ForeignKey('User', on_delete=models.PROTECT)
-
-
+    product_id = models.ForeignKey(Product, on_delete=models.PROTECT, default=0)
+    # user_id = models.ForeignKey(User, on_delete=models.PROTECT)
