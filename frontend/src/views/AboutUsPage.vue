@@ -30,6 +30,9 @@ import AppBreadcrumb from '@/components/breadcrumb/AppBreadcrumb.vue'
   @include font(48px, 400, 60px);
   color: $purple;
   margin: 8px 0 5px;
+  @include for-size(tablet) {
+    @include font(30px, 400, 1.2);
+  }
 }
 .aboutus-page__body {
   background-image: url(../assets/img/aboutus-bg1.png);
@@ -41,5 +44,8 @@ import AppBreadcrumb from '@/components/breadcrumb/AppBreadcrumb.vue'
 .aboutus-page__body p {
   @include font(36px, 500, 43px);
   color: $black;
+  @include for-size(tablet) {
+    @include font(16px, 400, 1.2);
+  }
 }
 </style>
