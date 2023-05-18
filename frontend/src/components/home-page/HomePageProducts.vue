@@ -1,11 +1,16 @@
 <script setup lang="ts">
 import { ref } from 'vue';
+import { useRoute } from 'vue-router';
 
 const brands = ref([
   { id: 1, imagePath: "src/assets/img/brands/img1.png" },
   { id: 2, imagePath: "src/assets/img/brands/img2.png" },
   { id: 3, imagePath: "src/assets/img/brands/img3.png" },
 ]);
+
+const route = useRoute();
+
+console.log('route: ', route.params);
  
 </script>
 

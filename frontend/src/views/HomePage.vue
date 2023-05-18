@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import HomePageSwiper from '@/components/home-page/HomePageSwiper.vue';
-import HomePageBrands from '@/components/home-page/HomePageBrands.vue';
+import HomePageProducts from '@/components/home-page/HomePageProducts.vue';
 </script>
 
 
@@ -9,7 +9,7 @@ import HomePageBrands from '@/components/home-page/HomePageBrands.vue';
 
     <HomePageSwiper />
 
-    <HomePageBrands />
+    <HomePageProducts />
 
   </div>
 </template>
