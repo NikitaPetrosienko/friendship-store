@@ -132,8 +132,9 @@ DJOSER = {
     'SERIALIZERS': {
         'user_create': 'friendship_app.serializers.CustomUserCreateSerializer',
     },
-
-    # 'PASSWORD_CHANGED_EMAIL_CONFIRMATION': True,
+    'ACTIVATION_URL': '#/activate/{uid}/{token}',
+    'SEND_ACTIVATION_EMAIL': True,
+    'SEND_CONFIRMATION_EMAIL': True
 }
 
 REST_FRAMEWORK = {
@@ -141,3 +142,7 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.TokenAuthentication',
     ]
 }
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'localhost'
+EMAIL_PORT = 1025

@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.core.validators import MinValueValidator, MaxValueValidator
+from django.core.validators import RegexValidator
 
 
 class Basket(models.Model):
@@ -14,6 +15,11 @@ class Basket(models.Model):
 
 class Order(models.Model):
     basket_id = models.ForeignKey('Basket', on_delete=models.PROTECT)
+    first_name = models.CharField(max_length=50, default='user')
+    last_name = models.CharField(max_length=50, default='user')
+    email = models.EmailField(default='user@mail.ru')
+    phoneNumberRegex = RegexValidator(regex=r"^\+?1?\d{8,15}$")
+    phoneNumber = models.CharField(validators=[phoneNumberRegex], max_length=16, unique=True, default='+79180000000')
     district = models.CharField(max_length=50)
     street = models.CharField(max_length=50)
     house = models.CharField(max_length=5)
