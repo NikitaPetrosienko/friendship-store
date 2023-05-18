@@ -76,18 +76,30 @@
 .product-page__title {
   @include font(48px, 400, 60px);
   margin: 0 0 18px;
+  @include for-size(tablet) {
+    @include font(25px, 400, 1.2);
+  }
 }
 .product-page__price {
   @include font(48px, 400, 60px);
   margin: 0 0 18px;
+  @include for-size(tablet) {
+    @include font(25px, 400, 1.2);
+  }
 }
 .product-page__status {
   @include font(36px, 400, 45px);
   margin: 0 0 18px;
+  @include for-size(tablet) {
+    @include font(20px, 400, 1.2);
+  }
 }
 .product-page__size {
   @include font(36px, 400, 45px);
   margin: 0 0 24px;
+  @include for-size(tablet) {
+    @include font(20px, 400, 1.2);
+  }
 }
 .product-page__buttons {
   display: flex;
@@ -104,6 +116,10 @@
   background-color: $blue;
   color: $white;
   padding: 8px 20px;
+  @include for-size(tablet) {
+    @include font(20px, 400, 1.2);
+    padding: 6px 15px;
+  }
 }
 .product-page__btn-cart {
   display: flex;
@@ -115,6 +131,10 @@
   color: $white;
   padding: 8px;
   border-left: 1px solid #FFFFFF;
+  @include for-size(tablet) {
+    @include font(20px, 400, 1.2);
+    padding: 6px 15px;
+  }
 }
 .product-page__tabs {
   display: flex;
@@ -135,5 +155,8 @@
 .product-page__text {
   @include font(24px, 900, 28px);
   margin: 0 0 45px;
+  @include for-size(tablet) {
+    @include font(20px, 400, 1.2);
+  }
 }
 </style>
