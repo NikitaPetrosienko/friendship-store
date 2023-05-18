@@ -1,6 +1,44 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 
+const navigationList = ref([
+  {
+    id: 1,
+    title: 'Бренды',
+    url: '/brands'
+  },
+  {
+    id: 2,
+    title: 'Скейт',
+    url: '/skateboards'
+  },
+  {
+    id: 3,
+    title: 'Обувь',
+    url: '/shoes'
+  },
+  {
+    id: 4,
+    title: 'Одежда',
+    url: '/clothes'
+  },
+  {
+    id: 5,
+    title: 'Прочее',
+    url: '/others'
+  },
+  {
+    id: 6,
+    title: 'О нас',
+    url: '/aboutus'
+  },
+  {
+    id: 7,
+    title: 'Акции',
+    url: '/discounts'
+  }
+]);
+
 const isShowBurgerMenu = ref(false);
 
 const toggleBurgerMenu = () => {
@@ -10,24 +48,24 @@ const toggleBurgerMenu = () => {
 </script>
 
 <template>
-  <div class="header-burger" @click="toggleBurgerMenu">
+  <div 
+    class="header-burger"
+    :class="isShowBurgerMenu ? 'header-burger_active' : ''"
+    @click="toggleBurgerMenu">
     <span></span>
     <nav 
       v-if="isShowBurgerMenu"
       class="header-burger__menu"
     >
       <ul class="header-burger__list">
-        <li class="header-burger__item">
-          <a class="header-burger__link" href="">Бренды</a>
-        </li>
-        <li class="header-burger__item">
-          <a class="header-burger__link" href="">Скейт</a>
-        </li>
-        <li class="header-burger__item">
-          <a class="header-burger__link" href="">Обувь</a>
-        </li>
-        <li class="header-burger__item">
-          <a class="header-burger__link" href="">Одежда</a>
+        <li 
+          class="header-burger__item" 
+          v-for="link in navigationList" :key="link.id"
+        >
+          <router-link
+            class="header-burger__link"
+            :to="link.url"
+          >{{ link.title }}</router-link>
         </li>
       </ul>
     </nav>
@@ -77,6 +115,20 @@ const toggleBurgerMenu = () => {
   top: 8px;
   background-color: $white;
 }
+
+  /* анимация крестика */
+  .header-burger.header-burger_active span{
+    transform: scale(0) translate(0px, -50%);
+  }
+  .header-burger.header-burger_active::before {
+    top: 50%;
+    transform: rotate(-45deg) translate(0px, -50%);
+  }
+  .header-burger.header-burger_active::after {
+    bottom: 50%;
+    transform: rotate(45deg) translate(0px, 50%);
+  }
+  /* анимация крестика */
 
 .header-burger__menu {
   position: absolute;
