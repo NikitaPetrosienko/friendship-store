@@ -9,7 +9,10 @@
       href="tel: 8 (926) 473-47-68"
     >8 (926) 473-47-68</a>
     <div class="header-panel__links">
-      <a href="#" class="header-panel__link header-panel__link_basket">Корзина</a>
+      <router-link
+        class="header-panel__link header-panel__link_basket"
+        to="/cart"
+      >Корзина</router-link>
       <a href="#" class="header-panel__link header-panel__link_favourites">Избранное</a>
       <a href="#" class="header-panel__link header-panel__link_login">Войти</a>
     </div>
