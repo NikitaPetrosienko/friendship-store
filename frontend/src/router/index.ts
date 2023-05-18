@@ -35,6 +35,17 @@ const routes = [
       },
     ],
   },
+  {
+    path: '/cart',
+    component: () => import('@/layouts/Default.vue'),
+    children: [
+      {
+        path: '',
+        name: 'CartPage',
+        component: () => import('@/views/CartPage.vue'),
+      },
+    ],
+  },
 ]
 
 const router = createRouter({
