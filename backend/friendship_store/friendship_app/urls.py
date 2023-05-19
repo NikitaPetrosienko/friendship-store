@@ -12,8 +12,6 @@ urlpatterns = [
     path('albums/', views.AlbumAPIView.as_view()),
     path('news/', views.NewsAPIView.as_view()),
     path('review/', views.CreateReviewAPIView.as_view()),
-    path('review/<int:product_id>', views.ReviewAPIView.as_view()),
-    path('image/<int:product_id>', views.ImageAPIView.as_view()),
     path('product_by_id/<int:product_id>/', views.ProductByIdAPIView.as_view()),
     path('product_by_category/<int:category_id>/', views.ProductByCategoryAPIView.as_view()),
     path('product_by_brand/<int:brand_id>/', views.ProductByBrandAPIView.as_view()),

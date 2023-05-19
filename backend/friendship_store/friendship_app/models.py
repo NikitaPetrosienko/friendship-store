@@ -81,7 +81,11 @@ class News(models.Model):
 
 
 class Review(models.Model):
-    rating = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(5)])
+    # rating = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(5)])
+    name_user = models.CharField(max_length=50, default='user')
     body = models.TextField()
     product_id = models.ForeignKey(Product, on_delete=models.PROTECT, default=0)
-    # user_id = models.ForeignKey(User, on_delete=models.PROTECT)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'{self.name_user} {self.product_id}'
