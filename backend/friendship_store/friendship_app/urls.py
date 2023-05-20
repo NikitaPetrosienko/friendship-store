@@ -3,7 +3,6 @@ import friendship_app.views as views
 from friendship_app.yasg import urlpatterns as doc_urls
 
 urlpatterns = [
-    path('auth/', include('djoser.urls')),
     path('products/', views.ProductAPIView.as_view()),
     path('brands/', views.BrandAPIView.as_view()),
     path('categories/', views.CategoryAPIView.as_view()),
