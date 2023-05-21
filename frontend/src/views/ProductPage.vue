@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import CreateCommentForm from '@/components/product-page/CreateCommentForm.vue';
+import AppComment from '@/components/product-page/AppComment.vue';
 
 </script>
 
@@ -23,20 +25,37 @@
             <button class="product-page__btn" type="button">Купить в один клик</button>
           </div>
 
-          <div class="product-page__tabs">
-            <button class="product-page__tab product-page__tab_active" type="button">Описание</button>
-            <button class="product-page__tab" type="button">Доставка</button>
-            <button class="product-page__tab" type="button">Оплата</button>
-            <button class="product-page__tab" type="button">Отзывы</button>
+          <div class="product-page__desc">
+            <p class="product-page__text product-page__text_title">Описание</p>
+            <p class="product-page__text">
+              Поставка 2021 года.<br>
+              - Бренд: Footwork.<br>
+              - Конструкция: Progress.<br>
+              - Размеры: 8 x 31.5 / 8.25 x 31.75<br>
+              - Конкейв: Глубокий.<br>
+              - Стикерпак из 15 наклеек в подарок.
+            </p>
           </div>
-          <p class="product-page__text">
-            Поставка 2021 года.<br>
-            - Бренд: Footwork.<br>
-            - Конструкция: Progress.<br>
-            - Размеры: 8 x 31.5 / 8.25 x 31.75<br>
-            - Конкейв: Глубокий.<br>
-            - Стикерпак из 15 наклеек в подарок.
-          </p>
+
+        </div>
+      </div>
+
+      <div class="product-page__row">
+        <div class="product-page__column">
+          <CreateCommentForm />
+        </div>
+      </div>
+
+      <div class="product-page__row">
+        <div class="product-page__column">
+          <div class="product-page__comments" v-if="true">
+            <h3 class="product-page__text">Комментарии</h3>
+            <AppComment
+              v-for="comment in 4"
+              :key="comment"
+            />
+          </div>
+          <div class="product-page__comments-placeholder" v-else>Комментариев на данный момент нет</div>
         </div>
       </div>
     </div>
@@ -47,7 +66,7 @@
 @import '@/assets/scss/_variables.scss';
 @import '@/assets/scss/_mixins.scss';
 .product-page {
-  padding-top: 54px;
+  padding: 40px 0;
 }
 .product-page__row {
   display: flex;
@@ -57,6 +76,7 @@
   }
 }
 .product-page__column {
+  width: 100%;
   padding: 0 18px;
 }
 .product-page__column_picture {
@@ -136,27 +156,21 @@
     padding: 6px 15px;
   }
 }
-.product-page__tabs {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-  margin-bottom: 40px;
-}
-.product-page__tab {
-  @include button-reset;
-}
-.product-page__tab {
-  @include font(24px, 900, 28px);
-  padding: 10px 5px;
-}
-.product-page__tab_active {
-  border-bottom: 2px solid $blue;
-}
+
 .product-page__text {
   @include font(24px, 900, 28px);
   margin: 0 0 45px;
   @include for-size(tablet) {
     @include font(20px, 400, 1.2);
   }
+}
+.product-page__text_title {
+  display: inline-block;
+  padding-bottom: 10px;
+  border-bottom: 2px solid $blue;
+}
+
+.product-page__comments-placeholder {
+  text-align: center;
 }
 </style>
