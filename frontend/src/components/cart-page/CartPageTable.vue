@@ -36,9 +36,9 @@ const cartList = ref([
           <div class="cartpage-table__">{{ item.title }}</div>
         </td>
         <td class="cartpage-table__td cartpage-table__td-counters">
-          <span class="cartpage-table__btn cartpage-table__btn_decrease"></span>
+          <button class="cartpage-table__control cartpage-table__control_decrease"></button>
           <span class="cartpage-table__product-count">{{ item.count }}</span>
-          <span class="cartpage-table__btn cartpage-table__btn_increase"></span>
+          <button class="cartpage-table__control cartpage-table__control_increase"></button>
         </td>
         <td class="cartpage-table__td">
           <div class="cartpage-table__product-price">{{ item.totalPrice }}р</div>
@@ -46,15 +46,15 @@ const cartList = ref([
       </tr>
 
       <tr>
-        <td>Доставка</td>
-        <td></td>
-        <td>300.00р</td>
+        <td class="cartpage-table__td cartpage-table__delivery-info">Доставка</td>
+        <td class="cartpage-table__td cartpage-table__delivery-info"></td>
+        <td class="cartpage-table__td cartpage-table__delivery-info">300.00р</td>
       </tr>
 
       <tr>
-        <td colspan="2">Сумма заказа: 2930.00р</td>
-        <td>
-          <router-link to="/" class="cartpage-table__btn">Далее</router-link>
+        <td class="cartpage-table__td cartpage-table__total-price" colspan="2">Сумма заказа: 2930.00р</td>
+        <td class="cartpage-table__td">
+          <router-link class="cartpage-table__btn" to="/form">Далее</router-link>
         </td>
       </tr>
     </tbody>
@@ -66,6 +66,7 @@ const cartList = ref([
 @import '@/assets/scss/_mixins.scss';
 .cartpage-table {
   width: 100%;
+  border-collapse: collapse;
   text-align: center;
 }
 .cartpage-table__th {
@@ -76,7 +77,7 @@ const cartList = ref([
   }
 }
 .cartpage-table__td {
-  // border: 1px solid grey;
+  border: 1px solid grey;
 }
 
 .cartpage-table__td:first-child {
@@ -89,27 +90,26 @@ const cartList = ref([
 
 }
 .cartpage-table__td-counters {
-  vertical-align: middle;
+  vertical-align: middle; // ToDO
 }
-.cartpage-table__btn {
-  width: 30px;
-  height: 30px;
-  padding: 10px;
-  border-radius: 50%;
-  cursor: pointer;
+.cartpage-table__control {
+  @include button-reset;
+}
+.cartpage-table__control {
+  display: inline-block;
   @include font(36px, 400, 1.2);
   @include for-size(tablet) {
     @include font(20px, 900, 1.2);
   }
 }
 
-.cartpage-table__btn:hover {
+.cartpage-table__control:hover {
   background-color: rgba(128, 128, 128, 0.15); //ToDo
 }
-.cartpage-table__btn_decrease::before {
+.cartpage-table__control_decrease::before {
   content: '-';
 }
-.cartpage-table__btn_increase::before {
+.cartpage-table__control_increase::before {
   content: '+';
 }
 .cartpage-table__product-count {
@@ -124,5 +124,34 @@ const cartList = ref([
   @include for-size(tablet) {
     @include font(20px, 900, 1.2);
   }
+}
+.cartpage-table__delivery-info {
+  @include font(32px, 400, 1.2);
+  @include for-size(tablet) {
+    @include font(16px, 900, 1.2);
+  }
+}
+.cartpage-table__total-price {
+  @include font(32px, 400, 1.2);
+  padding: 15px;
+  @include for-size(tablet) {
+    @include font(16px, 900, 1.2);
+  }
+}
+.cartpage-table__btn {
+  @include font(32px, 400, 1.2);
+  display: inline-block;
+  background-color: $blue;
+  color: $white;
+  text-decoration: none;
+  padding: 10px 25px;
+  @include for-size(tablet) {
+    @include font(16px, 900, 1.2);
+    padding: 8px 16px;
+  }
+}
+.cartpage-table__btn::after {
+  content: '>>';
+  margin-left: 5px;
 }
 </style>
