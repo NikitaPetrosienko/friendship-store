@@ -27,7 +27,7 @@ const cartList = ref([
         v-for="item in cartList"
         :key="item.id"
       >
-        <td class="cartpage-table__td">
+        <td class="cartpage-table__td cartpage-table__td_main-info">
           <img 
             class="cartpage-table__img"
             src="../../assets/img/skateboards/img1.png" 
@@ -35,12 +35,12 @@ const cartList = ref([
           >
           <div class="cartpage-table__">{{ item.title }}</div>
         </td>
-        <td class="cartpage-table__td cartpage-table__td-counters">
+        <td class="cartpage-table__td cartpage-table__td-counters cartpage-table__td_main-info">
           <button class="cartpage-table__control cartpage-table__control_decrease"></button>
           <span class="cartpage-table__product-count">{{ item.count }}</span>
           <button class="cartpage-table__control cartpage-table__control_increase"></button>
         </td>
-        <td class="cartpage-table__td">
+        <td class="cartpage-table__td cartpage-table__td_main-info">
           <div class="cartpage-table__product-price">{{ item.totalPrice }}р</div>
         </td>
       </tr>
@@ -52,8 +52,8 @@ const cartList = ref([
       </tr>
 
       <tr>
-        <td class="cartpage-table__td cartpage-table__total-price" colspan="2">Сумма заказа: 2930.00р</td>
-        <td class="cartpage-table__td">
+        <td class="cartpage-table__td cartpage-table__total-price cartpage-table__td_extra-info" colspan="2">Сумма заказа: 2930.00р</td>
+        <td class="cartpage-table__td cartpage-table__td_extra-info">
           <router-link class="cartpage-table__btn" to="/form">Далее</router-link>
         </td>
       </tr>
@@ -77,14 +77,19 @@ const cartList = ref([
   }
 }
 .cartpage-table__td {
-  border: 1px solid grey;
+  // border: 1px solid grey;
 }
 
-.cartpage-table__td:first-child {
-  width: calc(100% / 10) * 3;
+.cartpage-table__td {
+  width: calc(100% / 3);
 }
-.cartpage-table__td:last-child {
-  width: calc(100% / 10) * 4;
+
+.cartpage-table__td_main-info {
+  padding-bottom: 30px;
+}
+
+.cartpage-table__td_extra-info {
+  padding-top: 30px;
 }
 .cartpage-table__img {
 
@@ -127,6 +132,9 @@ const cartList = ref([
 }
 .cartpage-table__delivery-info {
   @include font(32px, 400, 1.2);
+  padding: 30px 0;
+  border-top: 1px solid $blue;
+  border-bottom: 1px solid $blue;
   @include for-size(tablet) {
     @include font(16px, 900, 1.2);
   }
