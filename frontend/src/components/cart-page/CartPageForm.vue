@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import vInput from '@/components/v-input/v-input.vue';
-import vRadiobutton from '@/components/v-radiobutton/v-radiobutton.vue';
+import vInput from '@/components/input/v-input.vue';
+import vRadiobutton from '@/components/radiobutton/v-radiobutton.vue';
 
 import { computed, ref } from 'vue';
 
@@ -204,7 +204,6 @@ const selectedPayment = ref('');
   background-color: $blue;
   color: $white;
   text-decoration: none;
-  text-align: right;
   padding: 10px 25px;
   @include for-size(tablet) {
     @include font(16px, 900, 1.2);
