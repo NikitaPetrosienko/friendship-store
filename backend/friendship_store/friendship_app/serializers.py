@@ -4,6 +4,12 @@ import friendship_app.models as model
 from djoser.serializers import UserCreateSerializer
 
 
+class ReviewSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = model.Review
+        fields = '__all__'
+
+
 class CustomUserCreateSerializer(UserCreateSerializer):
     class Meta(UserCreateSerializer.Meta):
         fields = ('first_name', 'last_name', 'email', 'password')
@@ -65,10 +71,4 @@ class OrderSerializer(serializers.ModelSerializer):
 class NewsSerializer(serializers.ModelSerializer):
     class Meta:
         model = model.News
-        fields = '__all__'
-
-
-class ReviewSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = model.Review
         fields = '__all__'

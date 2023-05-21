@@ -1,5 +1,5 @@
 from rest_framework import generics
-
+from rest_framework.views import APIView, Response
 import friendship_app.models as model
 import friendship_app.serializers as fs
 
@@ -9,12 +9,17 @@ class ProductAPIView(generics.ListAPIView):
     serializer_class = fs.ProductSerializer
 
 
-class ProductByIdAPIView(generics.ListAPIView):
-    serializer_class = fs.ProductSerializer
-
-    def get_queryset(self):
-        product_id = self.kwargs['product_id']
-        return model.Product.objects.filter(id=product_id)
+class ProductByIdAPIView(APIView):
+    def get(self, request, product_id):
+        product = model.Product.objects.get(id=product_id)
+        reviews = model.Review.objects.filter(product_id=product_id)
+        images = model.Image.objects.filter(product_id=product_id)
+        response_data = {
+            'product': fs.ProductSerializer(product).data,
+            'review': [fs.ReviewSerializer(review).data for review in reviews],
+            'images': [fs.ImageSerializer(image).data for image in images],
+        }
+        return Response(response_data)
 
 
 class ProductByCategoryAPIView(generics.ListAPIView):
@@ -48,14 +53,6 @@ class AlbumAPIView(generics.ListAPIView):
     serializer_class = fs.AlbumSerializer
 
 
-class ImageAPIView(generics.ListAPIView):
-    serializer_class = fs.ImageSerializer
-
-    def get_queryset(self):
-        product_id = self.kwargs['product_id']
-        return model.Image.objects.filter(product_id=product_id)
-
-
 class AddToBasketAPIView(generics.CreateAPIView):
     serializer_class = fs.BasketSerializer
 
@@ -84,14 +81,6 @@ class NewOrderAPIView(generics.CreateAPIView):
 class NewsAPIView(generics.ListAPIView):
     queryset = model.News.objects.all()
     serializer_class = fs.NewsSerializer
-
-
-class ReviewAPIView(generics.ListAPIView):
-    serializer_class = fs.ReviewSerializer
-
-    def get_queryset(self):
-        product_id = self.kwargs['product_id']
-        return model.Review.objects.filter(product_id=product_id)
 
 
 class CreateReviewAPIView(generics.CreateAPIView):
