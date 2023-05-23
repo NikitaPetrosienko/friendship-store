@@ -7,6 +7,7 @@ interface IPropsPicture {
   imageUrl?: string,
   classContainer: string,
   classImage?: string,
+  altText: string
 }
 
 const props = defineProps<IPropsPicture>();
@@ -18,7 +19,7 @@ const { imageUrl, classContainer, classImage } = toRefs(props);
 <template>
   <div class="picture">
     <picture class="picture__container" :class="classContainer">
-      <img class="picture__img" :class="classImage" :src="`${imageUrl}`" alt="img">
+      <img class="picture__img" :class="classImage" :src="`${imageUrl}`" :alt="altText">
     </picture>
   </div>
 </template>
