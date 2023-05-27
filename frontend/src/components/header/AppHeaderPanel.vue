@@ -42,7 +42,7 @@
   }
 }
 .header-panel__phone::before {
-  content: url('../../assets/img/phone.svg');
+  content: url('../../assets/img/svg/phone.svg');
   margin-right: 16px;
 }
 .header-panel__links {
@@ -60,7 +60,7 @@
 .header-panel__link_basket {
   width: 39px;
   height: 40px;
-  background-image: url('../../assets/img/basket.svg');
+  background-image: url('../../assets/img/svg/basket.svg');
   @include for-size(tablet) {
     width: 17px;
     height: 15px;
@@ -69,7 +69,7 @@
 .header-panel__link_favourites {
   width: 52px;
   height: 44px;
-  background-image: url('../../assets/img/favourites.svg');
+  background-image: url('../../assets/img/svg/favourites.svg');
   @include for-size(tablet) {
     width: 17px;
     height: 16px;
@@ -78,7 +78,7 @@
 .header-panel__link_login {
   width: 54px;
   height: 46px;
-  background-image: url('../../assets/img/login.svg');  
+  background-image: url('../../assets/img/svg/login.svg');  
   @include for-size(tablet) {
     width: 19px;
     height: 18px;
