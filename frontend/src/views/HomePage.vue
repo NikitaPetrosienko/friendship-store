@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import HomePageSwiper from '@/components/home-page/HomePageSwiper.vue';
-import HomePageProducts from '@/components/home-page/HomePageProducts.vue';
+
 </script>
 
 
@@ -9,7 +9,7 @@ import HomePageProducts from '@/components/home-page/HomePageProducts.vue';
 
     <HomePageSwiper />
 
-    <HomePageProducts />
+    <router-view />
 
   </div>
 </template>
