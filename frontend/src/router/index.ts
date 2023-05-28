@@ -10,6 +10,18 @@ const routes = [
         path: '',
         name: 'HomePage',
         component: () => import('@/views/HomePage.vue'),
+        children: [
+          {
+            path: '',
+            name: 'HomePageBrands',
+            component: () => import('@/components/home-page/HomePageBrands.vue'),
+          },
+          {
+            path: '/products/:category?:brand?',
+            name: 'HomePageProducts',
+            component: () => import('@/components/home-page/HomePageProducts.vue'),
+          },
+        ],
       },
     ],
   },
@@ -43,6 +55,23 @@ const routes = [
         path: '',
         name: 'CartPage',
         component: () => import('@/views/CartPage.vue'),
+        children: [
+          {
+            path: '',
+            name: 'CartPageTable',
+            component: () => import('@/components/cart-page/CartPageTable.vue'),
+          },
+          {
+            path: '/form',
+            name: 'CartPageForm',
+            component: () => import('@/components/cart-page/CartPageForm.vue'),
+          },
+          {
+            path: '/make-order',
+            name: 'CartPageMakeOrder',
+            component: () => import('@/components/cart-page/CartPageMakeOrder.vue'),
+          },
+        ],
       },
     ],
   },
@@ -51,6 +80,9 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes,
+  scrollBehavior(to, from, savedPosition) {
+    return { top: 0 };
+  },
 })
 
 export default router
