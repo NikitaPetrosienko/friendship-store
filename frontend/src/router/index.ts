@@ -37,6 +37,17 @@ const routes = [
     ],
   },
   {
+    path: '/albums',
+    component: () => import('@/layouts/Default.vue'),
+    children: [
+      {
+        path: '',
+        name: 'AlbumsPage',
+        component: () => import('@/views/AlbumsPage.vue'),
+      },
+    ],
+  },
+  {
     path: '/product/:id',
     component: () => import('@/layouts/Default.vue'),
     children: [
