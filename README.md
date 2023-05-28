@@ -12,3 +12,8 @@
 - Axios
 - SCSS
 ## Backend
+- Django rest framework
+- Celery
+- Mailhog
+- Redis
+- Oauth2
