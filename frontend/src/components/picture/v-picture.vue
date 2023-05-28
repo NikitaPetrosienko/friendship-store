@@ -54,4 +54,10 @@ const { imageUrl, classContainer, classImage } = toRefs(props);
   padding-top: calc(243 / 298 * 100%);
 }
 .product__img {}
+
+.albums-page__picture {
+  padding-top: calc(328 / 556 * 100%);
+}
+
+.albums-page__img {}
 </style>
