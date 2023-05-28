@@ -26,7 +26,7 @@ const props = defineProps({
     </div>
 
     <div class="news__footer">
-      <router-link to="/" class="news__link">
+      <router-link :to="`/news/${1}`" class="news__link">
         <div class="news__title">17 Окт. 2021</div>
         <div class="news__title">{{ item.title }}</div>
       </router-link>
