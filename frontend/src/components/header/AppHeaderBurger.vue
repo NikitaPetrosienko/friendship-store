@@ -5,38 +5,33 @@ const navigationList = ref([
   {
     id: 1,
     title: 'Бренды',
-    url: '/brands'
+    url: '/'
   },
   {
     id: 2,
     title: 'Скейт',
-    url: '/skateboards'
+    url: '/products/?category=skateboards'
   },
   {
     id: 3,
     title: 'Обувь',
-    url: '/shoes'
+    url: '/products/?category=shoes'
   },
   {
     id: 4,
     title: 'Одежда',
-    url: '/clothes'
+    url: '/products/?category=clothes'
   },
   {
     id: 5,
-    title: 'Прочее',
-    url: '/others'
+    title: 'Фотоальбом',
+    url: '/albums'
   },
   {
     id: 6,
     title: 'О нас',
     url: '/aboutus'
   },
-  {
-    id: 7,
-    title: 'Акции',
-    url: '/discounts'
-  }
 ]);
 
 const isShowBurgerMenu = ref(false);

@@ -5,38 +5,33 @@ const navigationList = ref([
   {
     id: 1,
     title: 'Бренды',
-    url: '/brands'
+    url: '/'
   },
   {
     id: 2,
     title: 'Скейт',
-    url: '/skateboards'
+    url: '/products/?category=skateboards'
   },
   {
     id: 3,
     title: 'Обувь',
-    url: '/shoes'
+    url: '/products/?category=shoes'
   },
   {
     id: 4,
     title: 'Одежда',
-    url: '/clothes'
+    url: '/products/?category=clothes'
   },
   {
     id: 5,
-    title: 'Прочее',
-    url: '/others'
+    title: 'Фотоальбом',
+    url: '/albums'
   },
   {
     id: 6,
     title: 'О нас',
     url: '/aboutus'
   },
-  {
-    id: 7,
-    title: 'Акции',
-    url: '/discounts'
-  }
 ]);
 </script>
 
@@ -100,7 +95,7 @@ const navigationList = ref([
   width: 102px;
   height: 63px;
   background-color: $gray;
-  background-image: url(../../assets/img/search.svg);
+  background-image: url(../../assets/img/svg/search.svg);
   background-position: center;
   background-repeat: no-repeat;
   background-size: 35px 35px;
