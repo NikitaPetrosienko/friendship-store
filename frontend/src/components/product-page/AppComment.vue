@@ -1,10 +1,8 @@
 <script setup lang="ts">
 
-import {
-  defineProps, PropType,
-} from 'vue';
-
-import { useRouter } from '@nuxtjs/composition-api'
+// import {
+//   defineProps, PropType,
+// } from 'vue';
 
 // interface IPropsComment {
 //   id: number,
