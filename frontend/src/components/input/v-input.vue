@@ -67,7 +67,6 @@ const updateValue = (e: any) => {
 @import '@/assets/scss/_mixins.scss';
 
 .form-input {
-  margin: 0 0 30px;
   position: relative;
 }
 
