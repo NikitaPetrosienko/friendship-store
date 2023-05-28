@@ -46,6 +46,7 @@ const submitForm = () => {
       </router-link>
       <form class="register-modal__form" action="#" @submit.prevent="submitForm">
         <v-input
+          class="register-modal__input"
           label="* Ваше email"
           name="email"
           type="email"
@@ -55,6 +56,7 @@ const submitForm = () => {
           :error="v.userEmail.$errors"
         />
         <v-input
+          class="register-modal__input"
           label="* Ваш пароль"
           name="password"
           type="password"
@@ -64,6 +66,7 @@ const submitForm = () => {
           :error="v.userPassword.$errors"
         />
         <v-input
+          class="register-modal__input"
           label="* Подтвердите пароль"
           name="password"
           type="password"
@@ -102,7 +105,7 @@ const submitForm = () => {
     max-width: 600px;
   }
   @include for-size(mobile) {
-      max-width: 300px;
+    max-width: 300px;
   }
 }
 .register-modal__link {
@@ -112,6 +115,7 @@ const submitForm = () => {
   color: $blue;
   text-decoration: none;
   padding: 10px 25px;
+  margin-bottom: 20px;
   @include for-size(tablet) {
     @include font(16px, 900, 1.2);
     padding: 8px 16px;
@@ -122,6 +126,10 @@ const submitForm = () => {
   display: flex;
   flex-direction: column;
   justify-content: center;
+}
+
+.register-modal__input + .register-modal__input {
+  margin-top: 30px;
 }
 .register-modal__img {
 }
@@ -136,7 +144,6 @@ const submitForm = () => {
   border: 2px solid $blue;
   border-radius: 8px;
   transition: all 0.2s ease;
-  margin-top: 10px;
   @include for-size(tablet) {
     @include font(16px, 400, 1.2);
     padding: 8px 16px;

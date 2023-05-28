@@ -41,6 +41,7 @@ const submitForm = () => {
       </router-link>
       <form class="login-modal__form" action="#" @submit.prevent="submitForm">
         <v-input
+          class="login-modal__input"
           label="* Ваше email"
           name="email"
           type="email"
@@ -50,6 +51,7 @@ const submitForm = () => {
           :error="v.userEmail.$errors"
         />
         <v-input
+          class="login-modal__input"
           label="* Ваш пароль"
           name="password"
           type="password"
@@ -98,6 +100,7 @@ const submitForm = () => {
   color: $blue;
   text-decoration: none;
   padding: 10px 25px;
+  margin-bottom: 20px;
   @include for-size(tablet) {
     @include font(16px, 900, 1.2);
     padding: 8px 16px;
@@ -108,6 +111,10 @@ const submitForm = () => {
   display: flex;
   flex-direction: column;
   justify-content: center;
+}
+
+.login-modal__input + .login-modal__input {
+  margin-top: 30px;
 }
 .login-modal__img {
 }
@@ -122,7 +129,6 @@ const submitForm = () => {
   border: 2px solid $blue;
   border-radius: 8px;
   transition: all 0.2s ease;
-  margin-top: 10px;
   @include for-size(tablet) {
     @include font(16px, 400, 1.2);
     padding: 8px 16px;

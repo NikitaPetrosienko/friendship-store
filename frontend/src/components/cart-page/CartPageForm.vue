@@ -66,6 +66,7 @@ const selectedPayment = ref('');
         <div class="cartpage-form__column">
           <div class="cartpage-form__title">Контактные данные</div>
           <v-input
+            class="cartpage-form__input"
             label="* Ваше имя"
             name="name"
             placeholder="Введите имя"
@@ -74,6 +75,7 @@ const selectedPayment = ref('');
             :error="v.userName.$errors"
           />
           <v-input
+            class="cartpage-form__input"
             label="* Ваше фамилия"
             name="surname"
             placeholder="Введите фамилия"
@@ -82,6 +84,7 @@ const selectedPayment = ref('');
             :error="v.userSurname.$errors"
           />
           <v-input
+            class="cartpage-form__input"
             label="* Ваш email"
             name="email"
             placeholder="Введите email"
@@ -90,6 +93,7 @@ const selectedPayment = ref('');
             :error="v.userEmail.$errors"
           />
           <v-input
+            class="cartpage-form__input"
             label="* Ваш телефон"
             name="phone"
             placeholder="Введите телефон"
@@ -101,6 +105,7 @@ const selectedPayment = ref('');
         <div class="cartpage-form__column">
           <div class="cartpage-form__title">Данные для доставки</div>
             <v-input
+              class="cartpage-form__input"
               label="* Город"
               name="name"
               placeholder="Укажите город"
@@ -109,6 +114,7 @@ const selectedPayment = ref('');
               :error="v.userCity.$errors"
             />
             <v-input
+              class="cartpage-form__input"
               label="* Улица"
               name="surname"
               placeholder="Укажите улицу"
@@ -117,6 +123,7 @@ const selectedPayment = ref('');
               :error="v.userStreet.$errors"
             />
             <v-input
+              class="cartpage-form__input"
               label="* Дом"
               name="email"
               placeholder="Укажите дом"
@@ -125,6 +132,7 @@ const selectedPayment = ref('');
               :error="v.userHouse.$errors"
             />
             <v-input
+              class="cartpage-form__input"
               label="Корпус"
               name="phone"
               placeholder="Укажите корпус"
@@ -183,6 +191,10 @@ const selectedPayment = ref('');
     width: 100%;
   }
 }
+
+.cartpage-form__input + .cartpage-form__input {
+  margin-top: 30px;
+}
 .cartpage-form__column_button {
   width: 100%;
   padding: 0 20px;
@@ -190,7 +202,7 @@ const selectedPayment = ref('');
 }
 .cartpage-form__title {
   @include font(36px, 400, 1.2);
-  margin-bottom: 30px;
+  margin: 30px 0;
   @include for-size(tablet) {
     @include font(20px, 800, 1.2);
   }

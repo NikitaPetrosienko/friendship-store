@@ -41,6 +41,7 @@ const handleClick = () => {
     <h3 class="createcomment-form__title">Добавить комментарий</h3>
 
     <v-input
+      class="createcomment-form__input"
       label="* Ваше имя"
       name="name"
       placeholder="Введите имя"
@@ -50,6 +51,7 @@ const handleClick = () => {
     />
 
     <v-textarea
+      class="createcomment-form__input"
       label="* Текст сообщения"
       name="text"
       placeholder="Введите текст комментария"
@@ -84,6 +86,10 @@ const handleClick = () => {
 .createcomment-form__title {
   @include font(25px, 700, 24px);
   margin: 0 0 50px;
+}
+
+.createcomment-form__input + .createcomment-form__input {
+  margin-top: 30px;
 }
 
 .createcomment-form__btn {
