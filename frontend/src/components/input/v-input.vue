@@ -20,11 +20,11 @@ const props = defineProps({
   },
   placeholder: {
     type: String,
-    required: true,
+    required: false,
   },
   label: {
     type: String,
-    required: true,
+    required: false,
   },
   width: {
     type: String,
@@ -50,7 +50,7 @@ const updateValue = (e: any) => {
       >
     <label :for="name" class="input-label">{{ label }}</label>
 
-    <TransitionGroup>
+    <TransitionGroup v-if="error">
       <div
         class="form-error"
         v-for="element of error"
