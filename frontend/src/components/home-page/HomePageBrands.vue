@@ -4,11 +4,11 @@ import HomePageNews from '@/components/home-page/HomePageNews.vue';
 
 import { ref } from 'vue';
 
-const brands = ref([
-  { id: 1, imagePath: "/src/assets/img/brands/img1.png", brandName: "shane" },
-  { id: 2, imagePath: "/src/assets/img/brands/img2.png", brandName: "volcom" },
-  { id: 3, imagePath: "/src/assets/img/brands/img3.png", brandName: "the-north-face" },
-]);
+import { useBrandsStore } from '@/store/brands/brands';
+
+const brandsStore = useBrandsStore();
+brandsStore.fetchBrands();
+
 </script>
 
 <template>
@@ -16,14 +16,14 @@ const brands = ref([
     <div class="container">
 
       <div class="home-page-brands__row">
-        <div class="home-page-brands__column" v-for="brand in brands" :key="brand.id">
+        <div class="home-page-brands__column" v-for="brand in brandsStore.brands" :key="brand.id">
           <div class="home-page-brands__card">
-            <router-link :to="{ name: 'HomePageProducts', params: { brand: `${brand.brandName}` }}" class="home-page-brands__link">
+            <router-link :to="{ name: 'HomePageProducts', params: { brand: `${brand.barnd_name}` }}" class="home-page-brands__link">
               <v-picture
                 :class-container="'home-page-brands__picture'"
                 :class-image="'home-page-brands__img'"
-                :image-url="brand.imagePath"
-                :alt-text="brand.brandName"
+                :image-url="brand.image"
+                :alt-text="brand.barnd_name"
               />
             </router-link>
           </div>
