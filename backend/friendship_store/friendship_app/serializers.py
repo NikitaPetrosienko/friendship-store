@@ -1,5 +1,6 @@
 from rest_framework import serializers
 import friendship_app.models as model
+from django.contrib.auth.models import User
 
 from djoser.serializers import UserCreateSerializer
 
@@ -15,6 +16,9 @@ class CustomUserCreateSerializer(UserCreateSerializer):
         fields = ('first_name', 'last_name', 'email', 'password')
 
     def create(self, validated_data):
+    #     if len(User.objects.filter(id=validated_data.get('email'))) != 0:
+    #         return
+    #
         user = self.Meta.model.objects.create_user(
             username=validated_data.get('email'),
             email=validated_data.get('email'),

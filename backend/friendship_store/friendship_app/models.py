@@ -40,6 +40,8 @@ class Product(models.Model):
     description = models.TextField()
     quantity = models.IntegerField(default=0)
     main_image = models.URLField(default='http://example.com')
+    size = models.CharField(max_length=100, default='0')
+
 
     def __str__(self):
         return f'{self.product_name} {self.model}'
