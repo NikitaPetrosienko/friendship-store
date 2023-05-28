@@ -1,5 +1,5 @@
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, ref } from 'vue';
 
 // Import Swiper Vue.js components
 import { Swiper, SwiperSlide } from 'swiper/vue';
@@ -16,7 +16,14 @@ export default defineComponent({
   },
   setup() {
 
+    const bannerImages = ref([
+      { id: 1, imagePath: "/src/assets/img/banner/banner1.webp" },
+      { id: 2, imagePath: "/src/assets/img/banner/banner2.webp" },
+      { id: 3, imagePath: "/src/assets/img/banner/banner3.webp" },
+    ]);
+
     return {
+      bannerImages,
       modules: [Autoplay, Navigation, Pagination],
     };
   },
@@ -30,8 +37,8 @@ export default defineComponent({
     disableOnInteraction: false,
     pauseOnMouseEnter: true,
   }">
-    <swiper-slide v-for="(elem, idx) in 5" :key="idx">
-      <img class="home-page__img" src="../../assets/img/banner.png" alt="banner">
+    <swiper-slide v-for="image in bannerImages" :key="image.id">
+      <img class="home-page__img" :src="image.imagePath" alt="banner">
     </swiper-slide>
   </swiper>
 </template>
