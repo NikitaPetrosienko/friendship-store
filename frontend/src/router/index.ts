@@ -47,6 +47,17 @@ const routes = [
       },
     ],
   },
+    {
+    path: '/news/:id',
+    component: () => import('@/layouts/Default.vue'),
+    children: [
+      {
+        path: '',
+        name: 'NewsPage',
+        component: () => import('@/views/NewsPage.vue'),
+      },
+    ],
+  },
   {
     path: '/product/:id',
     component: () => import('@/layouts/Default.vue'),
