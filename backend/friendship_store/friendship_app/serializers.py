@@ -55,7 +55,22 @@ class BasketSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = model.Basket
-        fields = ('quantity', 'user_id', 'product_id')
+        fields = ('id', 'quantity', 'user_id', 'product_id')
+
+
+class FavoriteSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = model.Favorite
+        fields = '__all__'
+
+
+class FavoriteGetSerializer(serializers.ModelSerializer):
+    product_id = ProductSerializer()
+
+    class Meta:
+        model = model.Favorite
+        fields = ('id', 'user_id', 'product_id')
 
 
 class AlbumSerializer(serializers.ModelSerializer):

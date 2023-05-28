@@ -12,6 +12,14 @@ class Basket(models.Model):
         return f'{self.user_id} - {self.product_id}'
 
 
+class Favorite(models.Model):
+    user_id = models.ForeignKey(User, on_delete=models.PROTECT)
+    product_id = models.ForeignKey('Product', on_delete=models.PROTECT)
+
+    def __str__(self):
+        return f'{self.user_id} - {self.product_id}'
+
+
 class Order(models.Model):
     basket_id = models.ForeignKey('Basket', on_delete=models.PROTECT)
     first_name = models.CharField(max_length=50)
