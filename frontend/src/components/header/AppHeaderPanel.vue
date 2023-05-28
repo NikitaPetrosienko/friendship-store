@@ -1,4 +1,11 @@
 <script setup lang="ts">
+import { useAuthStore } from '@/store/auth/auth';
+
+const authStore = useAuthStore();
+
+const logoutUser = () => {
+  authStore.logoutUser();
+}
 
 </script>
 
@@ -14,7 +21,19 @@
         to="/cart"
       >Корзина</router-link>
       <a href="#" class="header-panel__link header-panel__link_favourites">Избранное</a>
-      <a href="#" class="header-panel__link header-panel__link_login">Войти</a>
+
+      <router-link
+        v-if="!authStore.isUserLoggedIn"
+        class="header-panel__link header-panel__link_login"
+        to="/login"
+      >Войти</router-link>
+
+      <router-link
+        v-else
+        class="header-panel__link header-panel__link_login"
+        to="/"
+        @click="logoutUser"
+      >Выйти</router-link>
     </div>
   </div>
 </template>
