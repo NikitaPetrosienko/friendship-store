@@ -27,7 +27,7 @@ export const useAuthStore = defineStore('auth', {
         const response = await axios.post('http://127.0.0.1:8000/auth/token/login/', { username: email, password});
         const data = await response.data;
         this.user.id = data.auth_token;
-        localStorage.setItem("authToken", data.auth_token);
+        localStorage.setItem("authToken", JSON.stringify(data.auth_token));
         router.push('/');
       } catch (error) {
         console.error(error);
@@ -36,7 +36,7 @@ export const useAuthStore = defineStore('auth', {
     },
     async logoutUser() {
       try {
-        const authToken = localStorage.getItem("authToken");
+        const authToken = JSON.parse(localStorage.getItem("authToken"));
         const headers = {
           Authorization: `Token ${authToken}`,
         };
