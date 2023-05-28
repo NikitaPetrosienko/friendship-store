@@ -1,21 +1,20 @@
+<script setup lang="ts">
+import { RouterView } from 'vue-router';
+
+import { useAuthStore } from '@/store/auth/auth';
+
+const authStore = useAuthStore();
+
+const token = JSON.parse(localStorage.getItem("authToken"));
+
+if (token) {
+  authStore.setUserToken(token);
+}
+</script>
+
 <template>
   <RouterView />
 </template>
-
-<script setup lang="ts">
-import { RouterView } from 'vue-router';
-// import axios from 'axios';
-
-// const getAlbums = async () => {
-//   const response = await axios.get('http://127.0.0.1:8000/api/v1/albums/');
-//   const data = await response.data;
-//   console.log('data: ', data);
-// }
-
-// getAlbums();
-
-
-</script>
 
 <style lang="scss">
 @import '@/assets/scss/style.scss';
