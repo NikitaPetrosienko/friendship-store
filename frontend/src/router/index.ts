@@ -47,7 +47,7 @@ const routes = [
       },
     ],
   },
-    {
+  {
     path: '/news/:id',
     component: () => import('@/layouts/Default.vue'),
     children: [
@@ -94,6 +94,28 @@ const routes = [
             component: () => import('@/components/cart-page/CartPageMakeOrder.vue'),
           },
         ],
+      },
+    ],
+  },
+  {
+    path: '/login',
+    component: () => import('@/layouts/Empty.vue'),
+    children: [
+      {
+        path: '',
+        name: 'LoginPage.vue',
+        component: () => import('@/views/LoginPage.vue'),
+      },
+    ],
+  },
+  {
+    path: '/register',
+    component: () => import('@/layouts/Empty.vue'),
+    children: [
+      {
+        path: '',
+        name: 'RegisterPage.vue',
+        component: () => import('@/views/RegisterPage.vue'),
       },
     ],
   },
