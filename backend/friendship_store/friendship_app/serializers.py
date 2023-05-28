@@ -13,20 +13,22 @@ class ReviewSerializer(serializers.ModelSerializer):
 
 class CustomUserCreateSerializer(UserCreateSerializer):
     class Meta(UserCreateSerializer.Meta):
-        fields = ('first_name', 'last_name', 'email', 'password')
+        fields = ('email', 'password')
 
     def create(self, validated_data):
-    #     if len(User.objects.filter(id=validated_data.get('email'))) != 0:
-    #         return
-    #
+        email = validated_data.get('email')
+        password = validated_data.get('password')
+
+        if email and User.objects.filter(email=email).exists():
+            raise serializers.ValidationError('Пользователь с такой почтой уже существует!')
+
         user = self.Meta.model.objects.create_user(
-            username=validated_data.get('email'),
-            email=validated_data.get('email'),
-            password=validated_data.get('password')
+            username=email,
+            email=email,
+            password=password
         )
-        user.first_name = validated_data.get('first_name')
-        user.last_name = validated_data.get('last_name')
         user.save()
+
         return user
 
 
