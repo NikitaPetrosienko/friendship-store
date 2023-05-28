@@ -1,7 +1,5 @@
 <script setup lang="ts">
-import {
-  defineProps, toRefs
-} from 'vue';
+import { toRefs } from 'vue';
 
 interface IPropsPicture {
   imageUrl?: string,
@@ -45,7 +43,15 @@ const { imageUrl, classContainer, classImage } = toRefs(props);
 .home-page-brands__picture {
   padding-top: calc(357 / 345 * 100%);
 }
-.home-page-brands__img {
+.home-page-brands__img {}
 
+.news__picture {
+  padding-top: calc(248 / 406 * 100%);
 }
+.news__img {}
+
+.product__picture {
+  padding-top: calc(243 / 298 * 100%);
+}
+.product__img {}
 </style>
