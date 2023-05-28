@@ -4,24 +4,31 @@ import vInput from '@/components/input/v-input.vue';
 import { computed, ref } from 'vue';
 
 import useVuelidate from '@vuelidate/core';
-import { helpers, minLength, maxLength, email, numeric } from '@vuelidate/validators';
+import { helpers, minLength, email } from '@vuelidate/validators';
+
+import { useAuthStore } from '@/store/auth/auth';
+
+const authStore = useAuthStore();
 
 const userEmail = ref('');
 const userPassword = ref('');
 
 const rules = computed(() => ({
   userEmail: {
-    email: helpers.withMessage('Выввели неверный email', email),
+    email: helpers.withMessage('Вы ввели неверный email', email),
   },
   userPassword: {
-    minLength: helpers.withMessage('Минимальная длина: 3 символа', minLength(3))
+    minLength: helpers.withMessage('Минимальная длина: 8 символов', minLength(8))
   },
 }));
 
 const v = useVuelidate(rules, { userEmail, userPassword });
 
 const submitForm = () => {
-  console.log('submitForm: ', submitForm);
+  v.value.$touch()
+  if (!v.value.$error) {
+    authStore.loginUser({ email: userEmail.value, password: userPassword.value });
+  }
 }
 
 </script>
