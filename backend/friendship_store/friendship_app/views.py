@@ -43,6 +43,26 @@ class CategoryAPIView(generics.ListAPIView):
     serializer_class = fs.CategorySerializer
 
 
+class FavoriteListAPIView(generics.ListAPIView):
+    serializer_class = fs.FavoriteGetSerializer
+
+    def get_queryset(self):
+        user_id = self.kwargs['user_id']
+        return model.Favorite.objects.filter(user_id=user_id)
+
+
+class FavoriteCreateAPIView(generics.CreateAPIView):
+    serializer_class = fs.FavoriteSerializer
+
+
+class FavoriteDestroyAPIView(generics.DestroyAPIView):
+    serializer_class = fs.FavoriteSerializer
+
+    def get_queryset(self):
+        pk = self.kwargs['pk']
+        return model.Favorite.objects.filter(id=pk)
+
+
 class BrandAPIView(generics.ListAPIView):
     queryset = model.Brand.objects.all()
     serializer_class = fs.BrandSerializer

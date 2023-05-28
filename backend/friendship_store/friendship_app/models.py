@@ -5,8 +5,16 @@ from django.core.validators import RegexValidator
 
 class Basket(models.Model):
     user_id = models.ForeignKey(User, on_delete=models.PROTECT)
-    product_id = models.ForeignKey('Product', on_delete=models.PROTECT)
+    product_id = models.ForeignKey('Product', on_delete=models.PROTECT, related_name='product')
     quantity = models.IntegerField(default=1)
+
+    def __str__(self):
+        return f'{self.user_id} - {self.product_id}'
+
+
+class Favorite(models.Model):
+    user_id = models.ForeignKey(User, on_delete=models.PROTECT)
+    product_id = models.ForeignKey('Product', on_delete=models.PROTECT)
 
     def __str__(self):
         return f'{self.user_id} - {self.product_id}'
@@ -35,8 +43,8 @@ class Product(models.Model):
     model = models.CharField(max_length=50, null=True)
     price = models.DecimalField(decimal_places=2, max_digits=12)
     availability = models.BooleanField(default=True)
-    category = models.ForeignKey('Category', on_delete=models.PROTECT, blank=True)
-    brand = models.ForeignKey('Brand', on_delete=models.PROTECT, blank=True)
+    category = models.ForeignKey('Category', on_delete=models.PROTECT, blank=True, null=True)
+    brand = models.ForeignKey('Brand', on_delete=models.PROTECT, blank=True, null=True)
     description = models.TextField()
     quantity = models.IntegerField(default=0)
     main_image = models.URLField(default='http://example.com')
