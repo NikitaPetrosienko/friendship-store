@@ -51,9 +51,11 @@ class BrandSerializer(serializers.ModelSerializer):
 
 
 class BasketSerializer(serializers.ModelSerializer):
+    product_id = ProductSerializer()
+
     class Meta:
         model = model.Basket
-        fields = '__all__'
+        fields = ('quantity', 'user_id', 'product_id')
 
 
 class AlbumSerializer(serializers.ModelSerializer):
