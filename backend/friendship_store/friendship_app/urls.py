@@ -1,4 +1,4 @@
-from django.urls import path, include
+from django.urls import path
 import friendship_app.views as views
 from friendship_app.yasg import urlpatterns as doc_urls
 

@@ -14,11 +14,11 @@ class Basket(models.Model):
 
 class Order(models.Model):
     basket_id = models.ForeignKey('Basket', on_delete=models.PROTECT)
-    first_name = models.CharField(max_length=50, default='user')
-    last_name = models.CharField(max_length=50, default='user')
-    email = models.EmailField(default='user@mail.ru')
+    first_name = models.CharField(max_length=50)
+    last_name = models.CharField(max_length=50)
+    email = models.EmailField()
     phoneNumberRegex = RegexValidator(regex=r"^\+?1?\d{8,15}$")
-    phoneNumber = models.CharField(validators=[phoneNumberRegex], max_length=16, unique=True, default='+79180000000')
+    phoneNumber = models.CharField(validators=[phoneNumberRegex], max_length=16, unique=True)
     district = models.CharField(max_length=50)
     street = models.CharField(max_length=50)
     house = models.CharField(max_length=5)
@@ -40,6 +40,7 @@ class Product(models.Model):
     description = models.TextField()
     quantity = models.IntegerField(default=0)
     main_image = models.URLField(default='http://example.com')
+    size = models.CharField(max_length=100)
 
     def __str__(self):
         return f'{self.product_name} {self.model}'
@@ -81,9 +82,9 @@ class News(models.Model):
 
 class Review(models.Model):
     # rating = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(5)])
-    name_user = models.CharField(max_length=50, default='user')
+    name_user = models.CharField(max_length=50)
     body = models.TextField()
-    product_id = models.ForeignKey(Product, on_delete=models.PROTECT, default=0)
+    product_id = models.ForeignKey(Product, on_delete=models.PROTECT)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
