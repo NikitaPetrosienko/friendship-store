@@ -190,7 +190,7 @@ const selectedPayment = ref('');
 }
 .cartpage-form__title {
   @include font(36px, 400, 1.2);
-  margin-bottom: 10px;
+  margin-bottom: 30px;
   @include for-size(tablet) {
     @include font(20px, 800, 1.2);
   }
