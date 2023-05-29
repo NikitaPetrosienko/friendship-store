@@ -3,31 +3,33 @@ import vPicture from '@/components/picture/v-picture.vue';
 
 import { PropType } from 'vue';
 
-interface IPropProduct {
-  id: number,
-  imagePath: string,
-  title: string,
-}
+import { INews } from '@/store/news/news.interfaces';
 
 const props = defineProps({
   item: {
-    type: Object as PropType<IPropProduct>,
+    type: Object as PropType<INews>,
     required: true,
   },
 });
+
+const formatDate = (dateString) => {
+  const date = new Date(dateString);
+  const options = { day: 'numeric', month: 'long', year: 'numeric' };
+  return date.toLocaleDateString('ru-RU', options);
+}
 
 </script>
 
 <template>
   <div class="news">
     <div class="news__body">
-      <v-picture :class-container="'news__picture'" :class-image="'news__img'" :image-url="item.imagePath"
+      <v-picture :class-container="'news__picture'" :class-image="'news__img'" :image-url="item.main_image"
         :alt-text="item.title" />
     </div>
 
     <div class="news__footer">
       <router-link :to="`/news/${1}`" class="news__link">
-        <div class="news__title">17 Окт. 2021</div>
+        <div class="news__title">{{ formatDate(item.date) }}</div>
         <div class="news__title">{{ item.title }}</div>
       </router-link>
     </div>

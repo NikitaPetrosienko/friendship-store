@@ -3,21 +3,27 @@ import AppNews from '@/components/home-page/news/AppNews.vue';
 
 import { ref } from 'vue';
 
-const news = ref([
-  { id: 1, imagePath: "/src/assets/img/news/img1.png", title: "NIKE SB Dunk Low Pro Laser Blue" },
-  { id: 2, imagePath: "/src/assets/img/news/img2.png", title: "Вселенские скидки" },
-  { id: 3, imagePath: "/src/assets/img/news/img3.png", title: "Работа в нерабочие дни" },
-  { id: 4, imagePath: "/src/assets/img/news/img4.png", title: "NIKE SB Dunk Low Pro Laser Blue" },
-  { id: 5, imagePath: "/src/assets/img/news/img5.png", title: "Вселенские скидки" },
-  { id: 6, imagePath: "/src/assets/img/news/img6.png", title: "Работа в нерабочие дни" },
-]);
+import { useNewsStore } from '@/store/news/news';
+
+const newsStore = useNewsStore();
+newsStore.fetchNews();
+
+// const newsMock = ref([
+//   { id: 1, imagePath: "/src/assets/img/news/img1.png", title: "NIKE SB Dunk Low Pro Laser Blue" },
+//   { id: 2, imagePath: "/src/assets/img/news/img2.png", title: "Вселенские скидки" },
+//   { id: 3, imagePath: "/src/assets/img/news/img3.png", title: "Работа в нерабочие дни" },
+//   { id: 4, imagePath: "/src/assets/img/news/img4.png", title: "NIKE SB Dunk Low Pro Laser Blue" },
+//   { id: 5, imagePath: "/src/assets/img/news/img5.png", title: "Вселенские скидки" },
+//   { id: 6, imagePath: "/src/assets/img/news/img6.png", title: "Работа в нерабочие дни" },
+// ]);
+
 </script>
 
 <template>
   <div class="homepage-news">
     <div class="homepage-news__title">Архив новостей</div>
     <div class="homepage-news__row">
-      <div class="homepage-news__column" v-for="newsItem in news" :key="newsItem.id">
+      <div class="homepage-news__column" v-for="newsItem in newsStore.news" :key="newsItem.id">
         <AppNews :item="newsItem"/>
       </div>
     </div>
@@ -39,7 +45,6 @@ const news = ref([
 }
 .homepage-news__row {
   display: flex;
-  justify-content: space-between;
   flex-wrap: wrap;
   margin: 0 -16px;
 }
