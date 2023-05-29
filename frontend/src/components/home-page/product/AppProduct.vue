@@ -3,6 +3,8 @@ import vPicture from '@/components/picture/v-picture.vue';
 
 import { PropType } from 'vue';
 
+import { IProduct } from '@/store/products/products.interfaces';
+
 interface IPropProduct {
   id: number,
   imagePath: string,
@@ -12,7 +14,7 @@ interface IPropProduct {
 
 const props = defineProps({
   item: {
-    type: Object as PropType<IPropProduct>,
+    type: Object as PropType<IProduct>,
     required: true,
   },
 });
@@ -25,15 +27,21 @@ const props = defineProps({
       <v-picture
         :class-container="'product__picture'"
         :class-image="'product__img'"
-        :image-url="item.imagePath"
-        :alt-text="item.title"
+        :image-url="item.main_image"
+        :alt-text="item.product_name"
       />
-      <div class="product__card-title">{{ item.title }}</div>
+      <div class="product__card-title">{{ item.product_name }}</div>
     </div>
 
     <div class="product__footer">
       <div class="product__card-title">{{ item.price }} &#8381;</div>
-      <router-link :to="`/product/${1}`" class="product__link"></router-link>
+      <router-link 
+        :to="{
+          name: 'ProductPage',
+          params: { id: `${item.model}`, }
+        }"
+        class="product__link"
+      ></router-link>
     </div>
   </div>
 </template>
