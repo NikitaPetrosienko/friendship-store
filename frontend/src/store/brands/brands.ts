@@ -2,9 +2,11 @@ import { defineStore } from 'pinia';
 
 import axios from 'axios';
 
+import { IBrand } from '@/store/brands/brands.interfaces';
+
 export const useBrandsStore = defineStore('brands', {
   state: () => ({
-    brands: [],
+    brands: [] as IBrand[],
   }),
   actions: {
     async fetchBrands() {
@@ -15,6 +17,6 @@ export const useBrandsStore = defineStore('brands', {
         console.error(error);
         throw error;
       }
-    }
+    },
   },
 })
