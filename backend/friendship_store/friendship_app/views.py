@@ -53,16 +53,16 @@ class ProductByCategoryAPIView(generics.ListAPIView):
     serializer_class = fs.ProductSerializer
 
     def get_queryset(self):
-        category = self.kwargs['category_id']
-        return model.Product.objects.filter(category=category)
+        category = self.kwargs['category']
+        return model.Product.objects.filter(category__category_name=category)
 
 
 class ProductByBrandAPIView(generics.ListAPIView):
     serializer_class = fs.ProductSerializer
 
     def get_queryset(self):
-        brand = self.kwargs['brand_id']
-        return model.Product.objects.filter(brand=brand)
+        brand = self.kwargs['brand']
+        return model.Product.objects.filter(brand__brand_name=brand)
 
 
 class CategoryAPIView(generics.ListAPIView):
