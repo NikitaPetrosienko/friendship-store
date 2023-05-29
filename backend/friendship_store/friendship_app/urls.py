@@ -15,8 +15,8 @@ urlpatterns = [
     path('delete_favorite/<int:pk>', views.FavoriteDestroyAPIView.as_view()),
     path('favorites/<int:user_id>', views.FavoriteListAPIView.as_view()),
     path('product_by_id/<int:product_id>/', views.ProductByIdAPIView.as_view()),
-    path('product_by_category/<int:category_id>/', views.ProductByCategoryAPIView.as_view()),
-    path('product_by_brand/<int:brand_id>/', views.ProductByBrandAPIView.as_view()),
+    path('product_by_category/<str:category>/', views.ProductByCategoryAPIView.as_view()),
+    path('product_by_brand/<str:brand>/', views.ProductByBrandAPIView.as_view()),
     path('basket/<int:user_id>/', views.BasketByIdAPIView.as_view()),
     path('search/<str:word>/', views.SearchAPIView.as_view())
 ]
