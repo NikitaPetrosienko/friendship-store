@@ -54,6 +54,7 @@ const maxPrice = ref('');
   display: flex;
   align-items: center;
   flex-wrap: wrap;
+  gap: 20px;
   justify-content: space-between;
 }
 .products-form__legend {
