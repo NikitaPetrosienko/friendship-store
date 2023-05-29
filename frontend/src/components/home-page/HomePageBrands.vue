@@ -9,6 +9,13 @@ import { useBrandsStore } from '@/store/brands/brands';
 const brandsStore = useBrandsStore();
 brandsStore.fetchBrands();
 
+// const brandsMock = ref([
+//   { id: 1, image: "/src/assets/img/brands/brand1.png", brand_name: "shane" },
+//   { id: 2, image: "/src/assets/img/brands/brand2.png", brand_name: "volcom" },
+//   { id: 3, image: "/src/assets/img/brands/brand3.png", brand_name: "the-north-face" },
+//   { id: 4, image: "/src/assets/img/brands/brand4.png", brand_name: "adidas" },
+// ]);
+
 </script>
 
 <template>
@@ -18,12 +25,17 @@ brandsStore.fetchBrands();
       <div class="home-page-brands__row">
         <div class="home-page-brands__column" v-for="brand in brandsStore.brands" :key="brand.id">
           <div class="home-page-brands__card">
-            <router-link :to="{ name: 'HomePageProducts', params: { brand: `${brand.barnd_name}` }}" class="home-page-brands__link">
+            <router-link 
+              :to="{ 
+                    name: 'HomePageProducts', 
+                    query: { brand: `${brand.brand_name}`,}
+                  }"
+              class="home-page-brands__link">
               <v-picture
                 :class-container="'home-page-brands__picture'"
                 :class-image="'home-page-brands__img'"
                 :image-url="brand.image"
-                :alt-text="brand.barnd_name"
+                :alt-text="brand.brand_name"
               />
             </router-link>
           </div>
