@@ -10,13 +10,13 @@ class SearchAPIView(generics.ListAPIView):
     serializer_class = fs.ProductSerializer
 
     def get_queryset(self):
-        word = self.kwargs['word']
+        word = self.kwargs['word'].lower()
 
         queryset = model.Product.objects.filter(
-            Q(product_name=word) |
-            Q(model=word) |
-            Q(category__category_name=word) |
-            Q(brand__brand_name=word)
+            Q(product_name__icontains=word) |
+            Q(model__icontains=word) |
+            Q(category__category_name__icontains=word) |
+            Q(brand__brand_name__icontains=word)
         )
 
         if not queryset.exists():
