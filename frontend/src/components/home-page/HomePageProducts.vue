@@ -5,26 +5,26 @@ import AppProduct from '@/components/home-page/product/AppProduct.vue';
 import { ref } from 'vue';
 import { useRoute } from 'vue-router';
 
-import { useBrandsStore } from '@/store/brands';
+const route = useRoute();
 
-// const route = useRoute();
+import { useProductsStore } from '@/store/products/products';
 
-// const brandsStore = useBrandsStore();
-// brandsStore.fetchBrands();
+const productsStore = useProductsStore();
 
-const products = ref([
-  { id: 1, imagePath: "/src/assets/img/brands/adidas/img1.jpeg", title: "Кеды Adidas Busenitz Vulc II Core Black FTWWHT VIVRED", price: 6700 },
-  { id: 2, imagePath: "/src/assets/img/brands/adidas/img2.jpeg", title: "Толстовка Adidas ELEVATED3HOODIE Collegiate Navy", price: 7150 },
-  { id: 3, imagePath: "/src/assets/img/brands/adidas/img3.png", title: "Толстовка adidas LIGHTWZIPTRACK Night Indigo Collegiate Green White", price: 5990 },
-  { id: 4, imagePath: "/src/assets/img/brands/adidas/img4.png", title: "Кеды adidas 3MC COLLEGIATE NAVY FTWWHT GRETWO", price: 4490 },
-  { id: 5, imagePath: "/src/assets/img/brands/adidas/img1.jpeg", title: "Кеды Adidas Busenitz Vulc II Core Black FTWWHT VIVRED", price: 6700 },
-  { id: 6, imagePath: "/src/assets/img/brands/adidas/img2.jpeg", title: "Толстовка Adidas ELEVATED3HOODIE Collegiate Navy", price: 7150 },
-  { id: 7, imagePath: "/src/assets/img/brands/adidas/img3.png", title: "Толстовка adidas LIGHTWZIPTRACK Night Indigo Collegiate Green White", price: 5990 },
-  { id: 8, imagePath: "/src/assets/img/brands/adidas/img4.png", title: "Кеды adidas 3MC COLLEGIATE NAVY FTWWHT GRETWO", price: 4490 },
-]);
+// const productsMock = ref([
+//   { id: 1, imagePath: "/src/assets/img/brands/adidas/adidas1.jpeg", title: "Кеды Adidas Busenitz Vulc II Core Black FTWWHT VIVRED", price: 6700 },
+//   { id: 2, imagePath: "/src/assets/img/brands/adidas/adidas2.jpeg", title: "Толстовка Adidas ELEVATED3HOODIE Collegiate Navy", price: 7150 },
+//   { id: 3, imagePath: "/src/assets/img/brands/adidas/adidas3.png", title: "Толстовка adidas LIGHTWZIPTRACK Night Indigo Collegiate Green White", price: 5990 },
+//   { id: 4, imagePath: "/src/assets/img/brands/adidas/adidas4.png", title: "Кеды adidas 3MC COLLEGIATE NAVY FTWWHT GRETWO", price: 4490 },
+// ]);
 
-// console.log('Brand: ', route.params.brand);
-// console.log('Category: ', route.query.category);
+if (route.query.brand) {
+  productsStore.fetchProductsByBrand(route.query.brand);
+}
+if (route.query.category) {
+  productsStore.fetchProductsByCategory(route.query.category);
+}
+
 </script>
 
 <template>
@@ -35,7 +35,7 @@ const products = ref([
       <AppProductsForm />
 
       <div class="homepage-products__row">
-        <div class="homepage-products__column" v-for="product in products" :key="product.id">
+        <div class="homepage-products__column" v-for="product in productsStore.products" :key="product.id">
           <AppProduct :item="product"/>
         </div>
       </div>
