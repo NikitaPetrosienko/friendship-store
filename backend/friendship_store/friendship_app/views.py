@@ -2,6 +2,33 @@ from rest_framework import generics
 from rest_framework.views import APIView, Response
 import friendship_app.models as model
 import friendship_app.serializers as fs
+from django.db.models import Q
+from django.http import Http404, JsonResponse
+
+
+class SearchAPIView(generics.ListAPIView):
+    serializer_class = fs.ProductSerializer
+
+    def get_queryset(self):
+        word = self.kwargs['word']
+
+        queryset = model.Product.objects.filter(
+            Q(product_name=word) |
+            Q(model=word) |
+            Q(category__category_name=word) |
+            Q(brand__brand_name=word)
+        )
+
+        if not queryset.exists():
+            raise Http404(f'Ничего не нашлось по запросу "{word}"')
+
+        return queryset
+
+    def list(self, request, *args, **kwargs):
+        try:
+            return super().list(request, *args, **kwargs)
+        except Http404 as e:
+            return JsonResponse({'error': str(e)}, status=404)
 
 
 class ProductAPIView(generics.ListAPIView):
