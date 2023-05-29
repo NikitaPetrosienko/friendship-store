@@ -37,10 +37,10 @@ class ProductAPIView(generics.ListAPIView):
 
 
 class ProductByIdAPIView(APIView):
-    def get(self, request, product_id):
-        product = model.Product.objects.get(id=product_id)
-        reviews = model.Review.objects.filter(product_id=product_id)
-        images = model.Image.objects.filter(product_id=product_id)
+    def get(self, request, product):
+        product = model.Product.objects.get(model=product)
+        reviews = model.Review.objects.filter(product_id=product.id)
+        images = model.Image.objects.filter(product_id=product.id)
         response_data = {
             'product': fs.ProductSerializer(product).data,
             'review': [fs.ReviewSerializer(review).data for review in reviews],
