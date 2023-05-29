@@ -1,39 +1,36 @@
 <script setup lang="ts">
 
-// import {
-//   defineProps, PropType,
-// } from 'vue';
+import { PropType } from 'vue';
 
-// interface IPropsComment {
-//   id: number,
-//   title: string,
-//   publish_date: string,
-//   tag: string,
-//   text: string,
-// }
+import { IProductComment } from '@/store/products/products.interfaces';
 
-// const props = defineProps({
-//   item: {
-//     type: Object as PropType<IPropsComment>,
-//     required: true,
-//   },
-// });
+const props = defineProps({
+  item: {
+    type: Object as PropType<IProductComment>,
+    required: true,
+  },
+});
 
+const formatDate = (dateString) => {
+  const date = new Date(dateString);
+  const options = { day: 'numeric', month: 'long', year: 'numeric' };
+  return date.toLocaleDateString('ru-RU', options);
+}
 
 </script>
 
 <template>
   <div class="comment">
     <div class="comment__header">
-      <span class="comment__author">Person name</span>
+      <span class="comment__author">{{ item.name_user }}</span>
       <span class="comment__date">
-        <fa class="comment__icon" icon="clock" /> {{ new Date().toLocaleString() }}
+        <fa class="comment__icon" icon="clock" /> {{ formatDate(item.created_at) }}
       </span>
     </div>
     <hr>
     <div class="comment__text">
       <p class="comment__info">
-        Lorem ipsum dolor sit amet.
+        {{ item.body }}
       </p>
     </div>
 
