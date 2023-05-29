@@ -18,6 +18,7 @@ urlpatterns = [
     path('product_by_category/<int:category_id>/', views.ProductByCategoryAPIView.as_view()),
     path('product_by_brand/<int:brand_id>/', views.ProductByBrandAPIView.as_view()),
     path('basket/<int:user_id>/', views.BasketByIdAPIView.as_view()),
+    path('search/<str:word>/', views.SearchAPIView.as_view())
 ]
 
 urlpatterns += doc_urls
