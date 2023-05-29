@@ -2,20 +2,31 @@
 import CreateCommentForm from '@/components/product-page/CreateCommentForm.vue';
 import AppComment from '@/components/product-page/AppComment.vue';
 
+import { useRoute } from 'vue-router';
+
+const route = useRoute();
+
+import { useProductsStore } from '@/store/products/products';
+
+const productsStore = useProductsStore();
+
+productsStore.fetchProductBySlug(route.params.id);
+
+
 </script>
 
 <template>
   <div class="product-page">
     <div class="container">
-      <div class="product-page__row">
-        <div class="product-page__column product-page__column_picture">
-          <img src="../assets/img/skateboards/img1.png" alt="skateboard">
+      <div v-if="productsStore.currentProduct" class="product-page__row">
+        <div v-if="productsStore.currentProduct.product" class="product-page__column product-page__column_picture">
+          <img :src="productsStore.currentProduct.product.main_image" alt="skateboard">
         </div>
-        <div class="product-page__column product-page__column_info">
-          <h1 class="product-page__title">Дека Footwork Progress Universe fwsb-prguniverse (multi)</h1>
-          <div class="product-page__price">2630.00р</div>
-          <div class="product-page__status">В наличии</div>
-          <div class="product-page__size">Размер: 8x31.5</div>
+        <div v-if="productsStore.currentProduct.product" class="product-page__column product-page__column_info">
+          <h1  class="product-page__title">{{ productsStore.currentProduct.product.product_name }}</h1>
+          <div class="product-page__price">{{ productsStore.currentProduct.product.price }}</div>
+          <div class="product-page__status">{{ productsStore.currentProduct.product.availability ? 'В наличии' : 'Нет в наличии' }}</div>
+          <div class="product-page__size">Размер: {{ productsStore.currentProduct.product.size }}</div>
           
           <div class="product-page__buttons">
             <div class="product-page__btn-cart">
@@ -25,16 +36,17 @@ import AppComment from '@/components/product-page/AppComment.vue';
             <button class="product-page__btn" type="button">Купить в один клик</button>
           </div>
 
-          <div class="product-page__desc">
+          <div v-if="productsStore.currentProduct.product" class="product-page__desc">
             <p class="product-page__text product-page__text_title">Описание</p>
-            <p class="product-page__text">
+            <!-- <p class="product-page__text">
               Поставка 2021 года.<br>
               - Бренд: Footwork.<br>
               - Конструкция: Progress.<br>
               - Размеры: 8 x 31.5 / 8.25 x 31.75<br>
               - Конкейв: Глубокий.<br>
               - Стикерпак из 15 наклеек в подарок.
-            </p>
+            </p> -->
+            <div v-html="productsStore.currentProduct.product.description"></div>
           </div>
 
         </div>
@@ -47,12 +59,13 @@ import AppComment from '@/components/product-page/AppComment.vue';
       </div>
 
       <div class="product-page__row">
-        <div class="product-page__column">
-          <div class="product-page__comments" v-if="true">
+        <div v-if="productsStore.currentProduct.product" class="product-page__column">
+          <div class="product-page__comments" v-if="productsStore.currentProduct.review.length !== 0">
             <h3 class="product-page__text">Комментарии</h3>
             <AppComment
-              v-for="comment in 4"
-              :key="comment"
+              v-for="review in productsStore.currentProduct.review"
+              :key="review.id"
+              :item="review"
             />
           </div>
           <div class="product-page__comments-placeholder" v-else>Комментариев на данный момент нет</div>
