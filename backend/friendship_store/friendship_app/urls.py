@@ -13,7 +13,7 @@ urlpatterns = [
     path('review/', views.CreateReviewAPIView.as_view()),
     path('favorites/', views.FavoriteCreateAPIView.as_view()),
     path('delete_favorite/<int:pk>', views.FavoriteDestroyAPIView.as_view()),
-    path('favorites/<int:user_id>', views.FavoriteListAPIView.as_view()),
+    path('favorites/<str:token>', views.FavoriteListAPIView.as_view()),
     path('product/<str:product>/', views.ProductByIdAPIView.as_view()),
     path('product_by_category/<str:category>/', views.ProductByCategoryAPIView.as_view()),
     path('product_by_brand/<str:brand>/', views.ProductByBrandAPIView.as_view()),

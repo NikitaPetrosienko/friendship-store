@@ -77,8 +77,9 @@ class FavoriteListAPIView(generics.ListAPIView):
     serializer_class = fs.FavoriteGetSerializer
 
     def get_queryset(self):
-        user_id = self.kwargs['user_id']
-        return model.Favorite.objects.filter(user_id=user_id)
+        token = self.kwargs['token']
+        user_id = Token.objects.get(key=token).user_id
+        return model.Basket.objects.filter(user_id=user_id)
 
 
 class FavoriteCreateAPIView(generics.CreateAPIView):
