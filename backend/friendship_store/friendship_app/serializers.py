@@ -32,12 +32,6 @@ class CustomUserCreateSerializer(UserCreateSerializer):
         return user
 
 
-class ProductSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = model.Product
-        fields = '__all__'
-
-
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = model.Category
@@ -50,6 +44,27 @@ class BrandSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class ProductSerializer(serializers.ModelSerializer):
+    category = CategorySerializer()
+    brand = BrandSerializer()
+
+    class Meta:
+        model = model.Product
+        fields = (
+            'id',
+            'product_name',
+            'model',
+            'price',
+            'availability',
+            'category',
+            'brand',
+            'description',
+            'quantity',
+            'main_image',
+            'size',
+        )
+
+
 class BasketSerializer(serializers.ModelSerializer):
     product_id = ProductSerializer()
 
@@ -59,7 +74,6 @@ class BasketSerializer(serializers.ModelSerializer):
 
 
 class FavoriteSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = model.Favorite
         fields = '__all__'
