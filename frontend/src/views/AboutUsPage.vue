@@ -1,12 +1,29 @@
 <script setup lang="ts">
 import AppBreadcrumb from '@/components/breadcrumb/AppBreadcrumb.vue'
 
+import { ref } from 'vue';
+
+const breadcrumbs = ref([
+  {
+    id: 1,
+    title: 'Главная',
+    url: '/'
+  },
+  {
+    id: 2,
+    title: 'О магазине',
+    url: '/aboutus'
+  },
+]);
+
 </script>
 
 <template>
   <div class="aboutus-page">
     <div class="container">
-      <AppBreadcrumb />
+
+      <AppBreadcrumb :breadcrumbs="breadcrumbs"/>
+      
       <h1 class="aboutus-page__title">О магазине</h1>
     </div>
 
