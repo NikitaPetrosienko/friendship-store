@@ -30,6 +30,7 @@ defineProps({
 @import '@/assets/scss/_mixins.scss';
 .breadcrumb__list {
   display: flex;
+  flex-wrap: wrap;
   padding: 14px 0 0;
   margin: 0 0;
   list-style: none;
