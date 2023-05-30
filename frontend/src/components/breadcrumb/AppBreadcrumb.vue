@@ -1,16 +1,25 @@
-
 <script setup lang="ts">
+import { PropType } from 'vue';
 
+interface IBreadcrumb {
+  id: number,
+  title: string,
+  url: string,
+}
+
+defineProps({
+  breadcrumbs: {
+    type: Array as PropType<IBreadcrumb[]>,
+    required: true,
+  },
+});
 </script>
 
 <template>
   <nav class="breadcrumb">
     <ul class="breadcrumb__list">
-      <li class="breadcrumb__item">
-        <router-link class="breadcrumb__link" to="/" >Главная</router-link>
-      </li>
-      <li class="breadcrumb__item">
-        <router-link class="breadcrumb__link" to="/">О магазине</router-link>
+      <li class="breadcrumb__item" v-for="link in breadcrumbs" :key="link.id">
+        <router-link class="breadcrumb__link" :to="`${link.url}`" >{{ link.title }}</router-link>
       </li>
     </ul>
   </nav>
