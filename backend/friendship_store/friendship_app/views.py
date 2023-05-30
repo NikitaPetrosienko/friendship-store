@@ -4,6 +4,9 @@ import friendship_app.models as model
 import friendship_app.serializers as fs
 from django.db.models import Q
 from django.http import Http404, JsonResponse
+from rest_framework.authtoken.models import Token
+from django.contrib.auth.models import User
+from rest_framework.exceptions import ValidationError
 
 
 class SearchAPIView(generics.ListAPIView):
@@ -101,20 +104,28 @@ class AlbumAPIView(generics.ListAPIView):
 
 
 class AddToBasketAPIView(generics.CreateAPIView):
-    serializer_class = fs.BasketSerializer
+    serializer_class = fs.CreateBasketSerializer
 
     def perform_create(self, serializer):
         data = serializer.validated_data
+        user = Token.objects.get(key=data['token']).user_id
+        data['user_id'] = User.objects.get(id=user)
+        del data['token']
         product = model.Product.objects.get(id=data['product_id'].id)
         product.quantity -= int(data['quantity'])
 
         if product.quantity >= 0:
             product.save()
             serializer.save()
+        else:
+            raise ValidationError('Товара нет в наличие.')
+
+    def get_queryset(self):
+        return self.queryset
 
 
 class BasketByIdAPIView(generics.ListAPIView):
-    serializer_class = fs.BasketSerializer
+    serializer_class = fs.GetBasketSerializer
 
     def get_queryset(self):
         user_id = self.kwargs['user_id']

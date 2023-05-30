@@ -1,8 +1,15 @@
 from rest_framework import serializers
 import friendship_app.models as model
+from rest_framework.authtoken.models import Token
 from django.contrib.auth.models import User
 
 from djoser.serializers import UserCreateSerializer
+
+
+# class UserToken(serializers.ModelSerializer):
+#     class Meta:
+#         model = Token
+#         fields = ('key',)
 
 
 class ReviewSerializer(serializers.ModelSerializer):
@@ -65,12 +72,22 @@ class ProductSerializer(serializers.ModelSerializer):
         )
 
 
-class BasketSerializer(serializers.ModelSerializer):
-    product_id = ProductSerializer()
+class CreateBasketSerializer(serializers.ModelSerializer):
+    token = serializers.CharField(required=False)
 
     class Meta:
         model = model.Basket
-        fields = ('id', 'quantity', 'user_id', 'product_id')
+        fields = ('token', 'product_id', 'quantity')
+
+
+class GetBasketSerializer(serializers.ModelSerializer):
+    product_id = ProductSerializer()
+
+    # id = UserToken()
+
+    class Meta:
+        model = model.Basket
+        fields = ('id', 'quantity', 'product_id')
 
 
 class FavoriteSerializer(serializers.ModelSerializer):
