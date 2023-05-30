@@ -1,14 +1,33 @@
 <script setup lang="ts">
 import vPicture from '@/components/picture/v-picture.vue';
-import AppBreadcrumb from '@/components/breadcrumb/AppBreadcrumb.vue'
+import AppBreadcrumb from '@/components/breadcrumb/AppBreadcrumb.vue';
 
 import { ref } from 'vue';
 
-const albums = ref([
-  { id: 1, imagePath: "/src/assets/img/albums/img1.png", title: "Maiami" },
-  { id: 2, imagePath: "/src/assets/img/albums/img2.png", title: "San Fracisko" },
-  { id: 3, imagePath: "/src/assets/img/albums/img3.png", title: "Virginia" },
-  { id: 4, imagePath: "/src/assets/img/albums/img4.png", title: "Albukerke" },
+import { useAlbumsStore } from '@/store/albums/albums';
+
+const albumsStore = useAlbumsStore();
+
+albumsStore.fetchAlbums();
+
+// const mockAlbums = ref([
+//   { id: 1, image: "/src/assets/img/albums/img1.png"},
+//   { id: 2, image: "/src/assets/img/albums/img2.png" },
+//   { id: 3, image: "/src/assets/img/albums/img3.png"},
+//   { id: 4, image: "/src/assets/img/albums/img4.png"},
+// ]);
+
+const breadcrumbs = ref([
+  {
+    id: 1,
+    title: 'Главная',
+    url: '/'
+  },
+  {
+    id: 2,
+    title: 'Фотоальбом',
+    url: '/albums'
+  },
 ]);
 
 </script>
@@ -16,15 +35,17 @@ const albums = ref([
 <template>
   <div class="albums-page">
     <div class="container">
-      <AppBreadcrumb />
+
+      <AppBreadcrumb :breadcrumbs="breadcrumbs"/>
+      
       <h1 class="albums-page__title">Фотоальбом</h1>
       <div class="albums-page__row">
-        <div class="albums-page__column" v-for="item in albums" :key="item.id">
+        <div class="albums-page__column" v-for="album in albumsStore.albums" :key="album.id">
           <v-picture
             :class-container="'albums-page__picture'"
             :class-image="'albums-page__img'"
-            :image-url="item.imagePath"
-            :alt-text="item.title" 
+            :image-url="album.image"
+            alt-text="album" 
           />
         </div>
       </div>
