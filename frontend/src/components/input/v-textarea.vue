@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const emit = defineEmits(['input']);
+const emit = defineEmits(['update:value']);
 
 const props = defineProps({
   error: {
@@ -29,7 +29,7 @@ const props = defineProps({
 });
 
 const updateValue = (e: any) => {
-  emit('input', e.target.value)
+  emit('update:value', e.target.value);
 }
 
 </script>
