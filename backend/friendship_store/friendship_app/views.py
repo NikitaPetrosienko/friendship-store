@@ -108,8 +108,8 @@ class AddToBasketAPIView(generics.CreateAPIView):
 
     def perform_create(self, serializer):
         data = serializer.validated_data
-        user = Token.objects.get(key=data['token']).user_id
-        data['user_id'] = User.objects.get(id=user)
+        user_id = Token.objects.get(key=data['token']).user_id
+        data['user_id'] = User.objects.get(id=user_id)
         del data['token']
         product = model.Product.objects.get(id=data['product_id'].id)
         product.quantity -= int(data['quantity'])
@@ -125,10 +125,11 @@ class AddToBasketAPIView(generics.CreateAPIView):
 
 
 class BasketByIdAPIView(generics.ListAPIView):
-    serializer_class = fs.GetBasketSerializer
+    serializer_class = fs.CreateBasketSerializer
 
     def get_queryset(self):
-        user_id = self.kwargs['user_id']
+        token = self.kwargs['token']
+        user_id = Token.objects.get(key=token).user_id
         return model.Basket.objects.filter(user_id=user_id)
 
 
