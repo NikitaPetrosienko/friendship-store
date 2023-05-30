@@ -6,12 +6,6 @@ from django.contrib.auth.models import User
 from djoser.serializers import UserCreateSerializer
 
 
-# class UserToken(serializers.ModelSerializer):
-#     class Meta:
-#         model = Token
-#         fields = ('key',)
-
-
 class ReviewSerializer(serializers.ModelSerializer):
     class Meta:
         model = model.Review
@@ -91,9 +85,11 @@ class GetBasketSerializer(serializers.ModelSerializer):
 
 
 class FavoriteSerializer(serializers.ModelSerializer):
+    token = serializers.CharField(required=False)
+
     class Meta:
         model = model.Favorite
-        fields = '__all__'
+        fields = ('token', 'product_id',)
 
 
 class FavoriteGetSerializer(serializers.ModelSerializer):

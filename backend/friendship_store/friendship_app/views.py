@@ -84,6 +84,13 @@ class FavoriteListAPIView(generics.ListAPIView):
 class FavoriteCreateAPIView(generics.CreateAPIView):
     serializer_class = fs.FavoriteSerializer
 
+    def perform_create(self, serializer):
+        data = serializer.validated_data
+        user_id = Token.objects.get(key=data['token']).user_id
+        data['user_id'] = User.objects.get(id=user_id)
+        del data['token']
+        serializer.save()
+
 
 class FavoriteDestroyAPIView(generics.DestroyAPIView):
     serializer_class = fs.FavoriteSerializer
