@@ -54,17 +54,16 @@ const props = defineProps({
   flex: 1 1 auto;
 }
 .product__link {
+  @include font(24px, 400, 30px);
   display: inline-block;
   vertical-align: top;
-  max-width: 100%;
-  @include font(24px, 400, 30px);
-  color: inherit;
-  text-decoration: none;
-  margin-top: 24px;
   width: 100%;
   height: 1px;
+  max-width: 100%;
+  color: inherit;
   background-color: $blue;
   margin-top: 34px;
+  text-decoration: none;
   overflow-wrap: break-word;
 }
 
