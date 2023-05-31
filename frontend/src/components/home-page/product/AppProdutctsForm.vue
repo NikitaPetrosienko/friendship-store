@@ -1,10 +1,45 @@
 <script setup lang="ts">
 import vInput from '@/components/input/v-input.vue';
 
-import { ref } from 'vue';
+import { reactive, watch } from 'vue';
 
-const minPrice = ref('');
-const maxPrice = ref('');
+import { useRoute } from 'vue-router';
+
+const route = useRoute();
+
+import { useProductsStore } from '@/store/products/products';
+
+const productsStore = useProductsStore();
+
+const filtersConfig = reactive({
+  minPrice: productsStore.filters.minPrice,
+  maxPrice: productsStore.filters.maxPrice,
+  sortStatus: productsStore.filters.sortStatus
+});
+
+watch(filtersConfig, (newNumber, oldNumber) => {
+  if (filtersConfig.minPrice < 0) {
+    filtersConfig.minPrice = 1;
+  }
+  if (!isNaN(parseInt(filtersConfig.minPrice))) {
+    productsStore.filters.minPrice = parseInt(filtersConfig.minPrice);
+  }
+
+  if (!isNaN(parseInt(filtersConfig.maxPrice)) && (parseInt(filtersConfig.maxPrice) > parseInt(filtersConfig.minPrice))) {
+    productsStore.filters.maxPrice = parseInt(filtersConfig.maxPrice);
+  }
+
+  productsStore.filters.sortStatus = filtersConfig.sortStatus;
+
+  if (route.query.brand) {
+    productsStore.fetchProductsByBrand(route.query.brand);
+  }
+  if (route.query.category) {
+    productsStore.fetchProductsByCategory(route.query.category);
+  }
+
+});
+
 
 </script>
 
@@ -25,7 +60,7 @@ const maxPrice = ref('');
         placeholder="100"
         type="number"
         width="100%"
-        v-model:value="minPrice"
+        v-model:value="filtersConfig.minPrice"
       />
 
       <v-input
@@ -33,17 +68,19 @@ const maxPrice = ref('');
         placeholder="99999"
         type="number"
         width="100%"
-        v-model:value="maxPrice"
+        v-model:value="filtersConfig.maxPrice"
       />
     </fieldset>
 
     <fieldset class="products-form__fieldset">
       <label class="products-form__select-label" for="filterPrice">Сортировать по</label>
-      <select class="products-form__select" id="filterPrice">
+      <select class="products-form__select" id="filterPrice" v-model="filtersConfig.sortStatus">
         <option class="products-form__option" value="increase">возрастание</option>
         <option class="products-form__option" value="decrease">убывание</option>
       </select>
   </fieldset>
+
+  <div class="products-form__line"></div>
   </form>
 </template>
 
@@ -105,5 +142,11 @@ const maxPrice = ref('');
   width: auto;  
   outline: 0px;
   vertical-align: baseline;
+}
+
+.products-form__line {
+  width: 100%;
+  background-color: $blue;
+  height: 1px;
 }
 </style>
