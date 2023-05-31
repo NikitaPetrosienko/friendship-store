@@ -6,7 +6,7 @@ urlpatterns = [
     path('products/', views.ProductAPIView.as_view()),
     path('brands/', views.BrandAPIView.as_view()),
     path('categories/', views.CategoryAPIView.as_view()),
-    path('order/', views.NewOrderAPIView.as_view()),
+    path('order/', views.OrderAPIView.as_view()),
     path('basket/', views.AddToBasketAPIView.as_view()),
     path('albums/', views.AlbumAPIView.as_view()),
     path('news/', views.NewsAPIView.as_view()),
@@ -17,7 +17,7 @@ urlpatterns = [
     path('product/<str:product>/', views.ProductByIdAPIView.as_view()),
     path('product_by_category/<str:category>/', views.ProductByCategoryAPIView.as_view()),
     path('product_by_brand/<str:brand>/', views.ProductByBrandAPIView.as_view()),
-    path('basket/<str:token>/', views.BasketByIdAPIView.as_view()),
+    path('basket/<str:token>/', views.GetBasketAPIView.as_view()),
     path('search/<str:word>/', views.SearchAPIView.as_view())
 ]
 

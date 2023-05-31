@@ -1,6 +1,5 @@
 from rest_framework import serializers
 import friendship_app.models as model
-from rest_framework.authtoken.models import Token
 from django.contrib.auth.models import User
 
 from djoser.serializers import UserCreateSerializer
@@ -76,8 +75,6 @@ class CreateBasketSerializer(serializers.ModelSerializer):
 
 class GetBasketSerializer(serializers.ModelSerializer):
     product_id = ProductSerializer()
-
-    # id = UserToken()
 
     class Meta:
         model = model.Basket

@@ -132,16 +132,19 @@ class AddToBasketAPIView(generics.CreateAPIView):
         return self.queryset
 
 
-class BasketByIdAPIView(generics.ListAPIView):
-    serializer_class = fs.CreateBasketSerializer
-
-    def get_queryset(self):
-        token = self.kwargs['token']
+class GetBasketAPIView(APIView):
+    def get(self, request, token):
         user_id = Token.objects.get(key=token).user_id
-        return model.Basket.objects.filter(user_id=user_id)
+        basket = model.Basket.objects.filter(user_id=user_id)
+        total_price = sum([b.product_id.price * b.quantity for b in basket])
+        response_data = {
+            'basket': [fs.GetBasketSerializer(b).data for b in basket],
+            'total_price': total_price,
+        }
+        return Response(response_data)
 
 
-class NewOrderAPIView(generics.CreateAPIView):
+class OrderAPIView(generics.CreateAPIView):
     serializer_class = fs.OrderSerializer
 
 
