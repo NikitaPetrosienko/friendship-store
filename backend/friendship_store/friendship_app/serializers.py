@@ -65,15 +65,15 @@ class ProductSerializer(serializers.ModelSerializer):
         )
 
 
-class CreateBasketSerializer(serializers.ModelSerializer):
+class BasketPostSerializer(serializers.ModelSerializer):
     token = serializers.CharField(required=False)
 
     class Meta:
         model = model.Basket
-        fields = ('token', 'product_id', 'quantity')
+        fields = ('token', 'product_id')
 
 
-class GetBasketSerializer(serializers.ModelSerializer):
+class BasketGetSerializer(serializers.ModelSerializer):
     product_id = ProductSerializer()
 
     class Meta:
@@ -110,9 +110,11 @@ class ImageSerializer(serializers.ModelSerializer):
 
 
 class OrderSerializer(serializers.ModelSerializer):
+    token = serializers.CharField(required=False)
+
     class Meta:
         model = model.Order
-        fields = '__all__'
+        exclude = ('user_id', 'total_price',)
 
 
 class NewsSerializer(serializers.ModelSerializer):

@@ -7,6 +7,7 @@ class Basket(models.Model):
     user_id = models.ForeignKey(User, on_delete=models.PROTECT)
     product_id = models.ForeignKey('Product', on_delete=models.PROTECT, related_name='product')
     quantity = models.IntegerField(default=1)
+    ordered = models.BooleanField(default=False)
 
     def __str__(self):
         return f'{self.user_id} - {self.product_id}'
@@ -21,17 +22,18 @@ class Favorite(models.Model):
 
 
 class Order(models.Model):
-    basket_id = models.ForeignKey('Basket', on_delete=models.PROTECT)
+    user_id = models.ForeignKey(User, on_delete=models.PROTECT, default=0)
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     email = models.EmailField()
     phoneNumberRegex = RegexValidator(regex=r"^\+?1?\d{8,15}$")
-    phoneNumber = models.CharField(validators=[phoneNumberRegex], max_length=16, unique=True)
+    phoneNumber = models.CharField(validators=[phoneNumberRegex], max_length=16)
     district = models.CharField(max_length=50)
     street = models.CharField(max_length=50)
     house = models.CharField(max_length=5)
     apartment = models.CharField(max_length=5, blank=True)
     is_card_payment = models.BooleanField(default=False)
+    total_price = models.DecimalField(decimal_places=2, max_digits=10, default=0)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -89,7 +91,6 @@ class News(models.Model):
 
 
 class Review(models.Model):
-    # rating = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(5)])
     name_user = models.CharField(max_length=50)
     body = models.TextField()
     product_id = models.ForeignKey(Product, on_delete=models.PROTECT)
