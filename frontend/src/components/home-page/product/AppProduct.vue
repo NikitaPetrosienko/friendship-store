@@ -38,7 +38,7 @@ const props = defineProps({
       <router-link 
         :to="{
           name: 'ProductPage',
-          params: { id: `${item.model}`, }
+          params: { category: `${item.category.category_name}`, id: `${item.model}`, }
         }"
         class="product__link"
       ></router-link>
