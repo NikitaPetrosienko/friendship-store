@@ -6,6 +6,8 @@ import { IProduct, IProductPage, IFavouriteProduct } from '@/store/products/prod
 
 import { useCommonStore } from '@/store/common/common';
 
+import { useAuthStore } from '@/store/auth/auth';
+
 export const useProductsStore = defineStore('products', {
   state: () => ({
     products: [] as IProduct[],
@@ -54,10 +56,10 @@ export const useProductsStore = defineStore('products', {
         throw error;
       }
     },
-    async addToCart({ user_id, product_id}) {
+    async addToCart({ user_id, product_id}) { //ToDO
       console.log('addToCart: ', { user_id, product_id })
     },
-    async getUserCart({ user_id}) {
+    async getUserCart({ user_id}) { // ToDo
       try {
         const respone = await axios.get('http://127.0.0.1:8000/api/v1/basket/1/', { user_id });
       } catch (error) { 
@@ -77,6 +79,16 @@ export const useProductsStore = defineStore('products', {
       try {
         const respone = await axios.get(`http://127.0.0.1:8000/api/v1/favorites/${token}`);
         this.favoritesProducts = await respone.data;
+      } catch (error) { 
+        console.error(error);
+        throw error;
+      }
+    },
+    async deleteFavouriteProduct({ id }) {
+      try {
+        const response = await axios.delete(`http://127.0.0.1:8000/api/v1/delete_favorite/${id}`);
+        const authStore = useAuthStore();
+        this.fetchFavouriteProducts({ token: authStore.user.id})
       } catch (error) { 
         console.error(error);
         throw error;
