@@ -1,3 +1,14 @@
+export interface ICategory {
+  id: number,
+  category_name: string
+}
+
+export interface IBrand {
+  id: number,
+  brand_name: string,
+  image: string,
+}
+
 export interface IProduct {
   id: number,
   product_name: string,
@@ -8,8 +19,8 @@ export interface IProduct {
   quantity: number,
   main_image: string,
   size: string,
-  category: number,
-  brand: number
+  category: ICategory,
+  brand: IBrand
 }
 
 export interface IProductComment {
@@ -24,4 +35,11 @@ export interface IProductPage {
   product: IProduct,
   review: IProductComment[],
   images: [],
+}
+
+export interface IFavouriteProduct {
+  id: number,
+  user_id: string,
+  product_id: string,
+  product: IProduct,
 }
