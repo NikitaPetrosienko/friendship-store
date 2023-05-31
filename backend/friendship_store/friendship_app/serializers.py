@@ -70,7 +70,7 @@ class CreateBasketSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = model.Basket
-        fields = ('token', 'product_id', 'quantity')
+        fields = ('token', 'product_id')
 
 
 class GetBasketSerializer(serializers.ModelSerializer):

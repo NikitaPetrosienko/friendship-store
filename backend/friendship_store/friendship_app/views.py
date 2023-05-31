@@ -141,7 +141,7 @@ class AddToBasketAPIView(generics.CreateAPIView):
         data['user_id'] = User.objects.get(id=user_id)
         del data['token']
         product = model.Product.objects.get(id=data['product_id'].id)
-        product.quantity -= int(data['quantity'])
+        product.quantity -= 1
 
         if product.quantity >= 0:
             product.save()
