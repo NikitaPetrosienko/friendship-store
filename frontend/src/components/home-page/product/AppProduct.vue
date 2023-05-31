@@ -5,13 +5,6 @@ import { PropType } from 'vue';
 
 import { IProduct } from '@/store/products/products.interfaces';
 
-interface IPropProduct {
-  id: number,
-  imagePath: string,
-  title: string,
-  price: number,
-}
-
 const props = defineProps({
   item: {
     type: Object as PropType<IProduct>,
