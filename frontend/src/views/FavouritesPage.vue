@@ -26,11 +26,23 @@ productsStore.fetchFavouriteProducts({ token: authStore.user.id })
   <div class="favourites-page">
     <div v-if="!commonStore.loading" class="container">
       <div class="favourites-page__title">Мои избранные</div>
-      <div class="favourites-page__row">
+
+      <div 
+        v-if="productsStore.favoritesProducts.length !== 0" 
+        class="favourites-page__row"
+      >
         <div class="favourites-page__column" v-for="product in productsStore.favoritesProducts" :key="product.id">
           <AppFavouriteProduct :item="product.product_id" :id-product="product.id"/>          
         </div>
       </div>
+
+      <div 
+        v-else
+        class="favourites-page__placeholder"
+      >
+        Добавьте свой первый товар
+      </div>
+
     </div>
     <div v-else class="container">
       Загрузка данных..
@@ -58,6 +70,12 @@ productsStore.fetchFavouriteProducts({ token: authStore.user.id })
   justify-content: space-between;
   flex-wrap: wrap;
   margin: 30px -15px 0;
+}
+
+.favourites-page__placeholder {
+  @include font(30px, 400, 1.2);
+  margin-top: 50px;
+  text-align: center;
 }
 .favourites-page__column {
   width: calc(100% / 4);
