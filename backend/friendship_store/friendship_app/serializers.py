@@ -110,6 +110,8 @@ class ImageSerializer(serializers.ModelSerializer):
 
 
 class OrderSerializer(serializers.ModelSerializer):
+    token = serializers.CharField(required=False)
+
     class Meta:
         model = model.Order
         fields = '__all__'

@@ -7,6 +7,7 @@ class Basket(models.Model):
     user_id = models.ForeignKey(User, on_delete=models.PROTECT)
     product_id = models.ForeignKey('Product', on_delete=models.PROTECT, related_name='product')
     quantity = models.IntegerField(default=1)
+    ordered = models.BooleanField(default=False)
 
     def __str__(self):
         return f'{self.user_id} - {self.product_id}'
@@ -21,7 +22,7 @@ class Favorite(models.Model):
 
 
 class Order(models.Model):
-    basket_id = models.ForeignKey('Basket', on_delete=models.PROTECT)
+    user_id = models.ForeignKey(User, on_delete=models.PROTECT, default=0)
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     email = models.EmailField()
