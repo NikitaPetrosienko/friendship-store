@@ -17,7 +17,8 @@ export const useProductsStore = defineStore('products', {
       maxPrice: 99999,
       sortStatus: 'increase'
     },
-    favoritesProducts : [] as IFavouriteProduct[]
+    favoritesProducts : [] as IFavouriteProduct[],
+    userCart: [], //TODO
   }),
   actions: {
     async fetchProductsByBrand(brandName) {
@@ -51,17 +52,6 @@ export const useProductsStore = defineStore('products', {
       try {
         const respone = await axios.get(`http://127.0.0.1:8000/api/v1/product/${productSlug}`);
         this.currentProduct = await respone.data;
-      } catch (error) { 
-        console.error(error);
-        throw error;
-      }
-    },
-    async addToCart({ user_id, product_id}) { //ToDO
-      console.log('addToCart: ', { user_id, product_id })
-    },
-    async getUserCart({ user_id}) { // ToDo
-      try {
-        const respone = await axios.get('http://127.0.0.1:8000/api/v1/basket/1/', { user_id });
       } catch (error) { 
         console.error(error);
         throw error;

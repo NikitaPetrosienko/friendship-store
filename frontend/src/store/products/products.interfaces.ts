@@ -42,3 +42,9 @@ export interface IFavouriteProduct {
   user_id: string,
   product_id: IProduct,
 }
+
+export interface IFavouriteProduct {
+  id: number,
+  user_id: string,
+  product_id: IProduct,
+}
