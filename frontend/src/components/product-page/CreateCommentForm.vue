@@ -7,16 +7,12 @@ import { helpers, minLength, maxLength } from '@vuelidate/validators';
 
 import { computed, ref } from 'vue';
 
+import { useProductsStore } from '@/store/products/products';
+
+const productsStore = useProductsStore();
+
 const commentAuthor = ref('');
 const commentText = ref('');
-
-const submitForm = () => {
-  const formData = {
-    commentAuthor: commentAuthor.value,
-    commentText: commentText.value,
-  }
-  console.log('submitForm: ', formData);
-}
 
 const rules = computed(() => ({
   commentAuthor: {
@@ -30,14 +26,20 @@ const rules = computed(() => ({
 
 const v = useVuelidate(rules, { commentAuthor, commentText });
 
-const handleClick = () => {
-  console.log('Press Button');
+
+
+const craeteComment = () => {
+  productsStore.addComment({
+    name_user: commentAuthor.value,
+    product_id: productsStore.currentProduct.product.id,
+    body: commentText.value
+  });
 }
 
 </script>
 
 <template>
-  <form class="createcomment-form" action="#" method="POST" @submit.prevent="submitForm">
+  <form class="createcomment-form" action="#" method="POST" @submit.prevent="craeteComment">
     <h3 class="createcomment-form__title">Добавить комментарий</h3>
 
     <v-input
@@ -61,7 +63,7 @@ const handleClick = () => {
 
     <!-- <v-button label="Добавить комментарий" color="primary" size="medium" rounded type="submit" icon="pen-to-square"
       @click="handleClick" /> -->
-      <button class="createcomment-form__btn" type="button" @click="handleClick">Добавить комментарий</button>
+      <button class="createcomment-form__btn" type="submit">Добавить комментарий</button>
 
     <!-- <v-checkbox
       label="Согласен на обработку"
@@ -89,7 +91,7 @@ const handleClick = () => {
 }
 
 .createcomment-form__input + .createcomment-form__input {
-  margin-top: 30px;
+  margin-top: 50px;
 }
 
 .createcomment-form__btn {
@@ -102,6 +104,7 @@ const handleClick = () => {
   color: $white;
   text-decoration: none;
   padding: 10px 25px;
+  margin-top: 30px;
   @include for-size(tablet) {
     @include font(16px, 900, 1.2);
     padding: 8px 16px;
