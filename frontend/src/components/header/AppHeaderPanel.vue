@@ -19,25 +19,37 @@ const logoutUser = () => {
       <router-link
         class="header-panel__link header-panel__link_basket"
         to="/cart"
-      >Корзина</router-link>
+        >Корзина
+      </router-link>
 
       <router-link
+        v-if="authStore.isUserLoggedIn"
         class="header-panel__link header-panel__link_favourites"
         to="/favourites"
-      >Избранное</router-link>
+        >Избранное
+      </router-link>
+
+      <router-link
+        v-if="!authStore.isUserLoggedIn"
+        class="header-panel__link header-panel__link_favourites"
+        to="/login"
+        >Избранное
+      </router-link>
 
       <router-link
         v-if="!authStore.isUserLoggedIn"
         class="header-panel__link header-panel__link_login"
         to="/login"
-      >Войти</router-link>
+        >Войти
+      </router-link>
 
       <router-link
         v-else
         class="header-panel__link header-panel__link_login"
         to="/"
         @click="logoutUser"
-      >Выйти</router-link>
+        >Выйти
+      </router-link>
     </div>
   </div>
 </template>
