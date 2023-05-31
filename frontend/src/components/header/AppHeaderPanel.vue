@@ -20,7 +20,11 @@ const logoutUser = () => {
         class="header-panel__link header-panel__link_basket"
         to="/cart"
       >Корзина</router-link>
-      <a href="#" class="header-panel__link header-panel__link_favourites">Избранное</a>
+
+      <router-link
+        class="header-panel__link header-panel__link_favourites"
+        to="/favourites"
+      >Избранное</router-link>
 
       <router-link
         v-if="!authStore.isUserLoggedIn"
