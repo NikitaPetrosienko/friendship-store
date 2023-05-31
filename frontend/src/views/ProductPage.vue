@@ -12,9 +12,11 @@ const router = useRouter();
 
 import { useProductsStore } from '@/store/products/products';
 import { useAuthStore } from '@/store/auth/auth';
+import { useCartStore } from '@/store/cart/cart';
 
 const productsStore = useProductsStore();
 const authStore = useAuthStore();
+const cartStore = useCartStore();
 
 productsStore.fetchProductBySlug(route.params.id);
 
@@ -45,9 +47,9 @@ const breadcrumbs = ref([
 
 const addToCart = () => {
   if (authStore.user.id) {
-    productsStore.addToCart({
-      user_id: authStore.user.id,
-      product_id: productsStore.currentProduct.product.id
+    cartStore.addToCart({
+      token: authStore.user.id,
+      product_id: productsStore.currentProduct.product.id,
     });
   } else {
     alert('Необходима регистраиця!');
