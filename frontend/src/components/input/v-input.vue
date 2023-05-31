@@ -71,11 +71,12 @@ const updateValue = (e: any) => {
 }
 
 .form-error {
-  background: $red;
+  @include font(16px, 600, 1.2);
+  position: absolute;
   margin-top: 4px;
   border-radius: 7px;
   font-size: 13px;
-  color: #fff;
+  color: $red;
   padding: 5px;
 }
 
