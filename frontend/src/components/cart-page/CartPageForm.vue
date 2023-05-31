@@ -76,7 +76,7 @@ const selectedPayment = ref('');
           />
           <v-input
             class="cartpage-form__input"
-            label="* Ваше фамилия"
+            label="* Ваша фамилия"
             name="surname"
             placeholder="Введите фамилия"
             width="100%"
@@ -193,7 +193,7 @@ const selectedPayment = ref('');
 }
 
 .cartpage-form__input + .cartpage-form__input {
-  margin-top: 30px;
+  margin-top: 50px;
 }
 .cartpage-form__column_button {
   width: 100%;

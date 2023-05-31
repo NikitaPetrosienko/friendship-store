@@ -100,7 +100,7 @@ const submitForm = () => {
   color: $blue;
   text-decoration: none;
   padding: 10px 25px;
-  margin-bottom: 20px;
+  margin: 20px 0;
   @include for-size(tablet) {
     @include font(16px, 900, 1.2);
     padding: 8px 16px;
@@ -114,7 +114,7 @@ const submitForm = () => {
 }
 
 .login-modal__input + .login-modal__input {
-  margin-top: 30px;
+  margin-top: 50px;
 }
 .login-modal__img {
 }
