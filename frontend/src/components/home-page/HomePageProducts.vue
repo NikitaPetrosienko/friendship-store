@@ -2,14 +2,16 @@
 import AppProductsForm from '@/components/home-page/product/AppProdutctsForm.vue';
 import AppProduct from '@/components/home-page/product/AppProduct.vue';
 
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 
 const route = useRoute();
 
 import { useProductsStore } from '@/store/products/products';
+import { useCommonStore } from '@/store/common/common';
 
 const productsStore = useProductsStore();
+const commonStore = useCommonStore();
 
 // const productsMock = ref([
 //   { id: 1, imagePath: "/src/assets/img/brands/adidas/adidas1.jpeg", title: "Кеды Adidas Busenitz Vulc II Core Black FTWWHT VIVRED", price: 6700 },
@@ -19,18 +21,31 @@ const productsStore = useProductsStore();
 // ]);
 
 if (route.query.brand) {
+  // console.log("route.query.brand: ", route.query.brand);
   productsStore.fetchProductsByBrand(route.query.brand);
 }
 if (route.query.category) {
+  // console.log("route.query.category: ", route.query.category);
   productsStore.fetchProductsByCategory(route.query.category);
 }
+
+watch(() => route.query.brand, (newValue) => {
+    productsStore.fetchProductsByBrand(newValue);
+  }
+);
+
+watch(() => route.query.category,(newValue) => {
+    productsStore.fetchProductsByCategory(newValue);
+  }
+);
 
 </script>
 
 <template>
-  <div class="homepage-products">
-    <div class="container">
-      <div class="homepage-products__title">Adidas</div>
+  <div class="homepage-products" id="products">
+    <div v-if="!commonStore.loading" class="container">
+      <div v-if="route.query.brand" class="homepage-products__title">{{ route.query.brand }}</div>
+      <div v-else class="homepage-products__title">Продукты</div>
       
       <AppProductsForm />
 
@@ -40,6 +55,9 @@ if (route.query.category) {
         </div>
       </div>
     </div>
+    <div v-else class="container">
+      Загрузка данных..
+    </div>
   </div>
 </template>
 
@@ -47,7 +65,7 @@ if (route.query.category) {
 @import '@/assets/scss/_variables.scss';
 @import '@/assets/scss/_mixins.scss';
 .homepage-products {
-  padding-top: 40px;
+  padding: 40px 0;
 }
 
 .homepage-products__title {
