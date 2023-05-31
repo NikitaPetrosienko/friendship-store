@@ -65,7 +65,7 @@ class ProductSerializer(serializers.ModelSerializer):
         )
 
 
-class CreateBasketSerializer(serializers.ModelSerializer):
+class BasketPostSerializer(serializers.ModelSerializer):
     token = serializers.CharField(required=False)
 
     class Meta:
@@ -73,7 +73,7 @@ class CreateBasketSerializer(serializers.ModelSerializer):
         fields = ('token', 'product_id')
 
 
-class GetBasketSerializer(serializers.ModelSerializer):
+class BasketGetSerializer(serializers.ModelSerializer):
     product_id = ProductSerializer()
 
     class Meta:

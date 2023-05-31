@@ -8,6 +8,7 @@ from rest_framework.authtoken.models import Token
 from django.contrib.auth.models import User
 from rest_framework.exceptions import ValidationError
 from friendship_app.tasks import order_notice
+from django.core.exceptions import ObjectDoesNotExist
 
 
 class SearchAPIView(generics.ListAPIView):
@@ -133,7 +134,7 @@ class AlbumAPIView(generics.ListAPIView):
 
 
 class AddToBasketAPIView(generics.CreateAPIView):
-    serializer_class = fs.CreateBasketSerializer
+    serializer_class = fs.BasketPostSerializer
 
     def perform_create(self, serializer):
         data = serializer.validated_data
@@ -153,16 +154,42 @@ class AddToBasketAPIView(generics.CreateAPIView):
         return self.queryset
 
 
-class GetBasketAPIView(APIView):
+class BasketGetAPIView(APIView):
     def get(self, request, token):
         user_id = Token.objects.get(key=token).user_id
         basket = model.Basket.objects.filter(user_id=user_id, ordered=False)
         total_price = sum([b.product_id.price * b.quantity for b in basket])
         response_data = {
-            'basket': [fs.GetBasketSerializer(b).data for b in basket],
+            'basket': [fs.BasketGetSerializer(b).data for b in basket],
             'total_price': total_price,
         }
         return Response(response_data)
+
+
+class BasketQuantityAPIView(APIView):
+    def get(self, request, basket_id, incr):
+        try:
+            basket = model.Basket.objects.get(id=basket_id, ordered=False)
+        except ObjectDoesNotExist:
+            return Response({'message': 'Такой корзины не существует.'}, status=400)
+
+        product = model.Product.objects.get(id=basket.product_id.id)
+
+        if incr == 'incr':
+            if product.quantity <= 0:
+                return Response({'message': 'Товара нет в наличие.'}, status=400)
+            basket.quantity += 1
+            product.quantity -= 1
+        elif incr == 'decr':
+            basket.quantity -= 1
+            product.quantity += 1
+            if basket.quantity == 0:
+                basket.delete()
+                return Response({'message': 'Товар удален из корзины.'}, status=200)
+        basket.save()
+        product.save()
+
+        return Response({'message': 'Количество товара к корзине обновлено.'}, status=200)
 
 
 class OrderAPIView(generics.CreateAPIView):
