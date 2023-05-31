@@ -40,6 +40,5 @@ export interface IProductPage {
 export interface IFavouriteProduct {
   id: number,
   user_id: string,
-  product_id: string,
-  product: IProduct,
+  product_id: IProduct,
 }
