@@ -1,15 +1,26 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 
-const cartList = ref([
-  {
-    id: 1,
-    title: 'Дека Footwork Progress Universe fwsb-prguniverse (multi)',
-    count: 1,
-    imageURL: 'assets/img/skateboards/img1.png',
-    totalPrice: '2630.00' 
-  }
-]);
+// const mockCartList = ref([
+//   {
+//     id: 1,
+//     title: 'Дека Footwork Progress Universe fwsb-prguniverse (multi)',
+//     count: 1,
+//     imageURL: 'assets/img/skateboards/img1.png',
+//     totalPrice: '2630.00' 
+//   }
+// ]);
+
+
+import { useProductsStore } from '@/store/products/products';
+import { useAuthStore } from '@/store/auth/auth';
+import { useCartStore } from '@/store/cart/cart';
+
+const productsStore = useProductsStore();
+const authStore = useAuthStore();
+const cartStore = useCartStore();
+
+cartStore.getUserCart({ token: authStore.user.id });
 
 </script>
 
@@ -24,35 +35,35 @@ const cartList = ref([
     </thead>
     <tbody>
       <tr 
-        v-for="item in cartList"
+        v-for="item in cartStore.userCart.basket"
         :key="item.id"
       >
         <td class="cartpage-table__td cartpage-table__td_main-info">
           <img 
             class="cartpage-table__img"
-            src="../../assets/img/skateboards/img1.png" 
-            alt="skate"
+            :src="item.product_id.main_image" 
+            alt="cart-product"
           >
-          <div class="cartpage-table__">{{ item.title }}</div>
+          <div class="cartpage-table__title">{{ item.product_id.product_name }}</div>
         </td>
         <td class="cartpage-table__td cartpage-table__td-counters cartpage-table__td_main-info">
           <button class="cartpage-table__control cartpage-table__control_decrease"></button>
-          <span class="cartpage-table__product-count">{{ item.count }}</span>
+          <span class="cartpage-table__product-count">{{ item.quantity }}</span>
           <button class="cartpage-table__control cartpage-table__control_increase"></button>
         </td>
         <td class="cartpage-table__td cartpage-table__td_main-info">
-          <div class="cartpage-table__product-price">{{ item.totalPrice }}р</div>
+          <div class="cartpage-table__product-price">{{ item.quantity * parseInt(item.product_id.price) }}р</div>
         </td>
       </tr>
 
       <tr>
         <td class="cartpage-table__td cartpage-table__delivery-info">Доставка</td>
         <td class="cartpage-table__td cartpage-table__delivery-info"></td>
-        <td class="cartpage-table__td cartpage-table__delivery-info">300.00р</td>
+        <td class="cartpage-table__td cartpage-table__delivery-info">300.00 &#8381;</td>
       </tr>
 
       <tr>
-        <td class="cartpage-table__td cartpage-table__total-price cartpage-table__td_extra-info" colspan="2">Сумма заказа: 2930.00р</td>
+        <td class="cartpage-table__td cartpage-table__total-price cartpage-table__td_extra-info" colspan="2">Сумма заказа: {{ cartStore.userCart.total_price }} &#8381;</td>
         <td class="cartpage-table__td cartpage-table__td_extra-info">
           <router-link class="cartpage-table__btn" to="/form">Далее</router-link>
         </td>
