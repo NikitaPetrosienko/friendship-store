@@ -98,6 +98,17 @@ const routes = [
     ],
   },
   {
+    path: '/favourites',
+    component: () => import('@/layouts/Default.vue'),
+    children: [
+      {
+        path: '',
+        name: 'FavouritesPage',
+        component: () => import('@/views/FavouritesPage.vue'),
+      },
+    ],
+  },
+  {
     path: '/login',
     component: () => import('@/layouts/Empty.vue'),
     children: [
