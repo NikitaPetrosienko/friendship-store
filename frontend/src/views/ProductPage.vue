@@ -1,23 +1,80 @@
 <script setup lang="ts">
 import CreateCommentForm from '@/components/product-page/CreateCommentForm.vue';
 import AppComment from '@/components/product-page/AppComment.vue';
+import AppBreadcrumb from '@/components/breadcrumb/AppBreadcrumb.vue'
 
-import { useRoute } from 'vue-router';
+import { ref, computed } from 'vue';
+
+import { useRoute, useRouter } from 'vue-router';
 
 const route = useRoute();
+const router = useRouter();
 
 import { useProductsStore } from '@/store/products/products';
+import { useAuthStore } from '@/store/auth/auth';
 
 const productsStore = useProductsStore();
+const authStore = useAuthStore();
 
 productsStore.fetchProductBySlug(route.params.id);
 
+const productName = computed(() => {
+  if (productsStore.currentProduct.product) {
+    return productsStore.currentProduct.product.product_name
+  }
+  return '';
+});
+
+const breadcrumbs = ref([
+  {
+    id: 1,
+    title: 'Главная',
+    url: '/'
+  },
+  {
+    id: 2,
+    title: route.params.category,
+    url: `/products/?category=${route.params.category}`
+  },
+  {
+    id: 3,
+    title: productName,
+    url: `/products/?id=${productName}`
+  },
+]);
+
+const addToCart = () => {
+  if (authStore.user.id) {
+    productsStore.addToCart({
+      user_id: authStore.user.id,
+      product_id: productsStore.currentProduct.product.id
+    });
+  } else {
+    alert('Необходима регистраиця!');
+    router.push('/login');
+  }
+}
+
+const addToFavourites = () => {
+  if (authStore.user.id) {
+    productsStore.addToFavourites({
+      token: authStore.user.id,
+      product_id: productsStore.currentProduct.product.id
+    });
+  } else {
+    alert('Необходима регистраиця!');
+    router.push('/login');
+  }
+}
 
 </script>
 
 <template>
   <div class="product-page">
     <div class="container">
+
+      <AppBreadcrumb :breadcrumbs="breadcrumbs"/>
+
       <div v-if="productsStore.currentProduct" class="product-page__row">
         <div v-if="productsStore.currentProduct.product" class="product-page__column product-page__column_picture">
           <img :src="productsStore.currentProduct.product.main_image" alt="skateboard">
@@ -30,9 +87,9 @@ productsStore.fetchProductBySlug(route.params.id);
           
           <div class="product-page__buttons">
             <div class="product-page__btn-cart">
-              <button class="product-page__btn" type="button">В корзину </button><span class="product-page__btn-count">0</span>
+              <button class="product-page__btn" type="button" @click="addToCart">В корзину </button><span class="product-page__btn-count">0</span>
             </div>
-            <button class="product-page__btn" type="button">В избранное</button>
+            <button class="product-page__btn" type="button" @click="addToFavourites">В избранное</button>
             <button class="product-page__btn" type="button">Купить в один клик</button>
           </div>
 
@@ -84,6 +141,7 @@ productsStore.fetchProductBySlug(route.params.id);
 .product-page__row {
   display: flex;
   margin: 0 -18px;
+  padding-top: 30px;
   @include for-size(tablet) {
     flex-wrap: wrap;
   }
