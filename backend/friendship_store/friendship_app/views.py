@@ -7,6 +7,7 @@ from django.http import Http404, JsonResponse
 from rest_framework.authtoken.models import Token
 from django.contrib.auth.models import User
 from rest_framework.exceptions import ValidationError
+from friendship_app.tasks import order_notice
 
 
 class SearchAPIView(generics.ListAPIView):
@@ -171,11 +172,22 @@ class OrderAPIView(generics.CreateAPIView):
         data = serializer.validated_data
         user_id = Token.objects.get(key=data['token']).user_id
         data['user_id'] = User.objects.get(id=user_id)
+
         basket = model.Basket.objects.filter(user_id=user_id)
+
+        total_price = 0
         for b in basket:
             b.ordered = True
+            total_price += b.quantity * b.product_id.price
             b.save()
+
+        data['total_price'] = total_price
         del data['token']
+
+        first_name = User.objects.get(id=user_id).first_name
+        email = User.objects.get(id=user_id).email
+        order_notice.delay(first_name, total_price, email)
+
         serializer.save()
 
 

@@ -2,6 +2,8 @@ from friendship_store.celery import app
 from django.contrib.auth.models import User
 from django.core.mail import send_mail
 
+import datetime
+
 
 @app.task
 def send_beat_email():
@@ -18,3 +20,18 @@ def send_beat_email():
             [user.email],
             fail_silently=False,
         )
+
+
+@app.task
+def order_notice(first_name, total_price, email):
+    send_mail(
+        'friendship',
+        f'Здравствуйте, {first_name}!\n\n'
+        f'Мы рады сообщить, что ваша покупка была успешно соверщена.\n\n'
+        f'Дата покупки: {datetime.datetime.now().strftime("%d.%m.%Y")} '
+        f'Сумма покупки: {total_price}\n\n'
+        f'Спасибо, что выбрали наш магазин!',
+        'friendship@mail.ru',
+        [email],
+        fail_silently=False,
+    )

@@ -27,12 +27,13 @@ class Order(models.Model):
     last_name = models.CharField(max_length=50)
     email = models.EmailField()
     phoneNumberRegex = RegexValidator(regex=r"^\+?1?\d{8,15}$")
-    phoneNumber = models.CharField(validators=[phoneNumberRegex], max_length=16, unique=True)
+    phoneNumber = models.CharField(validators=[phoneNumberRegex], max_length=16)
     district = models.CharField(max_length=50)
     street = models.CharField(max_length=50)
     house = models.CharField(max_length=5)
     apartment = models.CharField(max_length=5, blank=True)
     is_card_payment = models.BooleanField(default=False)
+    total_price = models.DecimalField(decimal_places=2, max_digits=10, default=0)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

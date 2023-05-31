@@ -114,7 +114,7 @@ class OrderSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = model.Order
-        fields = '__all__'
+        exclude = ('user_id', 'total_price',)
 
 
 class NewsSerializer(serializers.ModelSerializer):
