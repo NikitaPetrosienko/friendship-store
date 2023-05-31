@@ -57,7 +57,17 @@ class ProductByCategoryAPIView(generics.ListAPIView):
 
     def get_queryset(self):
         category = self.kwargs['category']
-        return model.Product.objects.filter(category__category_name=category)
+        queryset = model.Product.objects.filter(category__category_name=category)
+        min_price = self.request.query_params.get('min_price', 0)
+        max_price = self.request.query_params.get('max_price', 999_999_999)
+        sort_by = self.request.query_params.get('sort_by', 'incr')
+        queryset = queryset.filter(price__gte=min_price, price__lte=max_price)
+
+        if sort_by == 'incr':
+            queryset = queryset.order_by('price')
+        elif sort_by == 'decr':
+            queryset = queryset.order_by('-price')
+        return queryset
 
 
 class ProductByBrandAPIView(generics.ListAPIView):
@@ -65,7 +75,17 @@ class ProductByBrandAPIView(generics.ListAPIView):
 
     def get_queryset(self):
         brand = self.kwargs['brand']
-        return model.Product.objects.filter(brand__brand_name=brand)
+        queryset = model.Product.objects.filter(brand__brand_name=brand)
+        min_price = self.request.query_params.get('min_price', 0)
+        max_price = self.request.query_params.get('max_price', 999_999_999)
+        sort_by = self.request.query_params.get('sort_by', 'incr')
+        queryset = queryset.filter(price__gte=min_price, price__lte=max_price)
+
+        if sort_by == 'incr':
+            queryset = queryset.order_by('price')
+        elif sort_by == 'decr':
+            queryset = queryset.order_by('-price')
+        return queryset
 
 
 class CategoryAPIView(generics.ListAPIView):
