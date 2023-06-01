@@ -121,13 +121,18 @@ const increaseProductCount = (productId) => {
 
 }
 .cartpage-table__td-counters {
-  vertical-align: middle; // ToDO
+  vertical-align: middle;
 }
 .cartpage-table__control {
   @include button-reset;
 }
 .cartpage-table__control {
   display: inline-block;
+  vertical-align: baseline;
+  text-align: center;
+  padding: 10px;
+  border-radius: 5px;
+  transition: all 0.3s ease;
   @include font(36px, 400, 1.2);
   @include for-size(tablet) {
     @include font(20px, 900, 1.2);
