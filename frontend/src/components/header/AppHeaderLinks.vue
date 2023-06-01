@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import AppHeaderSearch from '@/components/header/AppHeaderSearch.vue';
+
 import { ref } from 'vue';
 
 const navigationList = ref([
@@ -33,6 +35,7 @@ const navigationList = ref([
     url: '/aboutus'
   },
 ]);
+
 </script>
 
 <template>
@@ -50,10 +53,7 @@ const navigationList = ref([
         </li>
       </ul>
     </nav>
-    <div class="header-links__search">
-      <input class="header-links__input" type="text" placeholder="Поиск">
-      <button class="header-links__button" type="button">Найти</button>
-    </div>
+    <AppHeaderSearch />
   </div>
 </template>
 
@@ -82,26 +82,5 @@ const navigationList = ref([
   @include font(24px, 400, 30px);
   color: $white;
   text-decoration: none;
-}
-.header-links__search {
-  display: flex;
-}
-.header-links__input {
-  width: 100%;
-  padding: 12px 0 13px 19px;
-  border: 2px solid #000000
-}
-.header-links__button {
-  width: 102px;
-  height: 63px;
-  background-color: $gray;
-  background-image: url(../../assets/img/svg/search.svg);
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: 35px 35px;
-  padding: 14px 32px;
-  font-size: 0;
-  overflow: hidden;
-  cursor: pointer;
 }
 </style>
