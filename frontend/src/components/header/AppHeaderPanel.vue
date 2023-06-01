@@ -23,16 +23,8 @@ const logoutUser = () => {
       </router-link>
 
       <router-link
-        v-if="authStore.isUserLoggedIn"
         class="header-panel__link header-panel__link_favourites"
         to="/favourites"
-        >Избранное
-      </router-link>
-
-      <router-link
-        v-if="!authStore.isUserLoggedIn"
-        class="header-panel__link header-panel__link_favourites"
-        to="/login"
         >Избранное
       </router-link>
 
