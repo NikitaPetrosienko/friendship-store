@@ -31,7 +31,6 @@ export const useCartStore = defineStore('cart', {
       }
     },
     async decreaseProductCount({ basket_id }) {
-      console.log('decreaseProductCount: ', basket_id)
       const authStore = useAuthStore();
       try {
         const respone = await axios.get(`http://127.0.0.1:8000/api/v1/basket/${basket_id}/decr/`);
@@ -42,7 +41,6 @@ export const useCartStore = defineStore('cart', {
       }
     },
     async increseProductCount({ basket_id }) {
-      console.log('increseProductCount: ', basket_id)
       const authStore = useAuthStore();
       try {
         const respone = await axios.get(`http://127.0.0.1:8000/api/v1/basket/${basket_id}/incr/`);
