@@ -153,6 +153,8 @@ class AddToBasketAPIView(generics.CreateAPIView):
             product.quantity -= 1
             product.save()
         else:
+            product.availability = False
+            product.save()
             raise ValidationError('Товара нет в наличие.')
 
         try:
@@ -191,6 +193,8 @@ class BasketQuantityAPIView(APIView):
 
         if incr == 'incr':
             if product.quantity <= 0:
+                product.availability = False
+                product.save()
                 return Response({'message': 'Товара нет в наличие.'}, status=400)
             basket.quantity += 1
             product.quantity -= 1
