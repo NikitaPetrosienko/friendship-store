@@ -20,56 +20,71 @@ const productsStore = useProductsStore();
 const authStore = useAuthStore();
 const cartStore = useCartStore();
 
-cartStore.getUserCart({ token: authStore.credentials.token });
+cartStore.fetchUserCart({ token: authStore.credentials.token });
+
+
+
+const decreaseProductCount = (productId) => {
+  cartStore.decreaseProductCount({ basket_id: productId })
+}
+
+const increaseProductCount = (productId) => {
+  cartStore.increseProductCount({ basket_id: productId })
+}
 
 </script>
 
 <template>
-   <table class="cartpage-table">
-    <thead>
-      <tr>
-        <th class="cartpage-table__th">Товар</th>
-        <th class="cartpage-table__th">Кол-во</th>
-        <th class="cartpage-table__th">Итого</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr 
-        v-for="item in cartStore.userCart.basket"
-        :key="item.id"
-      >
-        <td class="cartpage-table__td cartpage-table__td_main-info">
-          <img 
-            class="cartpage-table__img"
-            :src="item.product_id.main_image" 
-            alt="cart-product"
-          >
-          <div class="cartpage-table__title">{{ item.product_id.product_name }}</div>
-        </td>
-        <td class="cartpage-table__td cartpage-table__td-counters cartpage-table__td_main-info">
-          <button class="cartpage-table__control cartpage-table__control_decrease"></button>
-          <span class="cartpage-table__product-count">{{ item.quantity }}</span>
-          <button class="cartpage-table__control cartpage-table__control_increase"></button>
-        </td>
-        <td class="cartpage-table__td cartpage-table__td_main-info">
-          <div class="cartpage-table__product-price">{{ item.quantity * parseInt(item.product_id.price) }}р</div>
-        </td>
-      </tr>
+  <div v-if="cartStore.userCart.basket">
+    <table v-if="cartStore.userCart.basket.length !== 0"  class="cartpage-table">
+      <thead>
+        <tr>
+          <th class="cartpage-table__th">Товар</th>
+          <th class="cartpage-table__th">Кол-во</th>
+          <th class="cartpage-table__th">Итого</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr 
+          v-for="item in cartStore.userCart.basket"
+          :key="item.id"
+        >
+          <td class="cartpage-table__td cartpage-table__td_main-info">
+            <img 
+              class="cartpage-table__img"
+              :src="item.product_id.main_image" 
+              alt="cart-product"
+            >
+            <div class="cartpage-table__title">{{ item.product_id.product_name }}</div>
+          </td>
+          <td class="cartpage-table__td cartpage-table__td-counters cartpage-table__td_main-info">
+            <button class="cartpage-table__control cartpage-table__control_decrease" @click="decreaseProductCount(item.id)" type="button" aria-label="уменьшить количество"></button>
+            <span class="cartpage-table__product-count">{{ item.quantity }}</span>
+            <button class="cartpage-table__control cartpage-table__control_increase" @click="increaseProductCount(item.id)" type="button" aria-label="увеличить количество"></button>
+          </td>
+          <td class="cartpage-table__td cartpage-table__td_main-info">
+            <div class="cartpage-table__product-price">{{ item.quantity * parseInt(item.product_id.price) }}р</div>
+          </td>
+        </tr>
 
-      <tr>
-        <td class="cartpage-table__td cartpage-table__delivery-info">Доставка</td>
-        <td class="cartpage-table__td cartpage-table__delivery-info"></td>
-        <td class="cartpage-table__td cartpage-table__delivery-info">300.00 &#8381;</td>
-      </tr>
+        <tr>
+          <td class="cartpage-table__td cartpage-table__delivery-info">Доставка</td>
+          <td class="cartpage-table__td cartpage-table__delivery-info"></td>
+          <td class="cartpage-table__td cartpage-table__delivery-info">300.00 &#8381;</td>
+        </tr>
 
-      <tr>
-        <td class="cartpage-table__td cartpage-table__total-price cartpage-table__td_extra-info" colspan="2">Сумма заказа: {{ cartStore.userCart.total_price }} &#8381;</td>
-        <td class="cartpage-table__td cartpage-table__td_extra-info">
-          <router-link class="cartpage-table__btn" to="/form">Далее</router-link>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+        <tr>
+          <td class="cartpage-table__td cartpage-table__total-price cartpage-table__td_extra-info" colspan="2">Сумма заказа: {{ cartStore.userCart.total_price }} &#8381;</td>
+          <td class="cartpage-table__td cartpage-table__td_extra-info">
+            <router-link class="cartpage-table__btn" to="/form">Далее</router-link>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div v-else>
+      <div class="cartpage-table__placeholder">Добавьте в корзину товары</div>
+    </div>
+  </div>
 </template>
 
 <style lang="scss" scoped>
@@ -172,5 +187,11 @@ cartStore.getUserCart({ token: authStore.credentials.token });
 .cartpage-table__btn::after {
   content: '>>';
   margin-left: 5px;
+}
+
+.cartpage-table__placeholder {
+  @include font(40px, 400, 1.2);
+  margin-top: 50px;
+  text-align: center;
 }
 </style>
