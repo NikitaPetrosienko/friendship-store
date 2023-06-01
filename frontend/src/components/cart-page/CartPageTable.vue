@@ -20,7 +20,7 @@ const productsStore = useProductsStore();
 const authStore = useAuthStore();
 const cartStore = useCartStore();
 
-cartStore.getUserCart({ token: authStore.user.id });
+cartStore.getUserCart({ token: authStore.credentials.token });
 
 </script>
 

@@ -46,9 +46,9 @@ const breadcrumbs = ref([
 ]);
 
 const addToCart = () => {
-  if (authStore.user.id) {
+  if (authStore.credentials.token) {
     cartStore.addToCart({
-      token: authStore.user.id,
+      token: authStore.credentials.token,
       product_id: productsStore.currentProduct.product.id,
     });
   } else {
@@ -58,9 +58,9 @@ const addToCart = () => {
 }
 
 const addToFavourites = () => {
-  if (authStore.user.id) {
+  if (authStore.credentials.token) {
     productsStore.addToFavourites({
-      token: authStore.user.id,
+      token: authStore.credentials.token,
       product_id: productsStore.currentProduct.product.id
     });
   } else {

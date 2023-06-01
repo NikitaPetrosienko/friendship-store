@@ -11,7 +11,7 @@ const productsStore = useProductsStore();
 const authStore = useAuthStore();
 const commonStore = useCommonStore();
 
-productsStore.fetchFavouriteProducts({ token: authStore.user.id })
+productsStore.fetchFavouriteProducts({ token: authStore.credentials.token })
 
 // const productsMock = ref([
 //   { id: 1, imagePath: "/src/assets/img/brands/adidas/adidas1.jpeg", title: "Кеды Adidas Busenitz Vulc II Core Black FTWWHT VIVRED", price: 6700 },
