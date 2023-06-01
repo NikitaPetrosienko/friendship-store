@@ -75,10 +75,14 @@ class BasketPostSerializer(serializers.ModelSerializer):
 
 class BasketGetSerializer(serializers.ModelSerializer):
     product_id = ProductSerializer()
+    total = serializers.SerializerMethodField()
 
     class Meta:
         model = model.Basket
-        fields = ('id', 'quantity', 'product_id')
+        fields = ('id', 'quantity', 'product_id', 'total')
+
+    def get_total(self, obj):
+        return obj.quantity * obj.product_id.price
 
 
 class FavoriteSerializer(serializers.ModelSerializer):
