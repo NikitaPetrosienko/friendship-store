@@ -11,6 +11,7 @@ import { useAuthStore } from '@/store/auth/auth';
 export const useProductsStore = defineStore('products', {
   state: () => ({
     products: [] as IProduct[],
+    searchListProducts: [] as IProduct[],
     currentProduct: {} as IProductPage,
     filters: {
       minPrice: 100,
@@ -18,7 +19,6 @@ export const useProductsStore = defineStore('products', {
       sortStatus: 'increase'
     },
     favoritesProducts : [] as IFavouriteProduct[],
-    userCart: [], //TODO
   }),
   actions: {
     async fetchProductsByBrand(brandName) {
@@ -29,9 +29,7 @@ export const useProductsStore = defineStore('products', {
       try {
         const respone = await axios.get(`http://127.0.0.1:8000/api/v1/product_by_brand/${brandName}`);
         this.products = await respone.data;
-        setTimeout(() => {
-          commonStore.setLoading(false);
-        }, 2000); // ToDO
+        commonStore.setLoading(false);
       } catch (error) { 
         commonStore.setLoading(false);
         commonStore.setError(error);
@@ -57,6 +55,16 @@ export const useProductsStore = defineStore('products', {
         throw error;
       }
     },
+    async searchProductsByUserInput({ word }) {
+      try {
+        const respone = await axios.get(`http://127.0.0.1:8000/api/v1/search/${word}`);
+        this.searchListProducts = await respone.data;
+        console.log('searchListProducts: ', this.searchListProducts)
+      } catch (error) { 
+        console.error(error);
+        throw error;
+      }
+    },
     async addToFavourites({ token, product_id}) {
       try {
         const respone = await axios.post('http://127.0.0.1:8000/api/v1/favorites/', { token, product_id});
@@ -75,10 +83,10 @@ export const useProductsStore = defineStore('products', {
       }
     },
     async deleteFavouriteProduct({ id }) {
+      const authStore = useAuthStore();
       try {
         const response = await axios.delete(`http://127.0.0.1:8000/api/v1/delete_favorite/${id}`);
-        const authStore = useAuthStore();
-        this.fetchFavouriteProducts({ token: authStore.user.id})
+        this.fetchFavouriteProducts({ token: authStore.credentials.token})
       } catch (error) { 
         console.error(error);
         throw error;
