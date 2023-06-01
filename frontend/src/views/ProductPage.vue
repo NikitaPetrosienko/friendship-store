@@ -69,6 +69,35 @@ const addToFavourites = () => {
   }
 }
 
+// const productInUserCartCount = computed(() => {
+//   cartStore.fetchUserCart({ token: authStore.credentials.token });
+//   // Id продукта знаем. Теперь нужно по этому ID посмотреть сколько таких товаров в корзине.
+//   if (productsStore.currentProduct.product.id) {
+//     const countOfProducts = 0;
+//     cartStore.userCart.basket.forEach((cartItem) => {
+//       if (cartItem.product_id.id === productsStore.currentProduct.product.id) {
+//         countOfProducts++;
+//       }
+//     })
+//     return countOfProducts;
+//   }
+//   return '';
+// })
+
+cartStore.fetchUserCart({ token: authStore.credentials.token });
+const getProductInUserCartCount = () => {
+  // Id продукта знаем. Теперь нужно по этому ID посмотреть сколько таких товаров в корзине.
+  let countOfProductsInCart = 0;
+  if (productsStore.currentProduct.product.id) {
+    cartStore.userCart.basket.forEach((cartItem) => {
+      if (cartItem.product_id.id === productsStore.currentProduct.product.id) {
+        countOfProductsInCart = cartItem.quantity
+      }
+    })
+  }
+  return countOfProductsInCart;
+}
+
 </script>
 
 <template>
@@ -89,7 +118,10 @@ const addToFavourites = () => {
           
           <div class="product-page__buttons">
             <div class="product-page__btn-cart">
-              <button class="product-page__btn" type="button" @click="addToCart">В корзину </button><span class="product-page__btn-count">0</span>
+              <button class="product-page__btn" type="button" @click="addToCart">В корзину </button>
+              <span v-if="productsStore.currentProduct.product" class="product-page__btn-count"
+                >{{ getProductInUserCartCount() }}
+              </span>
             </div>
             <button class="product-page__btn" type="button" @click="addToFavourites">В избранное</button>
             <button class="product-page__btn" type="button">Купить в один клик</button>
