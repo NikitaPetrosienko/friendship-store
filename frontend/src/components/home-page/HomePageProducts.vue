@@ -2,7 +2,7 @@
 import AppProductsForm from '@/components/home-page/product/AppProdutctsForm.vue';
 import AppProduct from '@/components/home-page/product/AppProduct.vue';
 
-import { ref, watch } from 'vue';
+import { watch } from 'vue';
 import { useRoute } from 'vue-router';
 
 const route = useRoute();
