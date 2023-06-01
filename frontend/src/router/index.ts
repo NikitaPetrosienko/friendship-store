@@ -1,6 +1,12 @@
 // Composables
 import { createRouter, createWebHistory } from 'vue-router'
 
+const authGuard = function (to, from, next) {
+  const isUserLoggedIn = localStorage.getItem('token');
+  if (!isUserLoggedIn) next ({ name: 'LoginPage'});
+  else next();
+}
+
 const routes = [
   {
     path: '/',
@@ -100,11 +106,13 @@ const routes = [
   {
     path: '/favourites',
     component: () => import('@/layouts/Default.vue'),
+    beforeEnter: authGuard,
     children: [
       {
         path: '',
         name: 'FavouritesPage',
         component: () => import('@/views/FavouritesPage.vue'),
+        beforeEnter: authGuard,
       },
     ],
   },
@@ -114,7 +122,7 @@ const routes = [
     children: [
       {
         path: '',
-        name: 'LoginPage.vue',
+        name: 'LoginPage',
         component: () => import('@/views/LoginPage.vue'),
       },
     ],
@@ -125,7 +133,7 @@ const routes = [
     children: [
       {
         path: '',
-        name: 'RegisterPage.vue',
+        name: 'RegisterPage',
         component: () => import('@/views/RegisterPage.vue'),
       },
     ],
