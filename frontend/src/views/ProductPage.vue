@@ -3,7 +3,7 @@ import CreateCommentForm from '@/components/product-page/CreateCommentForm.vue';
 import AppComment from '@/components/product-page/AppComment.vue';
 import AppBreadcrumb from '@/components/breadcrumb/AppBreadcrumb.vue'
 
-import { ref, computed } from 'vue';
+import { ref, computed, watch } from 'vue';
 
 import { useRoute, useRouter } from 'vue-router';
 
@@ -69,21 +69,6 @@ const addToFavourites = () => {
   }
 }
 
-// const productInUserCartCount = computed(() => {
-//   cartStore.fetchUserCart({ token: authStore.credentials.token });
-//   // Id продукта знаем. Теперь нужно по этому ID посмотреть сколько таких товаров в корзине.
-//   if (productsStore.currentProduct.product.id) {
-//     const countOfProducts = 0;
-//     cartStore.userCart.basket.forEach((cartItem) => {
-//       if (cartItem.product_id.id === productsStore.currentProduct.product.id) {
-//         countOfProducts++;
-//       }
-//     })
-//     return countOfProducts;
-//   }
-//   return '';
-// })
-
 cartStore.fetchUserCart({ token: authStore.credentials.token });
 const getProductInUserCartCount = () => {
   // Id продукта знаем. Теперь нужно по этому ID посмотреть сколько таких товаров в корзине.
@@ -97,6 +82,11 @@ const getProductInUserCartCount = () => {
   }
   return countOfProductsInCart;
 }
+
+watch(() => route.params.id, (newValue) => {
+  productsStore.fetchProductBySlug(route.params.id);
+}
+);
 
 </script>
 
