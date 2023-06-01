@@ -138,17 +138,29 @@ class AddToBasketAPIView(generics.CreateAPIView):
 
     def perform_create(self, serializer):
         data = serializer.validated_data
-        user_id = Token.objects.get(key=data['token']).user_id
-        data['user_id'] = User.objects.get(id=user_id)
-        del data['token']
-        product = model.Product.objects.get(id=data['product_id'].id)
-        product.quantity -= 1
+        product_id = data['product_id'].id
 
-        if product.quantity >= 0:
+        try:
+            user_id = Token.objects.get(key=data['token']).user_id
+            data['user_id'] = User.objects.get(id=user_id)
+            product = model.Product.objects.get(id=product_id)
+        except ObjectDoesNotExist as e:
+            raise ValidationError(str(e))
+
+        del data['token']
+
+        if product.quantity > 0:
+            product.quantity -= 1
             product.save()
-            serializer.save()
         else:
             raise ValidationError('Товара нет в наличие.')
+
+        try:
+            basket = model.Basket.objects.get(product_id=product_id)
+            basket.quantity += 1
+            basket.save()
+        except ObjectDoesNotExist:
+            serializer.save()
 
     def get_queryset(self):
         return self.queryset
@@ -159,10 +171,12 @@ class BasketGetAPIView(APIView):
         user_id = Token.objects.get(key=token).user_id
         basket = model.Basket.objects.filter(user_id=user_id, ordered=False)
         total_price = sum([b.product_id.price * b.quantity for b in basket])
+
         response_data = {
             'basket': [fs.BasketGetSerializer(b).data for b in basket],
             'total_price': total_price,
         }
+
         return Response(response_data)
 
 
