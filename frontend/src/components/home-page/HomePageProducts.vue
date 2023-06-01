@@ -78,7 +78,6 @@ watch(() => route.query.category,(newValue) => {
 
 .homepage-products__row {
   display: flex;
-  justify-content: space-between;
   flex-wrap: wrap;
   margin: 30px -15px 0;
 }
