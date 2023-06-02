@@ -73,7 +73,7 @@ const updateValue = (e: any) => {
   margin-top: 4px;
   border-radius: 7px;
   font-size: 13px;
-  color: $red;
+  color: $danger;
   padding: 5px;
 }
 
