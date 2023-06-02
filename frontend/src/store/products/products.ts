@@ -16,30 +16,34 @@ export const useProductsStore = defineStore('products', {
     filters: {
       minPrice: 100,
       maxPrice: 99999,
-      sortStatus: 'increase'
+      sortStatus: 'incr'
     },
     favoritesProducts : [] as IFavouriteProduct[],
   }),
   actions: {
     async fetchProductsByBrand(brandName) {
-      console.log('filters: ', { min_price: this.filters.minPrice, max_price: this.filters.maxPrice, sort_by: this.filters.sortStatus });
       const commonStore = useCommonStore();
-      commonStore.clearError();
+      commonStore.clearAlert();
       commonStore.setLoading(true);
       try {
-        const respone = await axios.get(`http://127.0.0.1:8000/api/v1/product_by_brand/${brandName}`);
+        const respone = await axios.get(`http://127.0.0.1:8000/api/v1/product_by_brand/${brandName}/?min_price=${this.filters.minPrice}&max_price=${this.filters.maxPrice}&sort_by=${this.filters.sortStatus}`);
+        if (this.filters.sortStatus === 'incr') {
+          this.products = await respone.data.sort((a, b) => a - b);
+        } else {
+          this.products = await respone.data.sort((a, b) => b - a);
+        }
+        
         this.products = await respone.data;
         commonStore.setLoading(false);
       } catch (error) { 
         commonStore.setLoading(false);
-        commonStore.setError(error);
+        commonStore.setAlertInfo(error);
         throw error;
       }
     },
     async fetchProductsByCategory(categoryName) {
-      console.log('filters: ', { min_price: this.filters.minPrice, max_price: this.filters.maxPrice, sort_by: this.filters.sortStatus });
       try {
-        const respone = await axios.get(`http://127.0.0.1:8000/api/v1/product_by_category/${categoryName}`);
+        const respone = await axios.get(`http://127.0.0.1:8000/api/v1/product_by_category/${categoryName}/?min_price=${this.filters.minPrice}&max_price=${this.filters.maxPrice}&sort_by=${this.filters.sortStatus}`);
         this.products = await respone.data;
       } catch (error) { 
         console.error(error);
