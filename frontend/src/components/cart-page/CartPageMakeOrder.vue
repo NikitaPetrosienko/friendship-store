@@ -1,5 +1,12 @@
 <script setup lang="ts">
 
+import { useOrdersStore } from '@/store/orders/orders';
+const ordersStore = useOrdersStore();
+
+const createOrder = () => {
+  ordersStore.createOrder();
+}
+
 </script>
 
 <template>
@@ -7,16 +14,20 @@
     <div class="cartpage-makeorder__row">
       <div class="cartpage-makeorder__column">
         <div class="cartpage-makeorder__title">Адрес доставки</div>
-        <p>г. Мухосранск, Ул. Пушкина, дом Колотушкина</p>
+        <p>{{ ordersStore.order.district }}, {{ ordersStore.order.street }}, {{ ordersStore.order.house }}</p>
       </div>
       <div class="cartpage-makeorder__column">
         <div class="cartpage-makeorder__title">Получатель</div>
-        <p>Аркадий Паровозов 8(999)-228-13-12</p>
+        <p>{{ ordersStore.order.first_name }} {{ ordersStore.order.last_name }} {{ ordersStore.order.phoneNumber }}</p>
       </div>
     </div>
     <div class="cartpage-makeorder__row">
       <div class="cartpage-makeorder__column cartpage-makeorder__column_button">
-        <router-link class="cartpage-makeorder__btn" to="/make-order">Далее</router-link>
+        <button 
+          class="cartpage-makeorder__btn"
+          @click="createOrder"
+          >Оформить заказ
+        </button>
       </div>
     </div>
   </div>
@@ -57,6 +68,10 @@
   @include for-size(tablet) {
     @include font(20px, 800, 1.2);
   }
+}
+
+.cartpage-makeorder__btn {
+  @include button-reset;
 }
 .cartpage-makeorder__btn {
   @include font(32px, 400, 1.2);
