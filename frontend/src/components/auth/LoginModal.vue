@@ -7,8 +7,10 @@ import useVuelidate from '@vuelidate/core';
 import { helpers, minLength, email } from '@vuelidate/validators';
 
 import { useAuthStore } from '@/store/auth/auth';
+import { useCommonStore } from '@/store/common/common';
 
 const authStore = useAuthStore();
+const commonStore = useCommonStore();
 
 const userEmail = ref('');
 const userPassword = ref('');
@@ -61,7 +63,7 @@ const submitForm = () => {
           :error="v.userPassword.$errors"
         />
         <router-link class="login-modal__link" to="/register">Еще не регистрироваилсь?</router-link>
-        <button class="login-modal__button" type="submit">Войти</button>
+        <button class="login-modal__button" :disabled="commonStore.loading" type="submit">Войти</button>
       </form>
     </div>
   </div>
@@ -90,7 +92,7 @@ const submitForm = () => {
     max-width: 600px;
   }
   @include for-size(mobile) {
-      max-width: 300px;
+      max-width: 330px;
   }
 }
 .login-modal__link {
@@ -124,19 +126,26 @@ const submitForm = () => {
 }
 .login-modal__button {
   @include font(32px, 400, 1.2);
-  color: $blue;
+  color: $white;
+  background-color: $blue;
   padding: 10px 25px;
-  border: 2px solid $blue;
   border-radius: 8px;
-  transition: all 0.2s ease;
+  transition: all 0.3s ease;
   @include for-size(tablet) {
     @include font(16px, 400, 1.2);
     padding: 8px 16px;
   }
 }
 .login-modal__button:hover {
-  background-color: $blue;
-  color: $white;
+  opacity: 0.8;
+}
+
+.login-modal__button:disabled {
+  cursor: not-allowed;
+  opacity: 1;
+  background: #eee;
+  border-color: #ddd;
+  color: #999;
 }
 
 </style>
