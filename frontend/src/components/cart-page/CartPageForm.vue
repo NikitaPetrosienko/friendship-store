@@ -4,6 +4,14 @@ import vRadiobutton from '@/components/radiobutton/v-radiobutton.vue';
 
 import { computed, ref } from 'vue';
 
+import { IOrder } from '@/store/orders/orders.interfaces';
+
+import { useOrdersStore } from '@/store/orders/orders';
+import { useAuthStore } from '@/store/auth/auth';
+
+const ordersStore = useOrdersStore();
+const authStore = useAuthStore();
+
 import useVuelidate from '@vuelidate/core';
 import { helpers, minLength, maxLength, email, numeric } from '@vuelidate/validators';
 
@@ -16,10 +24,6 @@ const userCity = ref('');
 const userStreet = ref('');
 const userHouse = ref('');
 const userHouseIndex = ref('');
-
-const submitForm = () => {
-  console.log('submitForm: ', submitForm);
-}
 
 const rules = computed(() => ({
   userName: {
@@ -42,10 +46,10 @@ const rules = computed(() => ({
     minLength: helpers.withMessage('Минимальная длина: 3 символа', minLength(3))
   },
   userHouse: {
-    minLength: helpers.withMessage('Минимальная длина: 3 символа', minLength(3))
+    minLength: helpers.withMessage('Минимальная длина: 3 символа', minLength(1))
   },
   userHouseIndex: {
-    minLength: helpers.withMessage('Минимальная длина: 3 символа', minLength(3))
+    minLength: helpers.withMessage('Минимальная длина: 3 символа', minLength(1))
   },
 }));
 
@@ -57,11 +61,35 @@ const paymentTypes = ref([
 ]);
 const selectedPayment = ref('');
 
+const isCardPayment = computed(() => {
+  if (selectedPayment.value === 'Карта') {
+    return true;
+  }
+  else {
+    return false;
+  }
+})
+
+const createOrder = () => {
+  ordersStore.setOrderInfo({
+    token: authStore.credentials.token,
+    first_name: userName.value,
+    last_name: userSurname.value,
+    email: userEmail.value,
+    phoneNumber: userPhone.value,
+    district: userCity.value,
+    street: userStreet.value,
+    house: userHouse.value,
+    apartment: userHouseIndex.value,
+    is_card_payment: isCardPayment.value
+  } as IOrder);
+};
+
 </script>
 
 <template>
   <div class="cartpage-form">
-    <form class="cartpage-form__form" action="#" @submit.prevent="submitForm" method="POST">
+    <form class="cartpage-form__form" action="#" @submit.prevent="">
       <div class="cartpage-form__row">
         <div class="cartpage-form__column">
           <div class="cartpage-form__title">Контактные данные</div>
@@ -164,7 +192,7 @@ const selectedPayment = ref('');
 
       <div class="cartpage-form__row">
         <div class="cartpage-form__column cartpage-form__column_button">
-          <router-link class="cartpage-form__btn" to="/make-order">Далее</router-link>
+          <router-link class="cartpage-form__btn" @click="createOrder" to="/make-order">Далее</router-link>
         </div>
       </div>
     </form>
