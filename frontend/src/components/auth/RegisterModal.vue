@@ -7,8 +7,10 @@ import useVuelidate from '@vuelidate/core';
 import { helpers, minLength, email, sameAs } from '@vuelidate/validators';
 
 import { useAuthStore } from '@/store/auth/auth';
+import { useCommonStore } from '@/store/common/common';
 
 const authStore = useAuthStore();
+const commonStore = useCommonStore();
 
 const userEmail = ref('');
 const userPassword = ref('');
@@ -76,7 +78,7 @@ const submitForm = () => {
           :error="v.confirmUserPassword.$errors"
         />
         <router-link class="register-modal__link" to="/login">Уже зарегистрированы?</router-link>
-        <button class="register-modal__button" type="submit">Зарегистрироваться</button>
+        <button class="register-modal__button" type="submit" :disabled="commonStore.loading">Зарегистрироваться</button>
       </form>
     </div>
   </div>
@@ -139,19 +141,26 @@ const submitForm = () => {
 }
 .register-modal__button {
   @include font(32px, 400, 1.2);
-  color: $blue;
+  color: $white;
+  background-color: $blue;
   padding: 10px 25px;
-  border: 2px solid $blue;
   border-radius: 8px;
-  transition: all 0.2s ease;
+  transition: all 0.3s ease;
   @include for-size(tablet) {
     @include font(16px, 400, 1.2);
     padding: 8px 16px;
   }
 }
 .register-modal__button:hover {
-  background-color: $blue;
-  color: $white;
+  opacity: 0.8;
+}
+
+.register-modal__button:disabled {
+  cursor: not-allowed;
+  opacity: 1;
+  background: #eee;
+  border-color: #ddd;
+  color: #999;
 }
 
 </style>
