@@ -69,10 +69,15 @@ const addToFavourites = () => {
   }
 }
 
-cartStore.fetchUserCart({ token: authStore.credentials.token });
+if (authStore.credentials.token) {
+  cartStore.fetchUserCart({ token: authStore.credentials.token });
+}
 const getProductInUserCartCount = () => {
   // Id продукта знаем. Теперь нужно по этому ID посмотреть сколько таких товаров в корзине.
   let countOfProductsInCart = 0;
+  if (!authStore.credentials.token) { // если корзины вовсе нет
+    return countOfProductsInCart;
+  }
   if (productsStore.currentProduct.product.id) {
     cartStore.userCart.basket.forEach((cartItem) => {
       if (cartItem.product_id.id === productsStore.currentProduct.product.id) {
@@ -112,6 +117,7 @@ watch(() => route.params.id, (newValue) => {
               <span v-if="productsStore.currentProduct.product" class="product-page__btn-count"
                 >{{ getProductInUserCartCount() }}
               </span>
+              <span v-else class="product-page__btn-count">0</span>
             </div>
             <button class="product-page__btn" type="button" @click="addToFavourites">В избранное</button>
             <button class="product-page__btn" type="button">Купить в один клик</button>
