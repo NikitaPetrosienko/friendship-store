@@ -34,6 +34,8 @@ const craeteComment = () => {
     product_id: productsStore.currentProduct.product.id,
     body: commentText.value
   });
+  commentAuthor.value = '';
+  commentText.value = '';
 }
 
 </script>
