@@ -145,7 +145,7 @@ class AddToBasketAPIView(generics.CreateAPIView):
             data['user_id'] = User.objects.get(id=user_id)
             product = model.Product.objects.get(id=product_id)
         except ObjectDoesNotExist as e:
-            raise ValidationError(str(e))
+            raise ValidationError({'error': str(e)})
 
         del data['token']
 
@@ -155,7 +155,7 @@ class AddToBasketAPIView(generics.CreateAPIView):
         else:
             product.availability = False
             product.save()
-            raise ValidationError('Товара нет в наличие.')
+            raise ValidationError({'error': 'Товара нет в наличие.'})
 
         try:
             basket = model.Basket.objects.get(product_id=product_id)
@@ -187,7 +187,7 @@ class BasketQuantityAPIView(APIView):
         try:
             basket = model.Basket.objects.get(id=basket_id, ordered=False)
         except ObjectDoesNotExist:
-            return Response({'message': 'Такой корзины не существует.'}, status=400)
+            return Response({'error': 'Такой корзины не существует.'}, status=400)
 
         product = model.Product.objects.get(id=basket.product_id.id)
 
@@ -195,7 +195,7 @@ class BasketQuantityAPIView(APIView):
             if product.quantity <= 0:
                 product.availability = False
                 product.save()
-                return Response({'message': 'Товара нет в наличие.'}, status=400)
+                return Response({'error': 'Товара нет в наличие.'}, status=400)
             basket.quantity += 1
             product.quantity -= 1
         elif incr == 'decr':
@@ -218,7 +218,10 @@ class OrderAPIView(generics.CreateAPIView):
         user_id = Token.objects.get(key=data['token']).user_id
         data['user_id'] = User.objects.get(id=user_id)
 
-        basket = model.Basket.objects.filter(user_id=user_id)
+        basket = model.Basket.objects.filter(user_id=user_id, ordered=False)
+
+        if not basket.exists():
+            raise ValidationError({'error': 'Корзина пустая.'})
 
         total_price = 0
         for b in basket:
