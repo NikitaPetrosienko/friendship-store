@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 
-interface IState {
+interface IState { // ToDo
   loading: boolean,
   error: null | string,
 }
@@ -8,17 +8,25 @@ interface IState {
 export const useCommonStore = defineStore('common', {
   state: () => ({
     loading: false,
-    error: null,
-  } as IState),
+    alert: {
+      info: null,
+      status: '' as 'success' | 'danger' | 'warning' | ''
+    },
+  }),
   actions: {
-    setLoading(payload: boolean) {
+    setLoading(payload) {
       this.loading = payload;
     },
-    setError(payload: string | null) {
-      this.error = payload;
+    setAlertInfo({info, status}) {
+      this.alert.info = info;
+      this.alert.status = status;
+      setTimeout(() => {
+        this.clearAlert();
+      }, 5000);
     },
-    clearError() {
-      this.error = null;
+    clearAlert() {
+      this.alert.info = null;
+      this.alert.status = '';
     },
   },
 })
