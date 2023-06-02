@@ -25,7 +25,7 @@ watch(filtersConfig, (newNumber, oldNumber) => {
     productsStore.filters.minPrice = parseInt(filtersConfig.minPrice);
   }
 
-  if (!isNaN(parseInt(filtersConfig.maxPrice)) && (parseInt(filtersConfig.maxPrice) > parseInt(filtersConfig.minPrice))) {
+  if (!isNaN(parseInt(filtersConfig.maxPrice))) {
     productsStore.filters.maxPrice = parseInt(filtersConfig.maxPrice);
   }
 
@@ -49,12 +49,12 @@ watch(filtersConfig, (newNumber, oldNumber) => {
     <fieldset class="products-form__fieldset">
       <div class="products-form__legend">Цена:</div>
       <!-- <label class="products-form__label" for="priceMin">От</label>
-      <input class="products-form__input" id="priceMin" type="number">
+      <input class="products-form__input" id="priceMin" v-model="filtersConfig.minPrice" type="number">
       
 
       <label class="products-form__label" for="priceMax">До</label>
-      <input class="products-form__input" id="priceMax" type="number"> -->
-
+      <input class="products-form__input" id="priceMax" v-model="filtersConfig.maxPrice" type="number"> -->
+      
       <v-input
         name="name"
         placeholder="100"
@@ -75,12 +75,12 @@ watch(filtersConfig, (newNumber, oldNumber) => {
     <fieldset class="products-form__fieldset">
       <label class="products-form__select-label" for="filterPrice">Сортировать по</label>
       <select class="products-form__select" id="filterPrice" v-model="filtersConfig.sortStatus">
-        <option class="products-form__option" value="increase">возрастание</option>
-        <option class="products-form__option" value="decrease">убывание</option>
+        <option class="products-form__option" value="incr">возрастание</option>
+        <option class="products-form__option" value="decr">убывание</option>
       </select>
-  </fieldset>
+    </fieldset>
 
-  <div class="products-form__line"></div>
+    <div class="products-form__line"></div>
   </form>
 </template>
 
