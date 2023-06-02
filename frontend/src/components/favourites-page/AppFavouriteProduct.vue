@@ -99,7 +99,7 @@ const deleteFavourite = (productId) => {
 
 .favourites-page__btn {
   @include font(18px, 900, 28px);
-  background-color: $red;
+  background-color: $danger;
   color: $white;
   padding: 8px 20px;
   margin-top: 24px;
