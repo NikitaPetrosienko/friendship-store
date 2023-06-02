@@ -78,26 +78,31 @@ const routes = [
   {
     path: '/cart',
     component: () => import('@/layouts/Default.vue'),
+    beforeEnter: authGuard,
     children: [
       {
         path: '',
         name: 'CartPage',
         component: () => import('@/views/CartPage.vue'),
+        beforeEnter: authGuard,
         children: [
           {
             path: '',
             name: 'CartPageTable',
             component: () => import('@/components/cart-page/CartPageTable.vue'),
+            beforeEnter: authGuard,
           },
           {
             path: '/form',
             name: 'CartPageForm',
             component: () => import('@/components/cart-page/CartPageForm.vue'),
+            beforeEnter: authGuard,
           },
           {
             path: '/make-order',
             name: 'CartPageMakeOrder',
             component: () => import('@/components/cart-page/CartPageMakeOrder.vue'),
+            beforeEnter: authGuard,
           },
         ],
       },
