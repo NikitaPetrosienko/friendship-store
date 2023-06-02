@@ -43,20 +43,28 @@ watch(() => route.query.category,(newValue) => {
 
 <template>
   <div class="homepage-products" id="products">
-    <div v-if="!commonStore.loading" class="container">
+    <div class="container">
       <div v-if="route.query.brand" class="homepage-products__title">{{ route.query.brand }}</div>
       <div v-else class="homepage-products__title">Продукты</div>
-      
+    
       <AppProductsForm />
 
-      <div class="homepage-products__row">
+      <div v-if="productsStore.products.length !== 0" class="homepage-products__row">
         <div class="homepage-products__column" v-for="product in productsStore.products" :key="product.id">
-          <AppProduct :item="product"/>
+          <div v-if="!commonStore.loading" class="container">
+            <AppProduct :item="product"/>
+          </div>
+
+          <div v-else class="container">
+            Загрузка данных..
+          </div>
         </div>
       </div>
-    </div>
-    <div v-else class="container">
-      Загрузка данных..
+
+      <div v-else class="container homepage-products_placeholder">
+        <h1 class="homepage-products__placeholder">Товары не найдены</h1>
+      </div>
+
     </div>
   </div>
 </template>
@@ -91,4 +99,14 @@ watch(() => route.query.category,(newValue) => {
     width: 100%;
   }
 }
+
+.homepage-products_placeholder {
+  padding-top: 80px;
+  text-align: center;
+}
+
+.homepage-products__placeholder {
+  @include font(48px, 400, 60px);
+}
+
 </style>
