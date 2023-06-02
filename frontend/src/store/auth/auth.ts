@@ -6,6 +6,10 @@ import { DefaultAPIInstance } from '@/api';
 
 import router from '@/router';
 
+import { useCommonStore } from '@/store/common/common';
+
+const commonStore = useCommonStore();
+
 export const useAuthStore = defineStore('auth', {
   state: () => ({
     credentials: {
@@ -14,84 +18,73 @@ export const useAuthStore = defineStore('auth', {
   }),
   actions: {
     async loginUser({ email, password }) {
+      commonStore.clearAlert();
+      commonStore.setLoading(true);
       try {
         const response = await AuthApi.login(email, password);
         const data = await response.data;
         this.credentials.token = data.auth_token;
         localStorage.setItem("token", data.auth_token);
         DefaultAPIInstance.defaults.headers['Authorization'] = `Token ${this.credentials.token}`
-        console.log('DefaultAPIInstance.defaults.headers["Authorization"]: ', DefaultAPIInstance.defaults.headers['authoriaztion']);
+        commonStore.setLoading(false);
         router.push('/');
       } catch (error) {
-        console.error(error);
+
+        commonStore.setLoading(false);
+        commonStore.setAlertInfo({
+          info: JSON.parse(error.response.request.response),
+          status: 'danger'
+        }); // ToDO
         throw error;
       }
     },
-    // async loginUser({ email, password }) {
-    //   try {
-    //     const response = await axios.post('http://127.0.0.1:8000/auth/token/login/', { username: email, password});
-    //     const data = await response.data;
-    //     this.user.id = data.auth_token;
-    //     localStorage.setItem("authToken", JSON.stringify(data.auth_token));
-    //     router.push('/');
-    //   } catch (error) {
-    //     console.error(error);
-    //     throw error;
-    //   }
-    // },
     async logoutUser() {
+      commonStore.clearAlert();
+      commonStore.setLoading(true);
       try {
         const response = await AuthApi.logout();
         const data = await response.data;
         this.credentials.token = null;
         localStorage.removeItem("token");
         delete DefaultAPIInstance.defaults.headers['Authorization'];
+
+        commonStore.setLoading(false);
+        commonStore.setAlertInfo({
+          info: 'Вы успешно вышли из аккаунта!',
+          status: 'success'
+        });
       } catch (error) {
-        console.error(error);
+        commonStore.setLoading(false);
+        commonStore.setAlertInfo({
+          info: 'Возникла ошибка с выходом из аккаунта!',
+          status: 'danger'  
+        }); // ToDO;
         throw error;
       }
     },
-    // async logoutUser() {
-    //   try {
-    //     const authToken = JSON.parse(localStorage.getItem("authToken"));
-    //     const headers = {
-    //       Authorization: `Token ${authToken}`,
-    //     };
-    //     const response = await axios.post(
-    //       'http://127.0.0.1:8000/auth/token/logout/',
-    //       {},
-    //       { headers }
-    //     );
-    //     this.user.id = null;
-    //     localStorage.removeItem("authToken");
-    //     router.push('/');
-    //   } catch (error) {
-    //     console.error(error);
-    //     throw error;
-    //   }
-    // },
     async registerUser({ email, password }) {
+      commonStore.clearAlert();
+      commonStore.setLoading(true);
       try {
         const response = await AuthApi.register(email, password);
         const data = await response.data;
-        alert('Вы успешно зарегистрированы!');
-        router.push('/login');
+        commonStore.setLoading(false);
+        commonStore.setAlertInfo({
+          info: 'Вы успешно зарегистрировались!',
+          status: 'success'
+        });
+        setTimeout(() => {
+          router.push('/login');
+        }, 3000);
       } catch (error) {
-        console.error(error);
+        commonStore.setLoading(false);
+        commonStore.setAlertInfo({
+          info: JSON.parse(error.response.request.response),
+          status: 'danger'  
+        }); // ToDO
         throw error;
       }
     },
-    // async registerUser({ email, password }) {
-    //   try {
-    //     const response = await axios.post('http://127.0.0.1:8000/auth/users/', { email, password});
-    //     const data = await response.data;
-    //     alert('Вы успешно зарегистрированы!');
-    //     router.push('/login');
-    //   } catch (error) {
-    //     console.error(error);
-    //     throw error;
-    //   }
-    // },
   },
   getters: {
     isUserLoggedIn(this) {
