@@ -119,6 +119,7 @@ export const useProductsStore = defineStore('products', {
       try {
         const respone = await axios.get(`http://127.0.0.1:8000/api/v1/favorites/${token}`);
         this.favoritesProducts = await respone.data;
+        commonStore.setLoading(false);
       } catch (error) { 
         commonStore.setLoading(false);
         commonStore.setAlertInfo({
