@@ -27,7 +27,7 @@ export const useOrdersStore = defineStore('orders', {
         commonStore.setLoading(false);
         commonStore.setAlertInfo({  
           info: error.response.data.error,
-          status: 'error'
+          status: 'danger'
         });
         throw error;
       }
