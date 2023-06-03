@@ -20,7 +20,7 @@ import AppAlert from '@/components/alert/AppAlert.vue';
 }
 
 .alert {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   z-index: 60;
