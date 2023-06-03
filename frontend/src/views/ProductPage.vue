@@ -88,10 +88,11 @@ const getProductInUserCartCount = () => {
   return countOfProductsInCart;
 }
 
-watch(() => route.params.id, (newValue) => {
-  productsStore.fetchProductBySlug(route.params.id);
-}
-);
+// при добавлении в корзину и открытие страницы корзины странные запрос с ошибкой идут
+// watch(() => route.params.id, (newValue) => {
+//   productsStore.fetchProductBySlug(route.params.id);
+// }
+// );
 
 </script>
 
