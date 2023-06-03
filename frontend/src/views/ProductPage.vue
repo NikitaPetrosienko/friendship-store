@@ -13,7 +13,9 @@ const router = useRouter();
 import { useProductsStore } from '@/store/products/products';
 import { useAuthStore } from '@/store/auth/auth';
 import { useCartStore } from '@/store/cart/cart';
+import { useCommonStore } from '@/store/common/common';
 
+const commonStore = useCommonStore();
 const productsStore = useProductsStore();
 const authStore = useAuthStore();
 const cartStore = useCartStore();
@@ -52,7 +54,11 @@ const addToCart = () => {
       product_id: productsStore.currentProduct.product.id,
     });
   } else {
-    alert('Необходима регистраиця!');
+    commonStore.clearAlert();
+    commonStore.setAlertInfo({
+      info: 'Необходима регистраиця!',
+      status: 'success'
+    });
     router.push('/login');
   }
 }
@@ -64,7 +70,11 @@ const addToFavourites = () => {
       product_id: productsStore.currentProduct.product.id
     });
   } else {
-    alert('Необходима регистраиця!');
+    commonStore.clearAlert();
+    commonStore.setAlertInfo({
+      info: 'Необходима регистраиця!',
+      status: 'success'
+    });
     router.push('/login');
   }
 }
