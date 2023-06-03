@@ -158,7 +158,7 @@ class AddToBasketAPIView(generics.CreateAPIView):
             raise ValidationError({'error': 'Товара нет в наличие.'})
 
         try:
-            basket = model.Basket.objects.get(product_id=product_id)
+            basket = model.Basket.objects.get(product_id=product_id, ordered=False)
             basket.quantity += 1
             basket.save()
         except ObjectDoesNotExist:
