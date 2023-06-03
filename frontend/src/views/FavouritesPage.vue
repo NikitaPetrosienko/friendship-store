@@ -67,7 +67,6 @@ productsStore.fetchFavouriteProducts({ token: authStore.credentials.token })
 
 .favourites-page__row {
   display: flex;
-  justify-content: space-between;
   flex-wrap: wrap;
   margin: 30px -15px 0;
 }
