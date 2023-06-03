@@ -29,12 +29,11 @@ export const useAuthStore = defineStore('auth', {
         commonStore.setLoading(false);
         router.push('/');
       } catch (error) {
-
         commonStore.setLoading(false);
         commonStore.setAlertInfo({
-          info: JSON.parse(error.response.request.response),
+          info: 'Неправильные данные',
           status: 'danger'
-        }); // ToDO
+        });
         throw error;
       }
     },
@@ -58,7 +57,7 @@ export const useAuthStore = defineStore('auth', {
         commonStore.setAlertInfo({
           info: 'Возникла ошибка с выходом из аккаунта!',
           status: 'danger'  
-        }); // ToDO;
+        });
         throw error;
       }
     },
@@ -79,9 +78,9 @@ export const useAuthStore = defineStore('auth', {
       } catch (error) {
         commonStore.setLoading(false);
         commonStore.setAlertInfo({
-          info: JSON.parse(error.response.request.response),
-          status: 'danger'  
-        }); // ToDO
+          info: 'Неправильные данные',
+          status: 'danger'
+        });
         throw error;
       }
     },
