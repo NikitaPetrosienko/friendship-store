@@ -9,7 +9,9 @@ const searchInput = ref('');
 
 const searchPanelProducts = () => {
   isShowList.value = true;
-  productsStore.searchProductsByUserInput({ word: searchInput.value });
+  if (searchInput.value !== '') {
+    productsStore.searchProductsByUserInput({ word: searchInput.value });
+  }
 }
 
 const isShowList = ref(false);
