@@ -9,6 +9,7 @@ from django.contrib.auth.models import User
 from rest_framework.exceptions import ValidationError
 from friendship_app.tasks import order_notice
 from django.core.exceptions import ObjectDoesNotExist
+from rest_framework.permissions import IsAuthenticated
 
 
 class SearchAPIView(generics.ListAPIView):
@@ -97,6 +98,7 @@ class CategoryAPIView(generics.ListAPIView):
 
 class FavoriteListAPIView(generics.ListAPIView):
     serializer_class = fs.FavoriteGetSerializer
+    permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
         token = self.kwargs['token']
@@ -106,6 +108,7 @@ class FavoriteListAPIView(generics.ListAPIView):
 
 class FavoriteCreateAPIView(generics.CreateAPIView):
     serializer_class = fs.FavoriteSerializer
+    permission_classes = [IsAuthenticated]
 
     def perform_create(self, serializer):
         data = serializer.validated_data
@@ -122,6 +125,7 @@ class FavoriteCreateAPIView(generics.CreateAPIView):
 
 class FavoriteDestroyAPIView(generics.DestroyAPIView):
     serializer_class = fs.FavoriteSerializer
+    permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
         pk = self.kwargs['pk']
