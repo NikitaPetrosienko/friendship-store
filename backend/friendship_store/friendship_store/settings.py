@@ -44,9 +44,6 @@ INSTALLED_APPS = [
     'djoser',
     'rest_framework.authtoken',
     'friendship_app.apps.FriendshipAppConfig',
-    'oauth2_provider',
-    'social_django',
-    'rest_framework_social_oauth2'
 ]
 
 MIDDLEWARE = [
@@ -146,8 +143,6 @@ DJOSER = {
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.TokenAuthentication',
-        'oauth2_provider.contrib.rest_framework.OAuth2Authentication',
-        'rest_framework_social_oauth2.authentication.SocialAuthentication',
     ]
 }
 
@@ -176,12 +171,3 @@ CELERY_RESULT_BACKEND = 'redis://' + REDIS_HOST + ':' + REDIS_PORT + '/0'
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
-
-SOCIAL_AUTH_VK_OAUTH2_KEY = os.getenv('VK_APP_ID')
-SOCIAL_AUTH_VK_OAUTH2_SECRET = os.getenv('VK_SECRET_KEY')
-
-AUTHENTICATION_BACKENDS = (
-    'social_core.backends.vk.VKOAuth2',
-    'rest_framework_social_oauth2.backends.DjangoOAuth2',
-    'django.contrib.auth.backends.ModelBackend',
-)
