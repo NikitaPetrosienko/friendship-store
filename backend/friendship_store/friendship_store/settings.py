@@ -38,12 +38,18 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
     'rest_framework',
     'drf_yasg',
     'corsheaders',
     'djoser',
     'rest_framework.authtoken',
     'friendship_app.apps.FriendshipAppConfig',
+
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.vk',
 ]
 
 MIDDLEWARE = [
@@ -171,3 +177,20 @@ CELERY_RESULT_BACKEND = 'redis://' + REDIS_HOST + ':' + REDIS_PORT + '/0'
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
+
+SITE_ID = 1
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+
+SOCIALACCOUNT_PROVIDERS = {
+    'vk': {
+        'APP': {
+            'client_id': os.getenv('VK_APP_ID'),
+            'secret': os.getenv('VK_SECRET_KEY'),
+            'key': ''
+        }
+    }
+}

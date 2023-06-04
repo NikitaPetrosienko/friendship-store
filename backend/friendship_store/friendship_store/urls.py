@@ -22,4 +22,5 @@ urlpatterns = [
     path('api/v1/', include('friendship_app.urls')),
     path('auth/', include('djoser.urls')),
     re_path(r'^auth/', include('djoser.urls.authtoken')),
+    path('accounts/', include('allauth.urls')),
 ]
