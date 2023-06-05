@@ -1,6 +1,5 @@
 import { defineStore } from 'pinia';
 
-import axios from 'axios';
 import { AuthApi } from '@/api/AuthApi';
 import { DefaultAPIInstance } from '@/api';
 
