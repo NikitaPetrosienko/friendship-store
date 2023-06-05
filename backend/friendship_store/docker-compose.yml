@@ -8,6 +8,8 @@ services:
       - POSTGRES_NAME=postgres
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
+    volumes:
+      - ./data/db:/var/lib/postgresql/data
     ports:
       - "5431:5432"
   redis:
@@ -25,8 +27,8 @@ services:
   web:
     build: .
     command: bash -c "python manage.py makemigrations &&
-             python manage.py migrate &&
-             python manage.py runserver 0.0.0.0:8000 "
+      python manage.py migrate &&
+      python manage.py runserver 0.0.0.0:8000 "
     ports:
       - "8000:8000"
     environment:
@@ -51,5 +53,4 @@ services:
       - redis
 
 volumes:
-  db:
-    driver: local
+  data:

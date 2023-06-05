@@ -108,7 +108,6 @@ class FavoriteListAPIView(generics.ListAPIView):
 
 class FavoriteCreateAPIView(generics.CreateAPIView):
     serializer_class = fs.FavoriteSerializer
-    permission_classes = [IsAuthenticated]
 
     def perform_create(self, serializer):
         data = serializer.validated_data
@@ -125,7 +124,6 @@ class FavoriteCreateAPIView(generics.CreateAPIView):
 
 class FavoriteDestroyAPIView(generics.DestroyAPIView):
     serializer_class = fs.FavoriteSerializer
-    permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
         pk = self.kwargs['pk']
