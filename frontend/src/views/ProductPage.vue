@@ -126,13 +126,13 @@ const getProductInUserCartCount = () => {
           <div class="product-page__buttons">
             <div class="product-page__btn-cart">
               <button class="product-page__btn" type="button" @click="addToCart">В корзину </button>
-              <span v-if="productsStore.currentProduct.product" class="product-page__btn-count"
+              <!-- <span v-if="productsStore.currentProduct.product" class="product-page__btn-count"
                 >{{ getProductInUserCartCount() }}
               </span>
-              <span v-else class="product-page__btn-count">0</span>
+              <span v-else class="product-page__btn-count">0</span> -->
             </div>
             <button class="product-page__btn" type="button" @click="addToFavourites">В избранное</button>
-            <button class="product-page__btn" type="button">Купить в один клик</button>
+            <!-- <button class="product-page__btn" type="button">Купить в один клик</button> -->
           </div>
 
           <div v-if="productsStore.currentProduct.product" class="product-page__desc">
