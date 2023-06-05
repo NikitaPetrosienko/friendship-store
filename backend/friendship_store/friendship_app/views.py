@@ -98,7 +98,6 @@ class CategoryAPIView(generics.ListAPIView):
 
 class FavoriteListAPIView(generics.ListAPIView):
     serializer_class = fs.FavoriteGetSerializer
-    permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
         token = self.kwargs['token']
