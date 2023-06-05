@@ -48,27 +48,22 @@ watch(() => route.query.category,(newValue) => {
       <div v-if="route.query.brand" class="homepage-products__title">{{ route.query.brand }}</div>
       <div v-else class="homepage-products__title">Продукты</div>
     
-      <AppProductsForm v-if="!commonStore.loading" />
+      <AppProductsForm />
 
-      <div v-if="productsStore.products.length !== 0" class="homepage-products__row">
+      <div v-if="!commonStore.loading && productsStore.products.length !== 0" class="homepage-products__row">
         <div class="homepage-products__column" v-for="product in productsStore.products" :key="product.id">
-          <div v-if="!commonStore.loading" class="container">
-            <transition name="fade"> 
-              <AppProduct :item="product"/>
-            </transition>
+          <div class="container">
+            <AppProduct :item="product"/>
           </div>
-
-          <div v-else class="container">
-            <transition name="fade">
-              <AppSpinner fullscreen />
-            </transition>
-          </div>
-
         </div>
       </div>
 
-      <div v-else class="container homepage-products_placeholder">
+      <div v-else-if="!commonStore.loading && productsStore.products.length === 0" class="container homepage-products_placeholder">
         <h1 class="homepage-products__placeholder">Товары не найдены</h1>
+      </div>
+
+      <div v-else>
+        <AppSpinner fullscreen />
       </div>
     </div>
   </div>
@@ -114,12 +109,4 @@ watch(() => route.query.category,(newValue) => {
 .homepage-products__placeholder {
   @include font(48px, 400, 60px);
 }
-
-.fade-enter-active, .fade-leave-active {
-  transition: opacity 0.5s
-}
-.fade-enter, .fade-leave-to {
-  opacity: 0
-}
-
 </style>
