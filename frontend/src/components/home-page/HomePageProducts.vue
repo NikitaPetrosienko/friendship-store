@@ -48,7 +48,7 @@ watch(() => route.query.category,(newValue) => {
       <div v-if="route.query.brand" class="homepage-products__title">{{ route.query.brand }}</div>
       <div v-else class="homepage-products__title">Продукты</div>
     
-      <AppProductsForm />
+      <AppProductsForm v-if="!commonStore.loading" />
 
       <div v-if="productsStore.products.length !== 0" class="homepage-products__row">
         <div class="homepage-products__column" v-for="product in productsStore.products" :key="product.id">
