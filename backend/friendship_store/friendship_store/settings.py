@@ -27,7 +27,7 @@ SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '0.0.0.0']
 
 # Application definition
 
@@ -90,10 +90,12 @@ WSGI_APPLICATION = 'friendship_store.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'friendship',
         'USER': 'postgres',
+        'NAME': 'postgres',
+        # 'NAME': 'friendship',
         'PASSWORD': os.getenv('PASSWORD_DB'),
-        'HOST': 'localhost',
+        'HOST': 'postgres',
+        # 'HOST': 'localhost',
         'PORT': '5432',
     }
 }
@@ -142,8 +144,8 @@ DJOSER = {
         'user_create': 'friendship_app.serializers.CustomUserCreateSerializer',
     },
     'ACTIVATION_URL': '#/activate/{uid}/{token}',
-    'SEND_ACTIVATION_EMAIL': True,
-    'SEND_CONFIRMATION_EMAIL': True
+    'SEND_ACTIVATION_EMAIL': False,
+    'SEND_CONFIRMATION_EMAIL': False
 }
 
 REST_FRAMEWORK = {
@@ -153,7 +155,7 @@ REST_FRAMEWORK = {
 }
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'localhost'
+EMAIL_HOST = 'mailhog'
 EMAIL_PORT = 1025
 
 CORS_ORIGIN_ALLOW_ALL = False
@@ -169,11 +171,14 @@ CORS_ALLOW_METHODS = [
     'DELETE',
 ]
 
-REDIS_HOST = '127.0.0.1'
-REDIS_PORT = '6379'
-CELERY_BROKER_URL = 'redis://' + REDIS_HOST + ':' + REDIS_PORT + '/0'
-CELERY_BROKER_TRANSPORT_OPTIONS = {'visibility_timeout': 3600}
-CELERY_RESULT_BACKEND = 'redis://' + REDIS_HOST + ':' + REDIS_PORT + '/0'
+CELERY_BROKER_URL = 'redis://redis:6379/0'
+CELERY_RESULT_BACKEND = 'redis://redis:6379/0'
+#
+# REDIS_HOST = '127.0.0.1'
+# REDIS_PORT = '6379'
+# CELERY_BROKER_URL = 'redis://' + REDIS_HOST + ':' + REDIS_PORT + '/0'
+# CELERY_BROKER_TRANSPORT_OPTIONS = {'visibility_timeout': 3600}
+# CELERY_RESULT_BACKEND = 'redis://' + REDIS_HOST + ':' + REDIS_PORT + '/0'
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
