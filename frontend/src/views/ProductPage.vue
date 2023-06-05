@@ -2,6 +2,7 @@
 import CreateCommentForm from '@/components/product-page/CreateCommentForm.vue';
 import AppComment from '@/components/product-page/AppComment.vue';
 import AppBreadcrumb from '@/components/breadcrumb/AppBreadcrumb.vue'
+import AppSpinner from '@/components/loader/AppSpinner.vue';
 
 import { ref, computed, watch } from 'vue';
 
@@ -57,7 +58,7 @@ const addToCart = () => {
     commonStore.clearAlert();
     commonStore.setAlertInfo({
       info: 'Необходима регистраиця!',
-      status: 'success'
+      status: 'warning'
     });
     router.push('/login');
   }
@@ -73,7 +74,7 @@ const addToFavourites = () => {
     commonStore.clearAlert();
     commonStore.setAlertInfo({
       info: 'Необходима регистраиця!',
-      status: 'success'
+      status: 'warning'
     });
     router.push('/login');
   }
@@ -108,11 +109,11 @@ const getProductInUserCartCount = () => {
 
 <template>
   <div class="product-page">
-    <div class="container">
+    <div v-if="!commonStore.loading" class="container">
 
       <AppBreadcrumb :breadcrumbs="breadcrumbs"/>
 
-      <div v-if="productsStore.currentProduct" class="product-page__row">
+      <div class="product-page__row">
         <div v-if="productsStore.currentProduct.product" class="product-page__column product-page__column_picture">
           <img :src="productsStore.currentProduct.product.main_image" alt="skateboard">
         </div>
@@ -170,6 +171,11 @@ const getProductInUserCartCount = () => {
         </div>
       </div>
     </div>
+
+    <div v-else class="container">
+      <AppSpinner fullscreen />
+    </div>
+
   </div>
 </template>
 
