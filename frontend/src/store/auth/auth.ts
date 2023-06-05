@@ -31,7 +31,7 @@ export const useAuthStore = defineStore('auth', {
       } catch (error) {
         commonStore.setLoading(false);
         commonStore.setAlertInfo({
-          info: 'Неправильные данные',
+          info: 'Неверные данные',
           status: 'danger'
         });
         throw error;
