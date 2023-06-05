@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import AppProductsForm from '@/components/home-page/product/AppProdutctsForm.vue';
 import AppProduct from '@/components/home-page/product/AppProduct.vue';
+import AppSpinner from '@/components/loader/AppSpinner.vue';
 
 import { watch } from 'vue';
 import { useRoute } from 'vue-router';
@@ -52,19 +53,23 @@ watch(() => route.query.category,(newValue) => {
       <div v-if="productsStore.products.length !== 0" class="homepage-products__row">
         <div class="homepage-products__column" v-for="product in productsStore.products" :key="product.id">
           <div v-if="!commonStore.loading" class="container">
-            <AppProduct :item="product"/>
+            <transition name="fade"> 
+              <AppProduct :item="product"/>
+            </transition>
           </div>
 
           <div v-else class="container">
-            Загрузка данных..
+            <transition name="fade">
+              <AppSpinner fullscreen />
+            </transition>
           </div>
+
         </div>
       </div>
 
       <div v-else class="container homepage-products_placeholder">
         <h1 class="homepage-products__placeholder">Товары не найдены</h1>
       </div>
-
     </div>
   </div>
 </template>
@@ -73,6 +78,7 @@ watch(() => route.query.category,(newValue) => {
 @import '@/assets/scss/_variables.scss';
 @import '@/assets/scss/_mixins.scss';
 .homepage-products {
+  position: relative;
   padding: 40px 0;
 }
 
@@ -107,6 +113,13 @@ watch(() => route.query.category,(newValue) => {
 
 .homepage-products__placeholder {
   @include font(48px, 400, 60px);
+}
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 0.5s
+}
+.fade-enter, .fade-leave-to {
+  opacity: 0
 }
 
 </style>
