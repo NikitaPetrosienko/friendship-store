@@ -114,7 +114,7 @@ class FavoriteCreateAPIView(generics.CreateAPIView):
         data['user_id'] = User.objects.get(id=user_id)
         del data['token']
 
-        favorite = model.Favorite.objects.filter(product_id=data['product_id'])
+        favorite = model.Favorite.objects.filter(product_id=data['product_id'], user_id=user_id)
         if favorite.exists():
             raise ValidationError({'error': 'Товар уже добавлен в избранное.'})
 
