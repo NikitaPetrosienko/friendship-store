@@ -10,6 +10,8 @@ import { useAuthStore } from '@/store/auth/auth';
 const commonStore = useCommonStore();
 const authStore = useAuthStore();
 
+const timerTimes = 1000;
+
 
 export const useProductsStore = defineStore('products', {
   state: () => ({
@@ -34,14 +36,15 @@ export const useProductsStore = defineStore('products', {
         } else {
           this.products = await respone.data.sort((a, b) => b - a);
         }
-        
         this.products = await respone.data;
-        commonStore.setLoading(false);
+        setTimeout(() => {
+          commonStore.setLoading(false);
+        }, timerTimes);
       } catch (error) { 
         commonStore.setLoading(false);
         commonStore.setAlertInfo({
           info: error.response.data.error,
-          status: 'error'
+          status: 'danger'
         });
         throw error;
       }
@@ -51,13 +54,20 @@ export const useProductsStore = defineStore('products', {
       commonStore.setLoading(true);
       try {
         const respone = await axios.get(`http://127.0.0.1:8000/api/v1/product_by_category/${categoryName}/?min_price=${this.filters.minPrice}&max_price=${this.filters.maxPrice}&sort_by=${this.filters.sortStatus}`);
+        if (this.filters.sortStatus === 'incr') {
+          this.products = await respone.data.sort((a, b) => a - b);
+        } else {
+          this.products = await respone.data.sort((a, b) => b - a);
+        }
         this.products = await respone.data;
-        commonStore.setLoading(false);
+        setTimeout(() => {
+          commonStore.setLoading(false);
+        }, timerTimes);
       } catch (error) { 
         commonStore.setLoading(false);
         commonStore.setAlertInfo({
           info: error.response.data.error,
-          status: 'error'
+          status: 'danger'
         });
         throw error;
       }
@@ -68,12 +78,14 @@ export const useProductsStore = defineStore('products', {
       try {
         const respone = await axios.get(`http://127.0.0.1:8000/api/v1/product/${productSlug}`);
         this.currentProduct = await respone.data;
-        commonStore.setLoading(false);
+        setTimeout(() => {
+          commonStore.setLoading(false);
+        }, timerTimes);
       } catch (error) { 
         commonStore.setLoading(false);
         commonStore.setAlertInfo({
           info: error.response.data.error,
-          status: 'error'
+          status: 'danger'
         });
         throw error;
       }
@@ -87,10 +99,6 @@ export const useProductsStore = defineStore('products', {
         commonStore.setLoading(false);
       } catch (error) { 
         commonStore.setLoading(false);
-        commonStore.setAlertInfo({
-          info: error.response.data.error,
-          status: 'error'
-        });
         throw error;
       }
     },
@@ -108,7 +116,7 @@ export const useProductsStore = defineStore('products', {
         commonStore.setLoading(false);
         commonStore.setAlertInfo({
           info: error.response.data.error,
-          status: 'error'
+          status: 'danger'
         });
         throw error;
       }
@@ -124,7 +132,7 @@ export const useProductsStore = defineStore('products', {
         commonStore.setLoading(false);
         commonStore.setAlertInfo({
           info: error.response.data.error,
-          status: 'error'
+          status: 'danger'
         });
         throw error;
       }
@@ -144,7 +152,7 @@ export const useProductsStore = defineStore('products', {
         commonStore.setLoading(false);
         commonStore.setAlertInfo({
           info: error.response.data.error,
-          status: 'error'
+          status: 'danger'
         });
         throw error;
       }
@@ -164,7 +172,7 @@ export const useProductsStore = defineStore('products', {
         commonStore.setLoading(false);
         commonStore.setAlertInfo({
           info: error.response.data.error,
-          status: 'error'
+          status: 'danger'
         });
         throw error;
       }
