@@ -22,12 +22,12 @@ const routes = [
             name: 'HomePageBrands',
             component: () => import('@/components/home-page/HomePageBrands.vue'),
           },
-          {
-            path: '/products/:category?:brand?',
-            name: 'HomePageProducts',
-            component: () => import('@/components/home-page/HomePageProducts.vue'),
-          },
         ],
+      },
+      {
+        path: '/products/:category?:brand?',
+        name: 'HomePageProducts',
+        component: () => import('@/components/home-page/HomePageProducts.vue'),
       },
     ],
   },
