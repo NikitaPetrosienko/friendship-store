@@ -1,0 +1,12 @@
+version: "3.8"
+services:
+  frontend:
+    build: .
+    container_name: "friendship_store"
+    env_file:
+      - .env  
+    ports:
+      - "5173:5173"
+    volumes:
+      - .:/var/www/html/friendship_store
+      - "/var/www/html/friendship_store/node_modules"
