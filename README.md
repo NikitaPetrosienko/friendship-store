@@ -35,3 +35,10 @@
 1. cd frontend/
 2. docker-compose build
 3. docker-compose up
+
+## Сервис с URL картинками
+
+https://www.flickr.com/photos/198318986@N03/
+
+логин: dontsovggwp@mail.ru
+пароль:123123qweqwe
