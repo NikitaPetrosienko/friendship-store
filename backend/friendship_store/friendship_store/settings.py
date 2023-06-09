@@ -161,8 +161,7 @@ EMAIL_PORT = 1025
 CORS_ORIGIN_ALLOW_ALL = False
 
 CORS_ORIGIN_WHITELIST = [
-    'https://example.com',
-    'https://www.example.com'
+    'http://127.0.0.1:5173',
 ]
 
 CORS_ALLOW_METHODS = [
