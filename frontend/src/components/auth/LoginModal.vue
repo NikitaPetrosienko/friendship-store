@@ -68,7 +68,7 @@ const submitForm = () => {
           v-model:value="v.userPassword.$model"
           :error="v.userPassword.$errors"
         />
-        <router-link class="login-modal__link" to="/register">Еще не регистрироваилсь?</router-link>
+        <router-link class="login-modal__link" to="/register">Еще не регистрировались?</router-link>
 
         <!-- <a class="login-modal__vk" href="https://oauth.vk.com/authorize?client_id=51651546&display=page&redirect_uri=http://127.0.0.1:5173/&scope=friends&response_type=code&v=5.131">
           <svg width="30" height="30" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
