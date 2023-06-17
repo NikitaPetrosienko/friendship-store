@@ -134,3 +134,121 @@ class BrandAPIView(generics.ListAPIView):
     serializer_class = fs.BrandSerializer
 
 
+class AlbumAPIView(generics.ListAPIView):
+    queryset = model.Album.objects.all()
+    serializer_class = fs.AlbumSerializer
+
+
+class AddToBasketAPIView(generics.CreateAPIView):
+    serializer_class = fs.BasketPostSerializer
+
+    def perform_create(self, serializer):
+        data = serializer.validated_data
+        product_id = data['product_id'].id
+
+        try:
+            user_id = Token.objects.get(key=data['token']).user_id
+            data['user_id'] = User.objects.get(id=user_id)
+            product = model.Product.objects.get(id=product_id)
+        except ObjectDoesNotExist as e:
+            raise ValidationError({'error': str(e)})
+
+        del data['token']
+
+        if product.quantity > 0:
+            product.quantity -= 1
+            product.save()
+        else:
+            product.availability = False
+            product.save()
+            raise ValidationError({'error': 'Товара нет в наличие.'})
+
+        try:
+            basket = model.Basket.objects.get(product_id=product_id, ordered=False)
+            basket.quantity += 1
+            basket.save()
+        except ObjectDoesNotExist:
+            serializer.save()
+
+    def get_queryset(self):
+        return self.queryset
+
+
+class BasketGetAPIView(APIView):
+    def get(self, request, token):
+        user_id = Token.objects.get(key=token).user_id
+        basket = model.Basket.objects.filter(user_id=user_id, ordered=False)
+        total_price = sum([b.product_id.price * b.quantity for b in basket])
+
+        response_data = {
+            'basket': [fs.BasketGetSerializer(b).data for b in basket],
+            'total_price': total_price,
+        }
+
+        return Response(response_data)
+
+
+class BasketQuantityAPIView(APIView):
+    def get(self, request, basket_id, incr):
+        try:
+            basket = model.Basket.objects.get(id=basket_id, ordered=False)
+        except ObjectDoesNotExist:
+            return Response({'error': 'Такой корзины не существует.'}, status=400)
+
+        product = model.Product.objects.get(id=basket.product_id.id)
+
+        if incr == 'incr':
+            if product.quantity <= 0:
+                product.availability = False
+                product.save()
+                return Response({'error': 'Товара нет в наличие.'}, status=400)
+            basket.quantity += 1
+            product.quantity -= 1
+        elif incr == 'decr':
+            basket.quantity -= 1
+            product.quantity += 1
+            if basket.quantity == 0:
+                basket.delete()
+                return Response({'message': 'Товар удален из корзины.'}, status=200)
+        basket.save()
+        product.save()
+
+        return Response({'message': 'Количество товара к корзине обновлено.'}, status=200)
+
+
+class OrderAPIView(generics.CreateAPIView):
+    serializer_class = fs.OrderSerializer
+
+    def perform_create(self, serializer):
+        data = serializer.validated_data
+        user_id = Token.objects.get(key=data['token']).user_id
+        data['user_id'] = User.objects.get(id=user_id)
+
+        basket = model.Basket.objects.filter(user_id=user_id, ordered=False)
+
+        if not basket.exists():
+            raise ValidationError({'error': 'Корзина пустая.'})
+
+        total_price = 0
+        for b in basket:
+            b.ordered = True
+            total_price += b.quantity * b.product_id.price
+            b.save()
+
+        data['total_price'] = total_price
+        del data['token']
+
+        first_name = User.objects.get(id=user_id).first_name
+        email = User.objects.get(id=user_id).email
+        order_notice.delay(first_name, total_price, email)
+
+        serializer.save()
+
+
+class NewsAPIView(generics.ListAPIView):
+    queryset = model.News.objects.all()
+    serializer_class = fs.NewsSerializer
+
+
+class CreateReviewAPIView(generics.CreateAPIView):
+    serializer_class = fs.ReviewSerializer
