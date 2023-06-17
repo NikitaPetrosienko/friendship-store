@@ -56,3 +56,45 @@ class Product(models.Model):
         return f'{self.product_name} {self.model}'
 
 
+class Category(models.Model):
+    category_name = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.category_name
+
+
+class Brand(models.Model):
+    brand_name = models.CharField(max_length=50)
+    image = models.URLField(default='http://example.com')
+
+    def __str__(self):
+        return self.brand_name
+
+
+class Image(models.Model):
+    image = models.URLField()
+    product_id = models.ForeignKey('Product', on_delete=models.PROTECT)
+
+
+class Album(models.Model):
+    image = models.URLField()
+
+
+class News(models.Model):
+    title = models.CharField()
+    main_image = models.URLField()
+    date = models.DateField()
+    body = models.TextField()
+
+    def __str__(self):
+        return self.title
+
+
+class Review(models.Model):
+    name_user = models.CharField(max_length=50)
+    body = models.TextField()
+    product_id = models.ForeignKey(Product, on_delete=models.PROTECT)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'{self.name_user} {self.product_id}'
