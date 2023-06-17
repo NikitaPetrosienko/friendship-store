@@ -5,7 +5,7 @@ from django.core.validators import RegexValidator
 
 class Basket(models.Model):
     user_id = models.ForeignKey(User, on_delete=models.PROTECT)
-    product_id = models.ForeignKey('Product', on_delete=models.PROTECT, related_name='product')
+    product_id = models.ForeignKey('Product', on_delete=models.PROTECT)
     quantity = models.IntegerField(default=1)
     ordered = models.BooleanField(default=False)
 

@@ -2,6 +2,8 @@
 
 ## Development team
 
+#### Rustam - Backend developer + docker
+
 #### Nikita - Frontend developer
 
 #### Polina - Backend developer
