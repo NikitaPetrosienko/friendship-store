@@ -1,3 +1,25 @@
+"""
+В следующем коде регистрируются модели из Friendship App в административном интерфейсе Django.
+
+Модуль admin импортируется из django.contrib.
+Модели из модуля friendship_app.models импортируются и присваиваются переменной model.
+Функция register вызывается для каждой модели на объекте admin.site для их регистрации в административном интерфейсе.
+Зарегистрированные модели:
+
+    Product
+    Category
+    Brand
+    Image
+    Order
+    Basket
+    Album
+    News
+    Review
+    Favorite
+
+Теперь эти модели будут доступны и управляемы через административный интерфейс Django.
+"""
+
 from django.contrib import admin
 
 import friendship_app.models as model

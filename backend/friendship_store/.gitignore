@@ -137,3 +137,5 @@ dmypy.json
 log.txt
 probe.py
 .idea/
+idea/
+.data/
