@@ -1,4 +1,4 @@
-data/
+backend/friendship_store/data/
 # Created by .ignore support plugin (hsz.mobi)
 ### Python template
 # Byte-compiled / optimized / DLL files
@@ -138,3 +138,4 @@ log.txt
 probe.py
 .idea/
 .data/
+*.
