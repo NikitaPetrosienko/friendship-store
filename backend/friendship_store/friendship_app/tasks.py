@@ -5,8 +5,6 @@
 
 Примечание: Предполагается, что необходимые импорты были выполнены, а приложение Celery было правильно инициализировано.
 """
-
-
 from friendship_store.celery import app
 from django.contrib.auth.models import User
 from django.core.mail import send_mail

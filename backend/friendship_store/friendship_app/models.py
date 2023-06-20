@@ -51,18 +51,18 @@ class Order(models.Model):
     on_delete=models.PROTECT означает, что при удалении пользователя заказ будет сохранен.
     По умолчанию равно 0.
     """
-    first_name = models.CharField(max_length=50)
-    last_name = models.CharField(max_length=50)
-    email = models.EmailField()
+    first_name = models.CharField(max_length=50, blank=True, null=True)
+    last_name = models.CharField(max_length=50, blank=True, null=True)
+    email = models.EmailField(blank=True, null=True)
     phoneNumberRegex = RegexValidator(regex=r"^\+?1?\d{8,15}$")
-    phoneNumber = models.CharField(validators=[phoneNumberRegex], max_length=16)
-    district = models.CharField(max_length=50)
-    street = models.CharField(max_length=50)
-    house = models.CharField(max_length=5)
-    apartment = models.CharField(max_length=5, blank=True)
-    is_card_payment = models.BooleanField(default=False)
-    total_price = models.DecimalField(decimal_places=2, max_digits=10, default=0)
-    created_at = models.DateTimeField(auto_now_add=True)
+    phoneNumber = models.CharField(validators=[phoneNumberRegex], max_length=16, blank=True, null=True)
+    district = models.CharField(max_length=50, blank=True, null=True)
+    street = models.CharField(max_length=50, blank=True, null=True)
+    house = models.CharField(max_length=5, blank=True, null=True)
+    apartment = models.CharField(max_length=5, blank=True, null=True)
+    is_card_payment = models.BooleanField(default=False, blank=True, null=True)
+    total_price = models.DecimalField(decimal_places=2, max_digits=10, default=0, blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True, blank=True, null=True)
 
     def __str__(self):
         """
@@ -75,16 +75,16 @@ class Product(models.Model):
     """
     Класс, описывающий продукт.
     """
-    product_name = models.CharField(max_length=50)
-    model = models.CharField(max_length=50, null=True)
-    price = models.DecimalField(decimal_places=2, max_digits=12)
+    product_name = models.CharField(max_length=50, blank=True, null=True)
+    model = models.CharField(max_length=50, null=True, blank=True)
+    price = models.DecimalField(decimal_places=2, max_digits=12, blank=True, null=True)
     availability = models.BooleanField(default=True)
     category = models.ForeignKey('Category', on_delete=models.PROTECT, blank=True, null=True)
     brand = models.ForeignKey('Brand', on_delete=models.PROTECT, blank=True, null=True)
-    description = models.TextField()
-    quantity = models.IntegerField(default=0)
-    main_image = models.URLField(default='http://example.com')
-    size = models.CharField(max_length=100)
+    description = models.TextField(blank=True, null=True)
+    quantity = models.IntegerField(default=0, blank=True, null=True)
+    main_image = models.URLField(default='http://example.com', blank=True, null=True)
+    size = models.CharField(max_length=100, blank=True, null=True)
 
     def __str__(self):
         """
@@ -97,7 +97,7 @@ class Category(models.Model):
     """
     Класс, описывающий категорию.
     """
-    category_name = models.CharField(max_length=50)
+    category_name = models.CharField(max_length=50, blank=True, null=True)
 
     def __str__(self):
         """
@@ -110,8 +110,8 @@ class Brand(models.Model):
     """
     Класс, описывающий бренд.
     """
-    brand_name = models.CharField(max_length=50)
-    image = models.URLField(default='http://example.com')
+    brand_name = models.CharField(max_length=50, blank=True, null=True)
+    image = models.URLField(default='http://example.com', blank=True, null=True)
 
     def __str__(self):
         """
@@ -124,7 +124,7 @@ class Image(models.Model):
     """
     Класс, описывающий изображение.
     """
-    image = models.URLField()
+    image = models.URLField(blank=True, null=True)
     product_id = models.ForeignKey('Product', on_delete=models.PROTECT)
 
 
@@ -132,17 +132,17 @@ class Album(models.Model):
     """
     Класс, описывающий альбом.
     """
-    image = models.URLField()
+    image = models.URLField(blank=True, null=True)
 
 
 class News(models.Model):
     """
     Класс, описывающий новости.
     """
-    title = models.CharField()
-    main_image = models.URLField()
-    date = models.DateField()
-    body = models.TextField()
+    title = models.CharField(blank=True, null=True)
+    main_image = models.URLField(blank=True, null=True)
+    date = models.DateField(blank=True, null=True)
+    body = models.TextField(blank=True, null=True)
 
     def __str__(self):
         """
@@ -155,8 +155,8 @@ class Review(models.Model):
     """
     Класс, описывающий ревью.
     """
-    name_user = models.CharField(max_length=50)
-    body = models.TextField()
+    name_user = models.CharField(max_length=50, blank=True, null=True)
+    body = models.TextField(blank=True, null=True)
     product_id = models.ForeignKey(Product, on_delete=models.PROTECT)
     created_at = models.DateTimeField(auto_now_add=True)
 

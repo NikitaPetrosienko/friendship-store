@@ -21,7 +21,6 @@
 """
 
 from django.contrib import admin
-
 import friendship_app.models as model
 
 admin.site.register(model.Product)
