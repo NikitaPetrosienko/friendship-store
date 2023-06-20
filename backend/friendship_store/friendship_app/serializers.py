@@ -1,7 +1,6 @@
 from rest_framework import serializers
 import friendship_app.models as model
 from django.contrib.auth.models import User
-
 from djoser.serializers import UserCreateSerializer
 
 

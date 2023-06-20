@@ -9,7 +9,6 @@ from django.contrib.auth.models import User
 from rest_framework.exceptions import ValidationError
 from friendship_app.tasks import order_notice
 from django.core.exceptions import ObjectDoesNotExist
-from rest_framework.permissions import IsAuthenticated
 
 
 class SearchAPIView(generics.ListAPIView):
