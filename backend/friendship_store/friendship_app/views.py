@@ -10,12 +10,20 @@ from rest_framework.exceptions import ValidationError
 from friendship_app.tasks import order_notice
 from django.core.exceptions import ObjectDoesNotExist
 
+from rest_framework.filters import SearchFilter, OrderingFilter
+from django_filters.rest_framework import DjangoFilterBackend
+
 
 class SearchAPIView(generics.ListAPIView):
     """
     Представление API для поиска продуктов на основе заданного слова.
     """
     serializer_class = fs.ProductSerializer
+    filter_backends = [
+        SearchFilter,
+        DjangoFilterBackend,
+        OrderingFilter,
+    ]
 
     def get_queryset(self):
         """
@@ -55,6 +63,36 @@ class ProductAPIView(generics.ListAPIView):
     """
     queryset = model.Product.objects.all()
     serializer_class = fs.ProductSerializer
+    filter_backends = [
+        SearchFilter,
+        DjangoFilterBackend,
+        OrderingFilter,
+    ]
+
+    search_fields = [
+        'product_name',
+        'model',
+        'availability',
+        'category',
+        'brand',
+        'description',
+        'quantity',
+    ]
+    ordering_fields = [
+        'product_name',
+        'price',
+        'quantity',
+    ]
+
+    filterset_fields = [
+        'product_name',
+        'model',
+        'availability',
+        'category',
+        'brand',
+        'description',
+        'quantity',
+    ]
 
 
 class ProductByIdAPIView(APIView):
@@ -142,6 +180,23 @@ class CategoryAPIView(generics.ListAPIView):
     """
     queryset = model.Category.objects.all()
     serializer_class = fs.CategorySerializer
+    filter_backends = [
+        SearchFilter,
+        DjangoFilterBackend,
+        OrderingFilter,
+    ]
+
+    search_fields = [
+        'category_name',
+    ]
+    ordering_fields = [
+        'category_name',
+
+    ]
+
+    filterset_fields = [
+        'category_name',
+    ]
 
 
 class FavoriteListAPIView(generics.ListAPIView):
@@ -201,6 +256,22 @@ class BrandAPIView(generics.ListAPIView):
     """
     queryset = model.Brand.objects.all()
     serializer_class = fs.BrandSerializer
+    filter_backends = [
+        SearchFilter,
+        DjangoFilterBackend,
+        OrderingFilter,
+    ]
+
+    search_fields = [
+        'brand_name',
+    ]
+    ordering_fields = [
+        'brand_name',
+
+    ]
+    filterset_fields = [
+        'brand_name',
+    ]
 
 
 class AlbumAPIView(generics.ListAPIView):
@@ -316,6 +387,45 @@ class OrderAPIView(generics.CreateAPIView):
     Представление API для создания заказа.
     """
     serializer_class = fs.OrderSerializer
+    filter_backends = [
+        SearchFilter,
+        DjangoFilterBackend,
+        OrderingFilter,
+    ]
+
+    search_fields = [
+        'first_name',
+        'last_name',
+        'email',
+        'phoneNumber',
+        'district',
+        'street',
+        'house',
+        'apartment',
+        'is_card_payment',
+        'total_price',
+        'created_at',
+    ]
+    ordering_fields = [
+        'first_name',
+        'last_name',
+        'email',
+        'phoneNumber',
+    ]
+
+    filterset_fields = [
+        'first_name',
+        'last_name',
+        'email',
+        'phoneNumber',
+        'district',
+        'street',
+        'house',
+        'apartment',
+        'is_card_payment',
+        'total_price',
+        'created_at',
+    ]
 
     def perform_create(self, serializer):
         """
@@ -352,6 +462,28 @@ class NewsAPIView(generics.ListAPIView):
     """
     queryset = model.News.objects.all()
     serializer_class = fs.NewsSerializer
+    filter_backends = [
+        SearchFilter,
+        DjangoFilterBackend,
+        OrderingFilter,
+    ]
+
+    search_fields = [
+        'title',
+        'date',
+        'body',
+    ]
+    ordering_fields = [
+        'title',
+        'date',
+        'body',
+    ]
+
+    filterset_fields = [
+        'title',
+        'date',
+        'body',
+    ]
 
 
 class CreateReviewAPIView(generics.CreateAPIView):

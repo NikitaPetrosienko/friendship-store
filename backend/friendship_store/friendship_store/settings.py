@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'djoser',
     'rest_framework.authtoken',
     'friendship_app.apps.FriendshipAppConfig',
+    'django_filters',
 
     'allauth',
     'allauth.account',
