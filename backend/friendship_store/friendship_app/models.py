@@ -7,6 +7,10 @@ class Basket(models.Model):
     """
     Модель корзины.
     """
+
+    class Meta:
+        ordering = ('quantity',)
+
     user_id = models.ForeignKey(User, on_delete=models.PROTECT)
     product_id = models.ForeignKey('Product', on_delete=models.PROTECT)
     quantity = models.IntegerField(default=1)
@@ -23,6 +27,7 @@ class Favorite(models.Model):
     """
     Модель "Избранное" представляет отношение между пользователем и продуктом.
     """
+
     user_id = models.ForeignKey(User, on_delete=models.PROTECT)
     """
     Поле ForeignKey, которое связывает модель Favorite с моделью User.
@@ -45,6 +50,10 @@ class Order(models.Model):
     """
     Модель "Заказ" представляет информацию о заказе пользователя.
     """
+
+    class Meta:
+        ordering = ('first_name', 'last_name', 'email', 'phoneNumber',)
+
     user_id = models.ForeignKey(User, on_delete=models.PROTECT, default=0)
     """
     Поле ForeignKey, которое связывает модель Order с моделью User.
@@ -75,6 +84,10 @@ class Product(models.Model):
     """
     Класс, описывающий продукт.
     """
+
+    class Meta:
+        ordering = ('product_name', 'model', 'price', 'description',)
+
     product_name = models.CharField(max_length=50, blank=True, null=True)
     model = models.CharField(max_length=50, null=True, blank=True)
     price = models.DecimalField(decimal_places=2, max_digits=12, blank=True, null=True)
@@ -97,6 +110,10 @@ class Category(models.Model):
     """
     Класс, описывающий категорию.
     """
+
+    class Meta:
+        ordering = ('category_name',)
+
     category_name = models.CharField(max_length=50, blank=True, null=True)
 
     def __str__(self):
@@ -110,6 +127,10 @@ class Brand(models.Model):
     """
     Класс, описывающий бренд.
     """
+
+    class Meta:
+        ordering = ('brand_name',)
+
     brand_name = models.CharField(max_length=50, blank=True, null=True)
     image = models.URLField(default='http://example.com', blank=True, null=True)
 
@@ -124,6 +145,7 @@ class Image(models.Model):
     """
     Класс, описывающий изображение.
     """
+
     image = models.URLField(blank=True, null=True)
     product_id = models.ForeignKey('Product', on_delete=models.PROTECT)
 
@@ -139,6 +161,10 @@ class News(models.Model):
     """
     Класс, описывающий новости.
     """
+
+    class Meta:
+        ordering = ('title', 'date', 'body',)
+
     title = models.CharField(blank=True, null=True)
     main_image = models.URLField(blank=True, null=True)
     date = models.DateField(blank=True, null=True)
@@ -155,6 +181,10 @@ class Review(models.Model):
     """
     Класс, описывающий ревью.
     """
+
+    class Meta:
+        ordering = ('name_user', 'body',)
+
     name_user = models.CharField(max_length=50, blank=True, null=True)
     body = models.TextField(blank=True, null=True)
     product_id = models.ForeignKey(Product, on_delete=models.PROTECT)
