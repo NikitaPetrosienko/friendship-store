@@ -38,7 +38,8 @@ class ProductAdmin(admin.ModelAdmin):
     list_filter = ['availability']
     fieldsets = [
         ('Main' or None, {
-            'fields': ('product_name', 'description'),
+            'fields': (
+                'product_name', 'model', 'category', 'brand', 'description', 'quantity', 'size'),
         }),
         ('Price Options', {
             'fields': ('price',),
@@ -78,7 +79,8 @@ class OrderAdmin(admin.ModelAdmin):
     search_fields = ('pk', 'first_name', 'last_name', 'created_at', 'email', 'phoneNumber',)
     fieldsets = [
         ('Main', {
-            'fields': ('district', 'street', 'house', 'apartment',),
+            'fields': ('first_name', 'last_name', 'email', 'phoneNumber', 'district', 'street', 'house', 'apartment',
+                       'is_card_payment', 'total_price',),
             'classes': ('wide', 'collapse',)
         }),
         ('User Options', {
@@ -132,7 +134,7 @@ class BrandAdmin(admin.ModelAdmin):
 
 # admin.site.register(model.Image)
 @admin.register(model.Image)
-class BrandAdmin(admin.ModelAdmin):
+class ImageAdmin(admin.ModelAdmin):
     list_display = 'product_id',
     list_display_links = 'product_id',
     ordering = 'product_id',
@@ -195,7 +197,7 @@ class ReviewAdmin(admin.ModelAdmin):
 
 # admin.site.register(model.Favorite)
 @admin.register(model.Favorite)
-class ReviewAdmin(admin.ModelAdmin):
+class FavoriteAdmin(admin.ModelAdmin):
     list_display = 'user_id', 'product_id',
     list_display_links = 'user_id', 'product_id',
     ordering = 'user_id', 'product_id',
