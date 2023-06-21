@@ -31,7 +31,6 @@ services:
       - "8000:8000"
     environment:
       - DJANGO_SETTINGS_MODULE=friendship_store.settings
-
     volumes:
       - .:/usr/src/friendship_store/
     env_file:
@@ -49,6 +48,16 @@ services:
     depends_on:
       - web
       - redis
+  dashboard:
+    container_name: dashboard
+    build: ./
+    command:  celery -A friendship_store --broker=redis://redis:6379/0 flower
+    ports:
+      - "5555:5555"
+    depends_on:
+      - redis
+      - web
+      - celery
 
 volumes:
   data:
