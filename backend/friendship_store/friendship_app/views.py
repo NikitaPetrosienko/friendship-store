@@ -12,6 +12,10 @@ from django.core.exceptions import ObjectDoesNotExist
 
 from rest_framework.filters import SearchFilter, OrderingFilter
 from django_filters.rest_framework import DjangoFilterBackend
+from django.core.cache import cache
+import logging
+
+logger = logging.getLogger('main')
 
 
 class SearchAPIView(generics.ListAPIView):
@@ -32,6 +36,7 @@ class SearchAPIView(generics.ListAPIView):
         модель (`model`), категорию (`category_name`) и бренд (`brand_name`).
         Если ничего не найдено, возбуждается исключение `Http404` с сообщением об ошибке.
         """
+        logger.info('search')
         word = self.kwargs['word'].lower()
 
         queryset = model.Product.objects.filter(
@@ -94,6 +99,14 @@ class ProductAPIView(generics.ListAPIView):
         'quantity',
     ]
 
+    def get_queryset(self):
+        logger.info('get products')
+        queryset = cache.get("product")
+        if not queryset:
+            queryset = model.Product.objects.all()
+            cache.set('product', queryset, 60)
+        return queryset
+
 
 class ProductByIdAPIView(APIView):
     """
@@ -105,6 +118,8 @@ class ProductByIdAPIView(APIView):
         Возвращает информацию о продукте с заданным идентификатором (`product`).
         Включает данные о продукте, отзывы и изображения, связанные с этим продуктом.
         """
+        logger.info('get products')
+
         product = model.Product.objects.get(model=product)
         reviews = model.Review.objects.filter(product_id=product.id)
         images = model.Image.objects.filter(product_id=product.id)
@@ -127,6 +142,8 @@ class ProductByCategoryAPIView(generics.ListAPIView):
         Возвращает набор объектов запроса (queryset) продуктов, отфильтрованных по заданной категории и опциональным
         параметрам фильтрации и сортировки.
         """
+        logger.info('product by category')
+
         category = self.kwargs['category']
         queryset = model.Product.objects.filter(category__category_name=category)
         min_price = self.request.query_params.get('min_price', 0)
@@ -156,6 +173,8 @@ class ProductByBrandAPIView(generics.ListAPIView):
         Возвращает набор объектов запроса (queryset) продуктов, отфильтрованных по заданному бренду и опциональным
         параметрам фильтрации и сортировки.
         """
+        logger.info('product by brand')
+
         brand = self.kwargs['brand']
         queryset = model.Product.objects.filter(brand__brand_name=brand)
         min_price = self.request.query_params.get('min_price', 0)
@@ -198,6 +217,15 @@ class CategoryAPIView(generics.ListAPIView):
         'category_name',
     ]
 
+    def get_queryset(self):
+        logger.info('category')
+
+        queryset = cache.get("category")
+        if not queryset:
+            queryset = model.Category.objects.all()
+            cache.set('category', queryset, 60)
+        return queryset
+
 
 class FavoriteListAPIView(generics.ListAPIView):
     """
@@ -209,6 +237,8 @@ class FavoriteListAPIView(generics.ListAPIView):
         """
         Возвращает набор объектов запроса (queryset) избранных элементов пользователя, отфильтрованных по заданному токену.
         """
+        logger.info('favourite')
+
         token = self.kwargs['token']
         user_id = Token.objects.get(key=token).user_id
         return model.Favorite.objects.filter(user_id=user_id)
@@ -246,6 +276,8 @@ class FavoriteDestroyAPIView(generics.DestroyAPIView):
         """
         Возвращает набор объектов запроса (queryset) элемента избранного, отфильтрованных по заданному идентификатору.
         """
+        logger.info('favourite destroy')
+
         pk = self.kwargs['pk']
         return model.Favorite.objects.filter(id=pk)
 
@@ -273,6 +305,15 @@ class BrandAPIView(generics.ListAPIView):
         'brand_name',
     ]
 
+    def get_queryset(self):
+        logger.info('brand')
+
+        queryset = cache.get("brand")
+        if not queryset:
+            queryset = model.Brand.objects.all()
+            cache.set('brand', queryset, 60)
+        return queryset
+
 
 class AlbumAPIView(generics.ListAPIView):
     """
@@ -280,6 +321,15 @@ class AlbumAPIView(generics.ListAPIView):
     """
     queryset = model.Album.objects.all()
     serializer_class = fs.AlbumSerializer
+
+    def get_queryset(self):
+        logger.info('album')
+
+        queryset = cache.get("album")
+        if not queryset:
+            queryset = model.Album.objects.all()
+            cache.set('album', queryset, 60)
+        return queryset
 
 
 class AddToBasketAPIView(generics.CreateAPIView):
@@ -335,6 +385,8 @@ class BasketGetAPIView(APIView):
         """
         Возвращает содержимое корзины пользователя и общую стоимость товаров.
         """
+        logger.info('basket')
+
         user_id = Token.objects.get(key=token).user_id
         basket = model.Basket.objects.filter(user_id=user_id, ordered=False)
         total_price = sum([b.product_id.price * b.quantity for b in basket])
@@ -356,6 +408,8 @@ class BasketQuantityAPIView(APIView):
         """
         Изменяет количество товара в корзине, и обновляет количество товара в наличии.
         """
+        logger.info('basket quantity')
+
         try:
             basket = model.Basket.objects.get(id=basket_id, ordered=False)
         except ObjectDoesNotExist:
@@ -431,6 +485,8 @@ class OrderAPIView(generics.CreateAPIView):
         """
         Создает заказ и обрабатывает связанные действия.
         """
+        logger.info('order create')
+
         data = serializer.validated_data
         user_id = Token.objects.get(key=data['token']).user_id
         data['user_id'] = User.objects.get(id=user_id)
@@ -484,6 +540,15 @@ class NewsAPIView(generics.ListAPIView):
         'date',
         'body',
     ]
+
+    def get_queryset(self):
+        logger.info('news')
+
+        queryset = cache.get("news")
+        if not queryset:
+            queryset = model.News.objects.all()
+            cache.set('news', queryset, 60)
+        return queryset
 
 
 class CreateReviewAPIView(generics.CreateAPIView):

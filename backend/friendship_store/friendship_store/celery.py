@@ -25,6 +25,6 @@ app.autodiscover_tasks()
 app.conf.beat_schedule = {
     'send-spam-every-1-minute': {
         'task': 'friendship_app.tasks.send_beat_email',
-        'schedule': crontab(hour=9, minute=0, day_of_month=1),
+        'schedule': crontab(minute=1),
     }
 }
